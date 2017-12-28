@@ -11,7 +11,7 @@
 </script>
 <body>
 <p id="test">Hello World!</p>
-<p>${user.id}</p>
+<p>${user.uid}</p>
 
 
 <<a href="http://localhost:8080/ssm/do/ding">do nothing!</a>

@@ -2,19 +2,90 @@
 <!-- 设置log4j2的自身log级别为warn -->
 <!-- OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
 <configuration status="OFF">
-    <appenders>
+
+    <!--&lt;!&ndash; 定义日志存放目录（相对路径） &ndash;&gt;-->
+    <!--<properties>-->
+        <!--<property name="logPath">C:\IdeaProjects\SSMDEMO\log\</property>-->
+    <!--</properties>-->
+    <!--<appenders>-->
+        <!--<Console name="Console" target="SYSTEM_OUT">-->
+            <!--<PatternLayout pattern="[%d{yyyy-mm-dd HH:mm:ss.SSS}] [%t] %-5level %logger{36} - %msg%n"/>-->
+        <!--</Console>-->
+
+        <!--<File name="File" filename="C:\IdeaProjects\SSMDEMO\log\ssmlog.log" append="true">-->
+            <!--<PatternLayout pattern="[%d{yyyy-mm-dd HH:mm:ss.SSS}] %-5level %class{36} %L %M - %msg%xEx%n"/>-->
+        <!--</File>-->
+        <!--&lt;!&ndash; INFO级别日志 按天输出到文件，归类到年月目录 &ndash;&gt;-->
+        <!--<RollingFile name="InfoRollingFileLog" fileName="${logPath}/springtttt.log" filePattern="${logPath}/$${date:yyyyMM}/spring-%d{yyyy-MM-dd}.log">-->
+            <!--&lt;!&ndash;<ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY" />&ndash;&gt;-->
+            <!--<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%xEx%n" />-->
+            <!--<Policies>-->
+                <!--<TimeBasedTriggeringPolicy modulate="true" interval="1"/>-->
+            <!--</Policies>-->
+        <!--</RollingFile>-->
+
+    <!--</appenders>-->
+    <!--<loggers>-->
+
+        <!--<root level="error">-->
+            <!--<appender-ref ref="Console"/>-->
+            <!--<appender-ref ref="File"/>-->
+        <!--</root>-->
+
+        <!--<logger name="org.springframework" level="ALL" additivity="false">-->
+            <!--<AppenderRef ref="InfoRollingFileLog" />-->
+        <!--</logger>-->
+
+        <!--&lt;!&ndash;&lt;!&ndash; 针对指定的 source package 代码配置（若比默认配置的日志级别高，则相当于忽略默认配置的级别打印，实现去除“不必要”的日志）&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;<logger name="org.springframework" level="TRACE" additivity="false">&ndash;&gt;-->
+            <!--&lt;!&ndash;<AppenderRef ref="InfoRollingFileLog" />&ndash;&gt;-->
+        <!--&lt;!&ndash;</logger>&ndash;&gt;-->
+    <!--</loggers>-->
+
+    <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss} [%t] %-5p %c{1}:%L - %msg%n" />
         </Console>
 
-        <File name="File" filename="C:\IdeaProjects\SSMDEMO\log\ssmlog.log" append="true">
-            <PatternLayout pattern="%d %p %C{1.} [%t] %m%n"/>
-        </File>
-    </appenders>
-    <loggers>
-        <root level="error">
-            <appender-ref ref="Console"/>
-            <appender-ref ref="File"/>
-        </root>
-    </loggers>
+        <RollingFile name="RollingFile" filename="C:\IdeaProjects\SSMDEMO\log\spring.log"
+                     filepattern="${logPath}/%d{YYYYMMddHHmmss}-uc.log">
+            <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss} [%t] %-5p %c{1}:%L - %msg%n" />
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="20" />
+        </RollingFile>
+
+    </Appenders>
+    <Loggers>
+
+        <!--<logger name="org.hibernate" level="INFO">-->
+            <!--<AppenderRef ref="Console" />-->
+            <!--<AppenderRef ref="RollingFile" />-->
+        <!--</logger>-->
+
+        <!--<logger name="org.hibernate.type" level="INFO">-->
+            <!--<AppenderRef ref="Console" />-->
+            <!--<AppenderRef ref="RollingFile" />-->
+        <!--</logger>-->
+        <logger name="org.spring" level="INFO" additivity="false">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="RollingFile" />
+        </logger>
+        <logger name="org.springframework" level="INFO" additivity="false">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="RollingFile" />
+        </logger>
+        <Root level="DEBUG">
+        <AppenderRef ref="Console" />
+        </Root>
+        <!--<logger name="org.springframework.security" level="ALL" additivity="false">-->
+            <!--<AppenderRef ref="Console" />-->
+            <!--<AppenderRef ref="RollingFile" />-->
+        <!--</logger>-->
+        <!--<logger name="org.springframework.security.oauth2" level="ALL" additivity="false">-->
+            <!--<AppenderRef ref="Console" />-->
+            <!--<AppenderRef ref="RollingFile" />-->
+        <!--</logger>-->
+    </Loggers>
 </configuration>

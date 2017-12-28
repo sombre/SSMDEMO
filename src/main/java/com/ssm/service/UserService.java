@@ -9,5 +9,6 @@ import com.ssm.model.User;
  * @since  2015年9月28日
  */
 public interface UserService {
-    public User selectUserById(long userId);
+    User selectUserById(int userId);
+
 }

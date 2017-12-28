@@ -1,7 +1,5 @@
 package com.ssm.dao;
 
-import com.ssm.model.User;
-
 /**
  * 功能概要：User的DAO类
  *
