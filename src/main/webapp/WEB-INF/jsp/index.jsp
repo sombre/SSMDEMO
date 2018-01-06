@@ -11,9 +11,11 @@
 </script>
 <body>
 <p id="test">Hello World!</p>
-<p>${user.uid}</p>
+<p>${user.username}</p>
 
 
-<<a href="http://localhost:8080/ssm/do/ding">do nothing!</a>
+<a href="http://localhost:8080/ssm/do/ding">do nothing!</a>
+<a href="http://localhost:8080/ssm/user/register">register</a>
+
 </body>
 </html>

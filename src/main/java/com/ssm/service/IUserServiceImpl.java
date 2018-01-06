@@ -5,9 +5,11 @@ import com.ssm.dao.UserMapper;
 import com.ssm.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class IUserServiceImpl implements IUserService {
 
     private UserMapper userMapper;
 
@@ -19,7 +21,7 @@ public class UserServiceImpl implements UserService {
         this.userMapper = userMapper;
     }
 
-    public User selectUserById(int userId) {
+    public User selectUserById(int userId) throws Exception{
 
         return this.userMapper.selectByPrimaryKey(userId);
     }
@@ -28,5 +30,11 @@ public class UserServiceImpl implements UserService {
 
         return false;
     }
-
+    @Transactional(isolation = Isolation.READ_COMMITTED,timeout = 3)
+    public boolean registerUser(User user) throws Exception{
+        int i=this.userMapper.insert(user);
+        if(i!=0)
+            return true;
+        return false;
+    }
 }

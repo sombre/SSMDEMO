@@ -2,7 +2,7 @@ package com.ssm.action;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssm.model.User;
-import com.ssm.service.UserService;
+import com.ssm.service.IUserService;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,12 +18,12 @@ public class DoNothing {
 
 
     @Autowired
-    private UserService userService;
+    private IUserService IUserService;
 
     private Logger logger = LogManager.getLogger(DoNothing.class.getName());
     @RequestMapping("/ding")
     public void doNothing(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        User user = this.userService.selectUserById(1);
+        User user = this.IUserService.selectUserById(1);
         ObjectMapper mapper = new ObjectMapper();
         request.setAttribute("param",1);
         response.getWriter().write("什么鬼!");

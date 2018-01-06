@@ -8,7 +8,7 @@ import com.ssm.model.User;
  * @author linbingwen
  * @since  2015年9月28日
  */
-public interface UserService {
-    User selectUserById(int userId);
-
+public interface IUserService {
+    User selectUserById(int userId) throws Exception;
+    boolean registerUser(User user) throws Exception;
 }
