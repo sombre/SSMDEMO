@@ -21,10 +21,12 @@
     <filter-mapping>
         <filter-name>encodingFilter</filter-name>
         <url-pattern>/</url-pattern>
+        <url-pattern>/index</url-pattern>
     </filter-mapping>
 
-
-
+    <welcome-file-list>
+        <welcome-file>index</welcome-file>
+    </welcome-file-list>
 
     <!-- 加载DispatcherServlet,将所有请求发送到这个Servlet,包括静态资源的请求-->
     <servlet>
@@ -42,6 +44,7 @@
         <servlet-name>SpringMVC</servlet-name>
         <!-- 匹配所有请求，此处也可以配置成 *.do 形式 -->
         <url-pattern>/</url-pattern>
+        <url-pattern>/index</url-pattern>
     </servlet-mapping>
 
     <!-- 阿里数据连接池 启用 Web 监控统计功能    start-->

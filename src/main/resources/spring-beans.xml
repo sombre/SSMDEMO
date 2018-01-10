@@ -6,5 +6,5 @@
 
     <!--<bean id="userDao" class="com.ssm.dao.UserDao"></bean>-->
     <!--<bean id="userService" class="com.ssm.service.UserServiceImpl"></bean>-->
-
+    <!--<bean id="exceptionHandler" class="com.ssm.util.MyException"/>-->
 </beans>

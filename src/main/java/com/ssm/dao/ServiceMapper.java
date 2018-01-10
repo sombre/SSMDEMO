@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface ServiceMapper {
 
-    public List<HashMap<String,Object>> showTopicAndComment();
+    public List<HashMap<String,Object>> showPostAndComment();
 
-    List<Comment> selectTopicComment(int topicId);
+    List<Comment> selectPostComment(int postId);
 
 }

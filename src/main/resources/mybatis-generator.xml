@@ -15,7 +15,8 @@
 
         <!--生成的Java文件的编码-->
         <property name="javaFileEncoding" value="UTF-8"/>
-
+        <!--当重新生成java文件时,是否合并-->
+        <property name="javaMergeable" value="false"/>
         <!--自动生成model的Equal和HashCode方法-->
         <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
         <!--让生成的model实现序列化接口-->
@@ -69,7 +70,7 @@
         </javaClientGenerator>
         <!-- 指定数据库表 -->
         <table tableName="user"/>
-        <table tableName="topic"/>
+        <table tableName="post"/>
         <table tableName="comment"/>
         <table tableName="reply"/>
     </context>

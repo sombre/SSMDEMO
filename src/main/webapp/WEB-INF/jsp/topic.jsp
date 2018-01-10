@@ -15,12 +15,15 @@
     <title>话题</title>
 </head>
 <body>
-<%--<c:out value="${collections}"></c:out>--%>
+<jsp:include page="top.jsp"/>
+
+<c:out value="${collections}"></c:out>
 <c:forEach var="item" items="${collections}">
     <c:forEach var="map" items="${item}">
         <c:out value="${map.key}"></c:out> : <c:out value="${map.value}"></c:out>
         <br>
     </c:forEach>
+
 </c:forEach>
 </body>
 </html>

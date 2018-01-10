@@ -11,6 +11,7 @@
     <title>注册</title>
 </head>
 <body>
+<jsp:include page="top.jsp"/>
 <form action="http://localhost:8080/ssm/user/addUser" method="post">
     UserName: <input type="text" name="username">
     Email:<input type="text" name="email">

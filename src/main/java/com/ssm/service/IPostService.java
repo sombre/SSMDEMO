@@ -3,7 +3,7 @@ package com.ssm.service;
 import java.util.HashMap;
 import java.util.List;
 
-public interface ITopicService {
+public interface IPostService {
 
     List<HashMap<String,Object>> showPostAndComment() throws Exception;
 }

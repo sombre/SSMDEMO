@@ -16,6 +16,7 @@ public class IUserServiceImpl implements IUserService {
     public UserMapper getUserMapper() {
         return userMapper;
     }
+
     @Autowired
     public void setUserMapper(UserMapper userMapper) {
         this.userMapper = userMapper;

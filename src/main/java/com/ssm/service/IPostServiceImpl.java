@@ -1,11 +1,11 @@
 package com.ssm.service;
 
 import com.ssm.dao.CommentMapper;
+import com.ssm.dao.PostMapper;
 import com.ssm.dao.ServiceMapper;
-import com.ssm.dao.TopicMapper;
 import com.ssm.dao.UserMapper;
 import com.ssm.model.Comment;
-import com.ssm.model.Topic;
+import com.ssm.model.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ import java.util.Map;
 
 
 @Service
-public class TopicServiceImpl implements ITopicService{
+public class IPostServiceImpl implements IPostService{
 
     private ServiceMapper serviceMapper;
 
@@ -23,7 +23,7 @@ public class TopicServiceImpl implements ITopicService{
 
     private UserMapper userMapper;
 
-    private TopicMapper topicMapper;
+    private PostMapper postMapper;
 
     public CommentMapper getCommentMapper() {
         return commentMapper;
@@ -41,12 +41,12 @@ public class TopicServiceImpl implements ITopicService{
         this.userMapper = userMapper;
     }
 
-    public TopicMapper getTopicMapper() {
-        return topicMapper;
+    public PostMapper getPostMapper() {
+        return postMapper;
     }
     @Autowired
-    public void setTopicMapper(TopicMapper topicMapper) {
-        this.topicMapper = topicMapper;
+    public void setPostMapper(PostMapper postMapper) {
+        this.postMapper = postMapper;
     }
 
     public ServiceMapper getServiceMapper() {
@@ -58,13 +58,13 @@ public class TopicServiceImpl implements ITopicService{
     }
 
     public List<HashMap<String,Object>> showPostAndComment() throws Exception {
-        List<HashMap<String,Object>> result = this.serviceMapper.showTopicAndComment();
-        List<Topic> topics = this.topicMapper.selectAll();
-        Map<Topic,List<Comment>> map = new HashMap<Topic, List<Comment>>();
-        for(Topic topic : topics){
-            List<Comment> tmp = this.serviceMapper.selectTopicComment(topic.getTid());
-            if(!tmp.isEmpty()) map.put(topic,tmp);
-            else map.put(topic,null);
+        List<HashMap<String,Object>> result = this.serviceMapper.showPostAndComment();
+        List<Post> posts = this.postMapper.selectAll();
+        Map<Post,List<Comment>> map = new HashMap<Post, List<Comment>>();
+        for(Post post : posts){
+            List<Comment> tmp = this.serviceMapper.selectPostComment(post.getPid());
+            if(!tmp.isEmpty()) map.put(post,tmp);
+            else map.put(post,null);
         }
 
         return result;
