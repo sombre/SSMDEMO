@@ -8,40 +8,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
-<html>
 <head>
-    <meta charset="UTF-8">
-    <script type="text/javascript" src="http://localhost:8080/ssm/js/first.js"></script>
-    <title>test</title>
-
+    <jsp:include page="top.jsp"/>
+    <title>主页</title>
 </head>
-
-<script>
-    function selectUser() {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function () {
-            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                document.getElementById("test").innerHTML = xmlhttp.responseText;
-            }
-        }
-        xmlhttp.open("GET", "user/showUserList?uid=1", true);
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-//        var formdata = new FormData();
-//        formdata.append("uid",1);
-        xmlhttp.send();
-    }
-
-</script>
 <body>
-<jsp:include page="top.jsp"/>
 <br>
 <br>
-<p id="test">Hello World!</p>
+<p id="gogo">Hello World!</p>
 <button type="button" onclick="selectUser()">onclick test</button>
 
 <br>
 <br>
-<p>${user.username}</p>
+<p>${user}</p>
 
 </body>
 </html>

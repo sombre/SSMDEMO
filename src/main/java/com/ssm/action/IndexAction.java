@@ -14,4 +14,10 @@ public class IndexAction {
         mv.setViewName("index");
         return mv;
     }
+
+    @RequestMapping("login")
+    public String toLogin(){
+
+        return "login";
+    }
 }

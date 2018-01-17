@@ -2,22 +2,22 @@ package com.ssm.service;
 
 import com.ssm.dao.CommentMapper;
 import com.ssm.dao.PostMapper;
-import com.ssm.dao.ServiceMapper;
+import com.ssm.dao.PostService;
 import com.ssm.dao.UserMapper;
 import com.ssm.model.Comment;
 import com.ssm.model.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 @Service
 public class IPostServiceImpl implements IPostService{
 
-    private ServiceMapper serviceMapper;
+    private PostService postService;
 
     private CommentMapper commentMapper;
 
@@ -49,24 +49,25 @@ public class IPostServiceImpl implements IPostService{
         this.postMapper = postMapper;
     }
 
-    public ServiceMapper getServiceMapper() {
-        return serviceMapper;
+    public PostService getPostService() {
+        return postService;
     }
     @Autowired
-    public void setServiceMapper(ServiceMapper serviceMapper) {
-        this.serviceMapper = serviceMapper;
+    public void setPostService(PostService postService) {
+        this.postService = postService;
     }
 
-    public List<HashMap<String,Object>> showPostAndComment() throws Exception {
-        List<HashMap<String,Object>> result = this.serviceMapper.showPostAndComment();
+    public List<HashMap> showPostAndComment() throws Exception {
+        List<HashMap> result = this.postService.showPostAndComment();
         List<Post> posts = this.postMapper.selectAll();
-        Map<Post,List<Comment>> map = new HashMap<Post, List<Comment>>();
-        for(Post post : posts){
-            List<Comment> tmp = this.serviceMapper.selectPostComment(post.getPid());
-            if(!tmp.isEmpty()) map.put(post,tmp);
-            else map.put(post,null);
+        HashMap em = new HashMap();
+        List<HashMap> postandcomment = new ArrayList<HashMap>();
+        HashMap<Object,Object> map = new HashMap<Object, Object>();
+        for (Post post:posts) {
+            List<Comment> tmp = this.postService.selectPostComment(post.getPid());
+            map.put(post,tmp);
         }
-
-        return result;
+        postandcomment.add(map);
+        return postandcomment;
     }
 }

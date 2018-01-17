@@ -4,7 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!--<bean id="userDao" class="com.ssm.dao.UserDao"></bean>-->
-    <!--<bean id="userService" class="com.ssm.service.UserServiceImpl"></bean>-->
+    <!--<bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter">-->
+        <!--<property name="defaultCharset" value="UTF-8"/>-->
+    <!--</bean>-->
     <!--<bean id="exceptionHandler" class="com.ssm.util.MyException"/>-->
 </beans>

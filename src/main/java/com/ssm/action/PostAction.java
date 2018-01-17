@@ -1,5 +1,6 @@
 package com.ssm.action;
 
+import com.ssm.model.Post;
 import com.ssm.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +29,7 @@ public class PostAction {
     public ModelAndView showPostAndComment () throws Exception{
         ModelAndView mv = new ModelAndView();
         this.postService.showPostAndComment();
-        List<HashMap<String,Object>> resultCollection = this.postService.showPostAndComment();
+        List<HashMap> resultCollection = this.postService.showPostAndComment();
         mv.addObject("collections",resultCollection);
 //        for(Map<String,Object> map : resultCollection){
 //            for(Map.Entry<String,Object> m : map.entrySet())
@@ -37,7 +38,7 @@ public class PostAction {
 //                System.out.print(m.getValue());
 //            }
 //        }
-        mv.setViewName("topic");
+        mv.setViewName("post");
         return mv;
     }
 

@@ -8,15 +8,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <jsp:include page="top.jsp"/>
     <title>注册</title>
 </head>
 <body>
-<jsp:include page="top.jsp"/>
 <form action="http://localhost:8080/ssm/user/addUser" method="post">
-    UserName: <input type="text" name="username">
-    Email:<input type="text" name="email">
-    PassWord: <input type="password" name="password">
-    Gender: <input type="text" name="gender">
+    UserName: <input type="text" name="userName">
+    Email:<input type="text" name="userEmail">
+    PassWord: <input type="password" name="userPassword">
+    Gender: <input type="text" name="userGender">
     <input type="submit" value="submit">
 </form>
 

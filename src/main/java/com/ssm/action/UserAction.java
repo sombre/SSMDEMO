@@ -14,8 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 @Controller
@@ -52,7 +51,7 @@ public class UserAction {
     }
 
     @RequestMapping("/register")
-    public String prepareRegister(){
+    public String prepareRegister() throws Exception{
 
         return "register";
     }
@@ -60,16 +59,7 @@ public class UserAction {
 
     @RequestMapping(value="/addUser",method = RequestMethod.POST)
     public ModelAndView registerUser(HttpServletRequest request,HttpServletResponse response,User user) throws Exception{
-
-//        User user = new User();
         ModelAndView mv = new ModelAndView();
-//        user.setUsername(userName);
-//        user.setEmail(email);
-//        user.setPassword(passWord);
-//        user.setGender(gender);
-//        HttpServletRequest request,HttpServletResponse response,
-//                @RequestParam String userName,
-//                @RequestParam String passWord,@RequestParam String email,@RequestParam String gender
         if(this.IUserService.registerUser(user))
         {
             mv.setViewName("index");
@@ -77,6 +67,30 @@ public class UserAction {
         }
         mv.setViewName("error");
         return mv;
+    }
+
+
+    @RequestMapping(value = "doLogin",method = RequestMethod.POST)
+    @ResponseBody
+    public HashMap login(HttpServletRequest request,HttpServletResponse response,User user) throws Exception{
+        User tmpUser=this.IUserService.verifyUser(user);
+        ObjectMapper objectMapper = new ObjectMapper();
+        HashMap<String,Object> dataMap= new HashMap<String, Object>();
+        if(tmpUser==null){
+            dataMap.put("error","用户名或者密码错误!");
+            String message = objectMapper.writeValueAsString(dataMap);
+            System.out.print("用户名或密码错误!");
+//            response.getWriter().write(message);
+//            return message;
+            return dataMap;
+        }
+        else {
+            dataMap.put("user",tmpUser);
+            String userJason = objectMapper.writeValueAsString(dataMap);
+            System.out.print(userJason);
+//            response.getWriter().write(userJason.toString());
+            return dataMap;
+        }
     }
 
 

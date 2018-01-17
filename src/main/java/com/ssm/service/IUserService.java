@@ -10,5 +10,7 @@ import com.ssm.model.User;
  */
 public interface IUserService {
     User selectUserById(int userId) throws Exception;
+    User selectUserByEmail(String email) throws Exception;
+    User verifyUser(User user) throws Exception;
     boolean registerUser(User user) throws Exception;
 }

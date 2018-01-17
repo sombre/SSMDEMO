@@ -12,7 +12,16 @@
 
 
     <!-- 配置注解驱动 -->
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven>
+        <!-- 消息转换器,将消息转换器的默认编码从ISO-8859-1设置为UTF-8 -->
+        <mvc:message-converters register-defaults="true">
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <!--<property name="supportedMediaTypes" value="text/html;charset=UTF-8"/>-->
+                <property name="defaultCharset" value="UTF-8"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
     <!--<mvc:resources location="/WEB-INF/jsp/" mapping="/resources/**"/>-->
     <!-- 配置包扫描器 -->
     <context:component-scan base-package="com.ssm.action"/>

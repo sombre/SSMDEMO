@@ -4,10 +4,11 @@ import com.ssm.model.Comment;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public interface ServiceMapper {
+public interface PostService {
 
-    public List<HashMap<String,Object>> showPostAndComment();
+    List<HashMap> showPostAndComment();
 
     List<Comment> selectPostComment(int postId);
 
