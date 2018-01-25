@@ -13,13 +13,23 @@
     <title>话题</title>
 </head>
 
+<p>发表主题:</p>
+<form method="post" action="">
+    帖子主题:<input type="text" name="title">
+    帖子内容:<textarea rows="" cols="" name="content"></textarea>
+    <input type="button" value="发表" onclick="">
+</form>
+
+<br>
+<br>
+
 <c:out value="${collections}"></c:out>
 <br>
 
 <c:forEach var="item" items="${collections}">
     <c:forEach var="map" items="${item}">
         <c:out value="${map.key}"></c:out> : <c:out value="${map.value}"></c:out>
-        <c:out value="${map.key.postTitle}"></c:out>
+        <c:out value="${map.key.title}"></c:out>
         <br>
         <br>
     </c:forEach>

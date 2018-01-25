@@ -73,5 +73,6 @@
         <table tableName="post"/>
         <table tableName="comment"/>
         <table tableName="reply"/>
+
     </context>
 </generatorConfiguration>

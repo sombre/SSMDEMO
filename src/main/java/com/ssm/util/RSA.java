@@ -18,6 +18,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.crypto.Cipher;
+//            int tmp = 16 - (byte_content.length % 16);
+//            tmp = tmp + byte_content.length;
+//            byte[] adddecode = new byte[tmp];
+//            for (int i = 0; i < adddecode.length; i++) {
+//                if (i <byte_content.length) {
+//                    adddecode[i] = byte_content[i];
+//                } else adddecode[i] = 0;
+//            }
+
 
 
 /**
@@ -26,7 +35,7 @@ import javax.crypto.Cipher;
  * @author: LUCKY
  * @date:2016年1月4日 下午1:25:34
  */
-public abstract class RSA {
+public abstract class RSA  {
     public static final String KEY_ALGORITHM = "RSA";
     public static final String SIGNATURE_ALGORITHM = "MD5withRSA";
 
@@ -59,8 +68,11 @@ public abstract class RSA {
     /**
      * 用私钥对信息生成数字签名
      *
-     * @param data       加密数据
-     * @param privateKey 私钥
+     * @param data
+     *            加密数据
+     * @param privateKey
+     *            私钥
+     *
      * @return
      * @throws Exception
      */
@@ -88,11 +100,16 @@ public abstract class RSA {
     /**
      * 校验数字签名
      *
-     * @param data      加密数据
-     * @param publicKey 公钥
-     * @param sign      数字签名
+     * @param data
+     *            加密数据
+     * @param publicKey
+     *            公钥
+     * @param sign
+     *            数字签名
+     *
      * @return 校验成功返回true 失败返回false
      * @throws Exception
+     *
      */
     public static boolean verify(byte[] data, String publicKey, String sign)
             throws Exception {

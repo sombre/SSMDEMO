@@ -11,168 +11,178 @@
     <schema id="5" parent="1" name="performance_schema"/>
     <schema id="6" parent="1" name="sys"/>
     <table id="7" parent="2" name="comment"/>
-    <table id="8" parent="2" name="post"/>
-    <table id="9" parent="2" name="reply"/>
-    <table id="10" parent="2" name="user"/>
-    <column id="11" parent="7" name="cid">
+    <table id="8" parent="2" name="cookie"/>
+    <table id="9" parent="2" name="post"/>
+    <table id="10" parent="2" name="reply"/>
+    <table id="11" parent="2" name="user"/>
+    <column id="12" parent="7" name="cid">
       <Position>1</Position>
       <DataType>int(10)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="12" parent="7" name="comm_pid">
+    <column id="13" parent="7" name="pid">
       <Position>2</Position>
       <DataType>int(10)|0</DataType>
     </column>
-    <column id="13" parent="7" name="comm_authorid">
+    <column id="14" parent="7" name="authorid">
       <Position>3</Position>
       <DataType>int(10)|0</DataType>
     </column>
-    <column id="14" parent="7" name="comm_content">
+    <column id="15" parent="7" name="content">
       <Position>4</Position>
       <DataType>text|0</DataType>
     </column>
-    <column id="15" parent="7" name="comm_create_at">
+    <column id="16" parent="7" name="create_at">
       <Position>5</Position>
-      <DataType>int(10)|0</DataType>
+      <DataType>bigint(10)|0</DataType>
     </column>
-    <key id="16" parent="7" name="PRIMARY">
+    <key id="17" parent="7" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>cid</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="17" parent="8" name="pid">
+    <column id="18" parent="8" name="auto_Id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="19" parent="8" name="auto_uIdName">
+      <Position>2</Position>
+      <DataType>varchar(20)|0</DataType>
+    </column>
+    <column id="20" parent="8" name="auto_uId">
+      <Position>3</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="21" parent="8" name="auto_tokenName">
+      <Position>4</Position>
+      <DataType>varchar(20)|0</DataType>
+    </column>
+    <column id="22" parent="8" name="auto_token">
+      <Position>5</Position>
+      <Comment>自动登陆口令</Comment>
+      <DataType>varchar(20)|0</DataType>
+    </column>
+    <key id="23" parent="8" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>auto_Id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="24" parent="9" name="pid">
       <Position>1</Position>
       <DataType>int(50)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="18" parent="8" name="post_title">
+    <column id="25" parent="9" name="title">
       <Position>2</Position>
       <DataType>varchar(64)|0</DataType>
     </column>
-    <column id="19" parent="8" name="post_authorid">
+    <column id="26" parent="9" name="authorid">
       <Position>3</Position>
       <DataType>int(50)|0</DataType>
     </column>
-    <column id="20" parent="8" name="post_created_by">
+    <column id="27" parent="9" name="content">
       <Position>4</Position>
+      <DataType>text|0</DataType>
+    </column>
+    <column id="28" parent="9" name="created_by">
+      <Position>5</Position>
       <Comment>发表者的名字</Comment>
       <DataType>char(20)|0</DataType>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="21" parent="8" name="post_content">
-      <Position>5</Position>
-      <DataType>text|0</DataType>
-    </column>
-    <column id="22" parent="8" name="post_created_at">
+    <column id="29" parent="9" name="created_at">
       <Position>6</Position>
-      <DataType>int(10)|0</DataType>
+      <DataType>bigint(10)|0</DataType>
     </column>
-    <key id="23" parent="8" name="PRIMARY">
+    <key id="30" parent="9" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>pid</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="24" parent="9" name="rid">
+    <column id="31" parent="10" name="rid">
       <Position>1</Position>
       <Comment>回复主键</Comment>
       <DataType>int(10)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="25" parent="9" name="reply_authorid">
+    <column id="32" parent="10" name="authorid">
       <Position>2</Position>
       <Comment>回复者ID</Comment>
       <DataType>int(10)|0</DataType>
     </column>
-    <column id="26" parent="9" name="reply_to_cid">
+    <column id="33" parent="10" name="reply_to_cid">
       <Position>3</Position>
       <Comment>被回复的评论的ID</Comment>
       <DataType>int(10)|0</DataType>
     </column>
-    <column id="27" parent="9" name="reply_content">
+    <column id="34" parent="10" name="content">
       <Position>4</Position>
       <DataType>text|0</DataType>
     </column>
-    <column id="28" parent="9" name="reply_at">
+    <column id="35" parent="10" name="reply_at">
       <Position>5</Position>
-      <DataType>int(10)|0</DataType>
+      <Comment>回复时间</Comment>
+      <DataType>bigint(10)|0</DataType>
     </column>
-    <key id="29" parent="9" name="PRIMARY">
+    <key id="36" parent="10" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>rid</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="30" parent="10" name="uid">
+    <column id="37" parent="11" name="uid">
       <Position>1</Position>
       <Comment>用户ID</Comment>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="31" parent="10" name="user_name">
+    <column id="38" parent="11" name="name">
       <Position>2</Position>
       <Comment>用户昵称</Comment>
-      <DataType>varchar(255)|0</DataType>
+      <DataType>varchar(32)|0</DataType>
     </column>
-    <column id="32" parent="10" name="user_salt">
+    <column id="39" parent="11" name="salt">
       <Position>3</Position>
       <Comment>盐</Comment>
       <DataType>varchar(20)|0</DataType>
     </column>
-    <column id="33" parent="10" name="user_password">
+    <column id="40" parent="11" name="password">
       <Position>4</Position>
       <Comment>用户密码</Comment>
-      <DataType>varchar(255)|0</DataType>
+      <DataType>varchar(64)|0</DataType>
     </column>
-    <column id="34" parent="10" name="user_email">
+    <column id="41" parent="11" name="email">
       <Position>5</Position>
       <Comment>用户邮箱</Comment>
-      <DataType>varchar(255)|0</DataType>
+      <DataType>varchar(32)|0</DataType>
     </column>
-    <column id="35" parent="10" name="user_phone">
+    <column id="42" parent="11" name="phone">
       <Position>6</Position>
       <DataType>varchar(20)|0</DataType>
     </column>
-    <column id="36" parent="10" name="user_gender">
+    <column id="43" parent="11" name="gender">
       <Position>7</Position>
       <DataType>varchar(20)|0</DataType>
     </column>
-    <column id="37" parent="10" name="user_avatar">
+    <column id="44" parent="11" name="avatar">
       <Position>8</Position>
-      <DataType>varchar(255)|0</DataType>
+      <DataType>varchar(100)|0</DataType>
     </column>
-    <column id="38" parent="10" name="user_role">
+    <column id="45" parent="11" name="signup_at">
       <Position>9</Position>
-      <Comment>用户身份</Comment>
-      <DataType>varchar(255)|0</DataType>
-    </column>
-    <column id="39" parent="10" name="user_status">
-      <Position>10</Position>
-      <Comment>用户状态</Comment>
-      <DataType>int(1)|0</DataType>
-    </column>
-    <column id="40" parent="10" name="user_registdate">
-      <Position>11</Position>
       <Comment>注册时间</Comment>
-      <DataType>int(10)|0</DataType>
+      <DataType>bigint(10)|0</DataType>
     </column>
-    <column id="41" parent="10" name="user_registip">
-      <Position>12</Position>
-      <Comment>注册IP</Comment>
-      <DataType>varchar(20)|0</DataType>
-    </column>
-    <column id="42" parent="10" name="user_lastloginip">
-      <Position>13</Position>
-      <Comment>最后登录ip</Comment>
-      <DataType>varchar(20)|0</DataType>
-    </column>
-    <column id="43" parent="10" name="user_address">
-      <Position>14</Position>
+    <column id="46" parent="11" name="address">
+      <Position>10</Position>
       <DataType>varchar(50)|0</DataType>
     </column>
-    <key id="44" parent="10" name="PRIMARY">
+    <key id="47" parent="11" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>uid</ColNames>
       <Primary>1</Primary>

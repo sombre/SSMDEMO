@@ -6,5 +6,6 @@ import org.apache.ibatis.annotations.Param;
 public interface UserService {
 
     User selectUserByEmail(String email);
+    User selectUserByIdNotAllData(int uid);
 
 }

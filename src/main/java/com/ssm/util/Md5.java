@@ -72,7 +72,8 @@ public class Md5 {
         int max=charSet.length();
         int min=0;
         for(int i=0;i<20;i++){
-            salt.append(charSet.charAt(random.nextInt(max)%(max-min+1))+min);
+            char tmp = (charSet.charAt(random.nextInt(max)%(max-min+1)+min));
+            salt.append(tmp);
         }
         return salt.toString();
     }

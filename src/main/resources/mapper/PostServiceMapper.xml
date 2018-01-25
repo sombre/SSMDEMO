@@ -4,17 +4,17 @@
 <mapper namespace="com.ssm.dao.PostService">
 
     <select id="showPostAndComment" resultType="HashMap">
-        SELECT p.pid,p.post_title,p.post_authorid,p.post_content,p.post_created_at,p.post_created_by,
-        c.cid,c.comm_pid,c.comm_authorid,c.comm_content,c.comm_create_at FROM post as p
-        LEFT JOIN comment AS c ON p.pid = c.comm_pid
+        SELECT p.pid,p.title,p.authorid AS post_authorid,p.content AS pcontent,p.created_at AS post_create_at,
+        p.created_by AS post_create_by,
+        c.cid,c.pid AS cpid,c.authorid AS comm_authorid,c.content AS comm_content,c.create_at AS comm_create_at
+        FROM post as p
+        LEFT JOIN comment AS c ON p.pid = c.pid
     </select>
 
-    <sql id="allpost">
-        p.pid,p.post_title,p.post_authorid,p.post_content,p.post_created_at,p.post_created_by
-    </sql>
+
 
     <select id="selectPostComment" resultMap="CommentResultMap" parameterType="int">
-        SELECT * FROM comment where comment.comm_pid = #{id}
+        SELECT * FROM comment where comment.pid = #{id}
     </select>
 
     <resultMap id="CommentResultMap" type="com.ssm.model.Comment">

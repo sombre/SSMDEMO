@@ -1,16 +1,18 @@
 <%--
   Created by IntelliJ IDEA.
   User: John
-  Date: 2018/1/8
-  Time: 20:12
+  Date: 2018/1/24
+  Time: 21:37
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     String path = request.getContextPath();
-    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    // 获得本项目的地址(例如: http://localhost:8080/MyApp/)赋值给basePath变量 
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
     <base href="<%=basePath%>">
@@ -19,16 +21,14 @@
     <meta http-equiv="expires" content="0">
     <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
     <meta http-equiv="description" content="This is my page">
-    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="js/first.js"></script>
+    <title>发表主题</title>
 </head>
 <body>
-<a href="index">主页</a>
-<a href="post/showpost">主题</a>
-<a href="login">登陆</a>
-<a href="user/signUp">注册</a>
-<a href="user/logout">退出</a>
 
-<p>居然不能显示中文,有毒啊</p>
+<form method="post" action="">
+    帖子主题:<input type="text" name="postTitle">
+    帖子内容:<textarea rows="" cols="" name="postContent"></textarea>
+</form>
+
 </body>
 </html>

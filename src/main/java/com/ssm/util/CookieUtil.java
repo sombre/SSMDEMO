@@ -9,48 +9,53 @@ import java.util.Map;
 
 public class CookieUtil {
 
+    public static int defMaxAge = 24 * 3600 * 7;
+
+
+
+
+
+
     /**
      * 添加cookie
      *
      * @param response HttpServletResponse
-     * @param name String
-     * @param value String
+     * @param name     String
+     * @param value    String
+     * @param maxAge   int 过期时间,单位为秒
      */
-
-    public static void addCookie(HttpServletResponse response, String name, String value) {
+    public static void addCookie(HttpServletResponse response, String name, String value, int maxAge) {
         Cookie cookie = new Cookie(name.trim(), value.trim());
-        cookie.setMaxAge(30 * 60);// 设置为30min
+        cookie.setMaxAge(maxAge);// 设置为30min
         cookie.setPath("/");
-        System.out.println("已添加===============");
         response.addCookie(cookie);
     }
 
     /**
      * Set cookie
-     *
-     * @param request HttpServletRequest
+     * @param request  HttpServletRequest
      * @param response HttpServletResponse
-     * @param name String
-     * @param value String
-     *
-     * 注意一、修改、删除Cookie时，新建的Cookie除value、maxAge之外的所有属性，例如name、path、domain等，都要与原Cookie完全一样。
-     * 否则，浏览器将视为两个不同的Cookie不予覆盖，导致修改、删除失败。
+     * @param name     String
+     * @param value    String
+     * @param maxAge   int
+     *                 注意一、修改、删除Cookie时，新建的Cookie除value、maxAge之外的所有属性，例如name、path、domain等，都要与原Cookie完全一样。
+     *                 否则，浏览器将视为两个不同的Cookie不予覆盖，导致修改、删除失败。
      */
-    public static void setCookie(HttpServletRequest request, HttpServletResponse response, String name, String value) {
+    public static void setCookie(HttpServletRequest request, HttpServletResponse response, String name, String value, int maxAge) {
         Cookie[] cookies = request.getCookies();
-        if (null == cookies) {
-            return;
-        } else {
+        if (null != cookies) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(name)) {
                     cookie.setValue(value);
                     cookie.setPath("/");
-                    cookie.setMaxAge(30 * 60);// 设置为30min
+                    //设置过期时间,单位为秒
+                    cookie.setMaxAge(maxAge);
                     response.addCookie(cookie);
                     break;
                 }
             }
         }
+
     }
 
     /**
@@ -59,47 +64,49 @@ public class CookieUtil {
      * maxAge属性只被浏览器用来判断Cookie是否过期
      *
      * @param request HttpServletRequest
-     * @param response HttpServletResponse
-     *
      */
-
-    public void showCookies(HttpServletRequest request,HttpServletResponse response ){
-
+    public static void showCookies(HttpServletRequest request) {
         //获取cookie数组
         Cookie[] cookies = request.getCookies();
-        if(null==cookies) {
+        if (null == cookies) {
             System.out.println("没有cookie=========");
-        }else{
-            for(Cookie cookie : cookies){
-                System.out.println("name:"+cookie.getName()+",value:"+ cookie.getValue());
+        } else {
+            for (Cookie cookie : cookies) {
+                System.out.println("name:" + cookie.getName() + ",value:" + cookie.getValue());
             }
         }
     }
 
 
-        /**
-         * 删除cookie
-         *
-         * @param response HttpServletResponse
-         * @param name String
-         * @param name String
-         *
-         */
-    public void removeCookie(HttpServletRequest request, HttpServletResponse response, String name) {
-        Cookie[] cookies = request.getCookies();
-        if (null == cookies) {
-            return;
-        } else {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals(name)) {
-                    cookie.setValue(null);
-                    cookie.setMaxAge(0);// 立即销毁cookie
-                    cookie.setPath("/");
-                    response.addCookie(cookie);
-                    break;
-                }
-            }
+    /**
+     * 删除cookie
+     *
+     * @param request  HttpServletRequest
+     * @param response HttpServletResponse
+     * @param name     String
+     */
+    public static void removeCookie(HttpServletRequest request, HttpServletResponse response, String name) {
+        Map<String, Cookie> cookies = readCookieMap(request);
+        Cookie cookie = cookies.get(name);
+        if(null != cookie) {
+            cookie.setValue(null);
+            cookie.setMaxAge(0);// 立即销毁cookie
+            cookie.setPath("/");
+            response.addCookie(cookie);
         }
+
+//        Cookie[] cookies = request.getCookies();
+//        if (null != cookies) {
+//            for (Cookie cookie : cookies) {
+//                if (cookie.getName().equals(name)) {
+//                    cookie.setValue(null);
+//                    cookie.setMaxAge(0);// 立即销毁cookie
+//                    cookie.setPath("/");
+//                    response.addCookie(cookie);
+//                    break;
+//                }
+//            }
+//        }
     }
 
 
@@ -108,13 +115,12 @@ public class CookieUtil {
      *
      * @param request HttpServletResponse
      * @param name    cookie名字
-     * @return
+     * @return Cookie
      */
-    public Cookie getCookieByName(HttpServletRequest request, String name) {
-        Map<String, Cookie> cookieMap = ReadCookieMap(request);
+    public static Cookie getCookieByName(HttpServletRequest request, String name) {
+        Map<String, Cookie> cookieMap = readCookieMap(request);
         if (cookieMap.containsKey(name)) {
-            Cookie cookie = cookieMap.get(name);
-            return cookie;
+            return cookieMap.get(name);
         } else {
             return null;
         }
@@ -128,7 +134,7 @@ public class CookieUtil {
      * @param request HttpServletRequest
      * @return Map
      */
-    private Map<String, Cookie> ReadCookieMap(HttpServletRequest request) {
+    private static Map<String, Cookie> readCookieMap(HttpServletRequest request) {
         Map<String, Cookie> cookieMap = new HashMap<String, Cookie>();
         Cookie[] cookies = request.getCookies();
         if (null != cookies) {

@@ -1,3 +1,35 @@
+//设置cookie: cookie名，cookie值，天数
+function setCookie(name, value, iDay)
+{
+    var oDate = new Date();
+    oDate.setDate(oDate.getDate() + iDay);
+    document.cookie = name+ '=' +value+ '; expires = '+oDate
+}
+
+//获取cookie
+function getCookie(name)
+{
+    var arr = document.cookie.split(";"); //将cookie切割成数组
+    for(var i = 0; i < arr.length; i++)
+    {
+        var arr2 = arr[i].split('='); //数组元素以等号切割
+        if(arr2[0] == name)
+        {
+            return arr2[1]; //获取cookie名对应的cookie值
+        }
+    }
+    return ''; //如果没有获取到值，返回空字符串
+}
+
+//删除cookie
+function removeCookie(name)
+{
+    setCookie(name, 1, -1);
+}
+
+
+
+
 function selectUser() {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
@@ -33,7 +65,10 @@ function login() {
                         content = content+key+" : "+value+' ';
                     });
                     t.text(content);
+                    // setCookie("user",content,1);
                 }
+                // console.log(getCookie("user"));
+                // removeCookie("user");
                 form.hide();
             },
             error: function (e,status) {
