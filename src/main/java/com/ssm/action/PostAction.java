@@ -3,9 +3,11 @@ package com.ssm.action;
 import com.ssm.model.Post;
 import com.ssm.model.User;
 import com.ssm.service.IPostService;
+import com.ssm.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,23 +35,23 @@ public class PostAction {
 
 
 
-
-
-    @RequestMapping("/toPost")
-    public String toPost() throws Exception{
-        return "addpost";
-    }
-
-    @RequestMapping("/addPost")
+    @RequestMapping(value = "/addpost",method = RequestMethod.POST)
     public String addPost(HttpSession session, HttpServletRequest request,Post post) throws Exception{
+
         User user = (User)session.getAttribute("user");
         if(null!=user && null!=post.getTitle()){
             post.setAuthorid(user.getUid());
             post.setCreatedBy(user.getName());
-            post.setCreatedAt(new Date().getTime());
+            post.setCreatedAt(DateUtil.getCurrentTimeLong());
+            if(this.postService.addPost(post))
+            {
+                return "redirect:/post/showpost";
+            }
         }
         return "index";
     }
+
+
 
 
 

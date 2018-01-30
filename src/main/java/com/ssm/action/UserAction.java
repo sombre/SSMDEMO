@@ -55,13 +55,13 @@ public class UserAction {
         return users;
     }
 
-    @RequestMapping("/signUp")
+    @RequestMapping("/signup")
     public String prepareSignUp() throws Exception {
         return "signup";
     }
 
 
-    @RequestMapping(value = "/signUpUser", method = RequestMethod.POST)
+    @RequestMapping(value = "/signupuser", method = RequestMethod.POST)
     public ModelAndView signUpUser(HttpServletRequest request, HttpServletResponse response, User user) throws Exception {
         ModelAndView mv = new ModelAndView();
         if (this.IUserService.signUpUser(user)) {
@@ -86,7 +86,7 @@ public class UserAction {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/doLogin", method = RequestMethod.POST)
+    @RequestMapping(value = "/dologin", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> ajaxLogin(HttpSession session, HttpServletResponse response, User user, boolean checked) throws Exception {
         User tmpUser = this.IUserService.verifyUser(user);
@@ -149,7 +149,7 @@ public class UserAction {
     }
 
 
-    @RequestMapping(value = "/logout")
+    @RequestMapping(value = "/logout",method = RequestMethod.GET)
     public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
         CookieUtil.removeCookie(request, response, "user");
         CookieUtil.removeCookie(request, response, "token");

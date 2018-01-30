@@ -20,9 +20,19 @@
     </filter>
     <filter-mapping>
         <filter-name>encodingFilter</filter-name>
-        <url-pattern>/</url-pattern>
-        <url-pattern>/index</url-pattern>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+    <!-- get method url encode -->
+    <filter>
+        <filter-name>getMethodEncodingFilter</filter-name>
+        <filter-class>com.ssm.util.GetMethodEncodingFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>getMethodEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
 
     <welcome-file-list>
         <welcome-file>index</welcome-file>

@@ -12,4 +12,16 @@ public class DateUtil {
     public static long getCurrentTimeLong(){
         return new Date().getTime();
     }
+
+
+    /**
+     * @return Date
+     */
+    public static  Date getCurrentDate(){
+        return new Date();
+    }
+
+
 }
+
+

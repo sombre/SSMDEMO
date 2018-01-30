@@ -14,10 +14,10 @@
 </head>
 
 <p>发表主题:</p>
-<form method="post" action="">
+<form method="post" name="post" action="post/addpost">
     帖子主题:<input type="text" name="title">
     帖子内容:<textarea rows="" cols="" name="content"></textarea>
-    <input type="button" value="发表" onclick="">
+    <input type="submit" value="发表">
 </form>
 
 <br>
@@ -29,7 +29,7 @@
 <c:forEach var="item" items="${collections}">
     <c:forEach var="map" items="${item}">
         <c:out value="${map.key}"></c:out> : <c:out value="${map.value}"></c:out>
-        <c:out value="${map.key.title}"></c:out>
+        <%--<c:out value="${map.key.title}"></c:out>--%>
         <br>
         <br>
     </c:forEach>

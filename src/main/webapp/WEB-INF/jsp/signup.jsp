@@ -12,11 +12,11 @@
     <title>注册</title>
 </head>
 <body>
-<form action="http://localhost:8080/ssm/user/signUpUser" method="post">
-    UserName: <input type="text" name="userName">
-    Email:<input type="text" name="userEmail">
-    PassWord: <input type="password" name="userPassword">
-    Gender: <input type="text" name="userGender">
+<form action="http://localhost:8080/ssm/user/signupuser" method="post">
+    UserName: <input type="text" name="Name">
+    Email:<input type="text" name="Email">
+    PassWord: <input type="password" name="Password">
+    Gender: <input type="text" name="Gender">
     <input type="submit" value="submit">
 </form>
 

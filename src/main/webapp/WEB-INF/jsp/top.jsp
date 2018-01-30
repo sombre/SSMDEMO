@@ -26,7 +26,7 @@
 <a href="index">主页</a>
 <a href="post/showpost">主题</a>
 <a href="login">登陆</a>
-<a href="user/signUp">注册</a>
+<a href="user/signup">注册</a>
 <a href="user/logout">退出</a>
 
 <p>居然不能显示中文,有毒啊</p>
