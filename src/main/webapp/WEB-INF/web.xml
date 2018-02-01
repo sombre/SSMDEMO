@@ -23,6 +23,7 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <!--自定义编码过滤器-->
     <!-- get method url encode -->
     <filter>
         <filter-name>getMethodEncodingFilter</filter-name>
@@ -32,6 +33,7 @@
         <filter-name>getMethodEncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
 
 
     <welcome-file-list>
@@ -56,6 +58,33 @@
         <url-pattern>/</url-pattern>
         <url-pattern>/index</url-pattern>
     </servlet-mapping>
+
+
+
+
+    <!-- Shiro Filter is defined in the spring application context: -->
+    <!--
+        1.配置Shiro Filter
+        2.DelagatingFilterProxy 实际上是Filter 的一个代理对象，默认情况下，Spring会到IOC容器中查找和
+        <filter-name> 对应的filter bean.也可以通过targetBeanName 的初始化参数来配置filter bean的id
+     -->
+    <filter>
+        <filter-name>shiroFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <!-- <init-param>
+            <param-name>targetBeanName</param-name>
+            <param-value>aaa</param-value>
+        </init-param> -->
+    </filter>
+    <filter-mapping>
+        <filter-name>shiroFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
 
     <!-- 阿里数据连接池 启用 Web 监控统计功能    start-->
     <servlet>

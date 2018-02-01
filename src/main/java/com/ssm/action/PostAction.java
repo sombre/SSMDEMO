@@ -23,14 +23,14 @@ import java.util.List;
 public class PostAction {
 
 
-    private IPostService postService;
+    private IPostService IPostService;
 
-    public IPostService getTopicService() {
-        return postService;
+    public IPostService getIPostService() {
+        return IPostService;
     }
     @Autowired
-    public void setTopicService(IPostService postService) {
-        this.postService = postService;
+    public void setIPostService(IPostService IPostService) {
+        this.IPostService = IPostService;
     }
 
 
@@ -43,7 +43,7 @@ public class PostAction {
             post.setAuthorid(user.getUid());
             post.setCreatedBy(user.getName());
             post.setCreatedAt(DateUtil.getCurrentTimeLong());
-            if(this.postService.addPost(post))
+            if(this.IPostService.addPost(post))
             {
                 return "redirect:/post/showpost";
             }
@@ -59,8 +59,8 @@ public class PostAction {
     @RequestMapping("/showpost")
     public ModelAndView showPostAndComment () throws Exception{
         ModelAndView mv = new ModelAndView();
-        this.postService.showPostAndComment();
-        List<HashMap> resultCollection = this.postService.showPostAndComment();
+        this.IPostService.showPostAndComment();
+        List<HashMap> resultCollection = this.IPostService.showPostAndComment();
         mv.addObject("collections",resultCollection);
 //        for(Map<String,Object> map : resultCollection){
 //            for(Map.Entry<String,Object> m : map.entrySet())

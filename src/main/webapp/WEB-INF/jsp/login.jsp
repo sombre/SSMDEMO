@@ -25,6 +25,16 @@
 </form>
 
 
+
+
+<form method="post" id="shiro" onsubmit="return false;">
+    邮箱: <input name="email" type="text" autocomplete="你的用户名">
+    密码: <input name="password" type="password" autocomplete="你的密码">
+    <input type="checkbox" name="checked" value="true">记住我
+    <input type="submit" value="提交" onclick="shirologin()"> <a href="/index">忘记密码?</a>
+</form>
+
+
 <%--<button type="button" onclick="testforit()">onclick test</button>--%>
 
 <br>

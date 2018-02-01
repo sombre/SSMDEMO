@@ -46,14 +46,10 @@ public class IUserServiceImpl implements IUserService {
 
 
 
-    public User selectUserByEmail(String email) throws Exception {
-        User user = new User();
+    public User selectUserByEmail(String email) {
         if(!"".equals(email) && null!=email) {
-            user = this.userserivce.selectUserByEmail(email);
-            if(user==null) System.out.println("user是空的");
-        }
-        if(null!=user && !"".equals(user)) {
-            return user;
+            User user = this.userserivce.selectUserByEmail(email);
+            if(user!=null) return user;
         }
         return null;
     }
@@ -78,8 +74,8 @@ public class IUserServiceImpl implements IUserService {
     @Transactional(isolation = Isolation.READ_COMMITTED,timeout = 3)
     public boolean signUpUser(User user) throws Exception{
         String email = user.getEmail();
-        //确认该用户是否已经注册过
         User tmpUser = selectUserByEmail(email);
+        //确认该用户是否已经注册过
         if(null==tmpUser){
             String password = user.getPassword();
             String salt = Md5.getRandomSalt();

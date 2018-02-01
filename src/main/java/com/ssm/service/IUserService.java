@@ -11,7 +11,7 @@ import com.ssm.model.User;
 public interface IUserService {
     User selectUserById(int userId) throws Exception;
     User selectUserByIdNotAllData(int userId) throws Exception;
-    User selectUserByEmail(String email) throws Exception;
+    User selectUserByEmail(String email);
     User verifyUser(User user) throws Exception;
     boolean signUpUser(User user) throws Exception;
 }

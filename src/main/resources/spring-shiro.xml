@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+
+
+
+
+    <!--配置SecurityManager,安全管理器-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="myRealm"/>
+        <!--<property name="realm" ref="jdbcRealm"/>-->
+    </bean>
+
+    <!--自定义的身份信息域,shiro通过这个Realm-->
+    <bean id="myRealm" class="com.ssm.service.shiro.MyAuthorizingRealm">
+        <property name="credentialsMatcher" ref="myCredentials"/>
+    </bean>
+    <!--自定义的身份认证器-->
+    <bean id="myCredentials" class="com.ssm.service.shiro.MyCredentialsMatcher"/>
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- 配置 LifecycleBeanPostProcessor，可以自动的调用配置在spring IOC容器中Shiro bean的声明周期方法-->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+    <!--启用 IOC 容器中使用 shiro 注解，但必须在配置了LifecycleBeanPostProcessor 之后才可以使用.-->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor"/>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+
+
+    <!--
+        6.配置ShiroFilter工厂
+        6.1 id 必须和web.xml 中配置的 DelegatingFilterProxy 的 <filter-name> 一致
+            若不一致，则会抛出：NoSuchBeanDefinitionException.因为Shiro会来IOC容器中查找和<filter-name> 名字对应的filter bean.
+     -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <!--<property name="loginUrl" value="/login.jsp"/>&lt;!&ndash; 登录页面 &ndash;&gt;-->
+        <!--<property name="successUrl" value="/list.jsp"/>&lt;!&ndash; 登录成功页面 &ndash;&gt;-->
+        <!--<property name="unauthorizedUrl" value="/unauthorized.jsp"/>&lt;!&ndash; 没有权限的页面 &ndash;&gt;-->
+        <!-- The 'filters' property is not necessary since any declared javax.servlet.Filter bean
+             defined will be automatically acquired and available via its beanName in chain
+             definitions, but you can perform overrides or parent/child consolidated configuration
+             here if you like: -->
+        <!-- <property name="filters">
+            <util:map>
+                <entry key="aName" value-ref="someFilterPojo"/>
+            </util:map>
+        </property> -->
+        <!--
+            配置哪些页面需要受保护
+            以及访问这些页面需要的权限
+            1). anon(anonymous) 可以被匿名访问，即不需要登录就可以访问
+            2). authc(authentication) 必须认证之后，即登录后才可以访问
+            3). URL 权限采取第一次匹配优先的方式，即从开头使用第一个匹配的url模式对应的拦截器链。
+         -->
+        <!--<property name="filterChainDefinitions">-->
+        <!--<value>-->
+        <!--/login.jsp= anon-->
+        <!--# everything else requires authentication:-->
+        <!--/list.jsp = anon-->
+        <!--/** = authc-->
+        <!--</value>-->
+        <!--</property>-->
+    </bean>
+
+</beans>

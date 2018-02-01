@@ -44,11 +44,11 @@ function addPost() {
         processData: false,
         contentType: "application/x-www-form-urlencoded",
         dataType: "json",
-        success:function (data,status){
+        success: function (data, status) {
             console.log(status);
             console.log(data);
         },
-        error:function (e,status) {
+        error: function (e, status) {
             console.log(status);
             console.log(e);
         }
@@ -87,5 +87,40 @@ function login() {
             alert(status);
         }
     });
-
 }
+
+
+
+function shirologin() {
+    var form = $("#shiro");
+    $.ajax({
+        url: "http://localhost:8080/ssm/user/doshirologin",
+        type: "post",
+        data: form.serialize(),
+        processData: false,
+        contentType: "application/x-www-form-urlencoded",
+        dataType: "json",
+        success: function (data, status) {
+            var t = $("#test");
+            if (data.error != undefined) {
+                t.text(data.error);
+            }
+            else {
+                var content = "user:  ";
+                $.each(data.user, function (key, value) {
+                    content = content + key + " : " + value + ' ';
+                });
+                t.text(content);
+                // setCookie("user",content,1);
+            }
+            // console.log(getCookie("user"));
+            // removeCookie("user");
+            form.hide();
+        },
+        error: function (e, status) {
+            console.log(e);
+            console.log(status);
+        }
+    });
+}
+

@@ -6,6 +6,9 @@ import com.ssm.service.IUserService;
 import com.ssm.util.AES;
 import com.ssm.util.CookieUtil;
 import com.ssm.util.Md5;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.*;
+
 
 
 @Controller
@@ -78,14 +82,6 @@ public class UserAction {
     }
 
 
-    /**
-     * @param session
-     * @param response
-     * @param user
-     * @param checked
-     * @return
-     * @throws Exception
-     */
     @RequestMapping(value = "/dologin", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> ajaxLogin(HttpSession session, HttpServletResponse response, User user, boolean checked) throws Exception {
@@ -94,10 +90,8 @@ public class UserAction {
         HashMap<String, Object> dataMap = new HashMap<String, Object>();
         if (null != tmpUser) {
             dataMap.put("user", tmpUser);
-
             //session存储登录资料
             session.setAttribute("user",tmpUser);
-
             //如果选中自动登陆,更新Cookie
             if (true == checked) {
                 String userJason = objectMapper.writeValueAsString(dataMap);
@@ -111,6 +105,32 @@ public class UserAction {
             return dataMap;
         }
     }
+
+
+    @RequestMapping(value = "/doshirologin", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> ajaxShiroLogin(HttpSession session, HttpServletResponse response, User user, boolean checked) throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        HashMap<String, Object> dataMap = new HashMap<String, Object>();
+        Subject currentUser = SecurityUtils.getSubject();
+        if(!currentUser.isAuthenticated()){
+            UsernamePasswordToken up = new UsernamePasswordToken();
+            up.setUsername(user.getEmail());
+            up.setPassword(user.getPassword().toCharArray());
+            try{
+
+                currentUser.login(up);
+            }
+            catch (Exception e){
+                throw e;
+            }
+        }
+        dataMap.put("error","用户名密码错误!");
+        return dataMap;
+    }
+
+
+
 
 
     public boolean refreshCookie(HttpServletResponse response, String uid) {
@@ -153,7 +173,9 @@ public class UserAction {
     public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
         CookieUtil.removeCookie(request, response, "user");
         CookieUtil.removeCookie(request, response, "token");
-        session.invalidate();
+//        session.invalidate();
+        Subject curUser = SecurityUtils.getSubject();
+        if(curUser.isAuthenticated()) curUser.logout();
         return "index";
     }
 
