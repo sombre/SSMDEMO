@@ -36,11 +36,11 @@ public class IUserServiceImpl implements IUserService {
     }
 
 
-    public User selectUserById(int userId) throws Exception{
+    public User selectUserById(long userId) throws Exception{
         return this.userMapper.selectByPrimaryKey(userId);
     }
 
-    public User selectUserByIdNotAllData(int userId) throws Exception{
+    public User selectUserByIdNotAllData(long userId) throws Exception{
         return this.userserivce.selectUserByIdNotAllData(userId);
     }
 

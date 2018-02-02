@@ -11,7 +11,7 @@ public interface PostService {
 
     List<HashMap> showPostAndComment() throws Exception;
 
-    List<Comment> selectPostComment(int postId) throws Exception;
+    List<Comment> selectPostComment(long postId) throws Exception;
 
 
 }

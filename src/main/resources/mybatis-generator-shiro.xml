@@ -69,11 +69,21 @@
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
         <!-- 指定数据库表 -->
-        <table tableName="permission"/>
-        <table tableName="role"/>
-        <table tableName="group"/>
-        <table tableName="src"/>
-        <table tableName="group_src"/>
+        <table tableName="permission">
+            <generatedKey column="permissionid" sqlStatement="Mysql" identity="true" type="post"/>
+        </table>
+        <table tableName="role">
+            <generatedKey column="roleid" sqlStatement="Mysql" identity="true" type="post"/>
+        </table>
+        <table tableName="group">
+            <generatedKey column="groupid" sqlStatement="Mysql" identity="true" type="post"/>
+        </table>
+        <table tableName="role_permission">
+            <generatedKey column="role_per_id" sqlStatement="Mysql" identity="true" type="post"/>
+        </table>
+        <table tableName="group_user">
+            <generatedKey column="group_usr_id" sqlStatement="Mysql" identity="true" type="post"/>
+        </table>
 
     </context>
 </generatorConfiguration>

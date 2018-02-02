@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -81,35 +80,35 @@ public class UserAction {
         return "user";
     }
 
+//
+//    @RequestMapping(value = "/dologin", method = RequestMethod.POST)
+//    @ResponseBody
+//    public Map<String, Object> ajaxLogin(HttpSession session, HttpServletResponse response, User user, boolean checked) throws Exception {
+//        User tmpUser = this.IUserService.verifyUser(user);
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        HashMap<String, Object> dataMap = new HashMap<String, Object>();
+//        if (null != tmpUser) {
+//            dataMap.put("user", tmpUser);
+//            //session存储登录资料
+//            session.setAttribute("user",tmpUser);
+//            //如果选中自动登陆,更新Cookie
+//            if (true == checked) {
+//                String userJason = objectMapper.writeValueAsString(dataMap);
+//                System.out.print(userJason);
+//                this.refreshCookie(response, tmpUser.getUid().toString());
+//            }
+//            return dataMap;
+//        } else {
+//            dataMap.put("error", "用户名或者密码错误!");
+//            String message = objectMapper.writeValueAsString(dataMap);
+//            return dataMap;
+//        }
+//    }
+
 
     @RequestMapping(value = "/dologin", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> ajaxLogin(HttpSession session, HttpServletResponse response, User user, boolean checked) throws Exception {
-        User tmpUser = this.IUserService.verifyUser(user);
-        ObjectMapper objectMapper = new ObjectMapper();
-        HashMap<String, Object> dataMap = new HashMap<String, Object>();
-        if (null != tmpUser) {
-            dataMap.put("user", tmpUser);
-            //session存储登录资料
-            session.setAttribute("user",tmpUser);
-            //如果选中自动登陆,更新Cookie
-            if (true == checked) {
-                String userJason = objectMapper.writeValueAsString(dataMap);
-                System.out.print(userJason);
-                this.refreshCookie(response, tmpUser.getUid().toString());
-            }
-            return dataMap;
-        } else {
-            dataMap.put("error", "用户名或者密码错误!");
-            String message = objectMapper.writeValueAsString(dataMap);
-            return dataMap;
-        }
-    }
-
-
-    @RequestMapping(value = "/doshirologin", method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String, Object> ajaxShiroLogin(HttpSession session, HttpServletResponse response, User user, boolean checked) throws Exception {
+    public Map<String, Object> ajaxShiroLogin(HttpSession session, HttpServletResponse response, User user, boolean checked)  {
         ObjectMapper objectMapper = new ObjectMapper();
         HashMap<String, Object> dataMap = new HashMap<String, Object>();
         Subject currentUser = SecurityUtils.getSubject();
@@ -118,14 +117,23 @@ public class UserAction {
             up.setUsername(user.getEmail());
             up.setPassword(user.getPassword().toCharArray());
             try{
-
                 currentUser.login(up);
+                User tmpUser = this.IUserService.selectUserByEmail(user.getEmail());
+                if(null!=tmpUser)
+                dataMap.put("user", tmpUser);
+                //session存储登录资料
+                session.setAttribute("user",tmpUser);
+                //如果选中自动登陆,更新Cookie
+                if (true == checked) {
+                    String userJason = objectMapper.writeValueAsString(dataMap);
+                    System.out.print(userJason);
+                    this.refreshCookie(response, tmpUser.getUid().toString());
+                }
             }
             catch (Exception e){
-                throw e;
+                dataMap.put("error","用户名密码错误!");
             }
         }
-        dataMap.put("error","用户名密码错误!");
         return dataMap;
     }
 
@@ -173,7 +181,6 @@ public class UserAction {
     public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
         CookieUtil.removeCookie(request, response, "user");
         CookieUtil.removeCookie(request, response, "token");
-//        session.invalidate();
         Subject curUser = SecurityUtils.getSubject();
         if(curUser.isAuthenticated()) curUser.logout();
         return "index";

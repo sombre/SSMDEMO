@@ -24,7 +24,7 @@ public class UserDaoTest {
 
     @Test
     public void testSelectUser() throws Exception {
-        int id = 1;
+        long id = 1;
         User user = dao.selectByPrimaryKey(id);
         System.out.println(user.getName());
         System.out.println(user.getEmail());

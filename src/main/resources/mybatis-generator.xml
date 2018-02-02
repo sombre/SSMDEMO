@@ -69,10 +69,18 @@
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
         <!-- 指定数据库表 -->
-        <table tableName="user"/>
-        <table tableName="post"/>
-        <table tableName="comment"/>
-        <table tableName="reply"/>
+        <table tableName="user">
+            <generatedKey column="uid" sqlStatement="MySql" identity="true" type="post"/>
+        </table>
+        <table tableName="post">
+            <generatedKey column="pid" sqlStatement="Mysql" identity="true" type="post"/>
+        </table>
+        <table tableName="comment">
+            <generatedKey column="cid" sqlStatement="Mysql" identity="true" type="post"/>
+        </table>
+        <table tableName="reply">
+            <generatedKey column="rid" sqlStatement="Mysql" identity="true" type="post"/>
+        </table>
 
     </context>
 </generatorConfiguration>

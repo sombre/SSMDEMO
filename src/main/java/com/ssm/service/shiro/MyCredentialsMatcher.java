@@ -23,7 +23,6 @@ public class MyCredentialsMatcher extends SimpleCredentialsMatcher {
         SimpleAuthenticationInfo simpleinfo = (SimpleAuthenticationInfo) info;
         String salt = new String(simpleinfo.getCredentialsSalt().getBytes());
         String realpwd = Md5.encryptPassword(pwd,salt);
-        Object tokenCredentials = getCredentials(token);
         Object accountCredentials = getCredentials(info);
         //将密码加密与系统加密后的密码校验，内容一致就返回true,不一致就返回false
         return equals(realpwd, accountCredentials);

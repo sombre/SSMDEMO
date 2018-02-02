@@ -94,7 +94,7 @@ function login() {
 function shirologin() {
     var form = $("#shiro");
     $.ajax({
-        url: "http://localhost:8080/ssm/user/doshirologin",
+        url: "http://localhost:8080/ssm/user/dologin",
         type: "post",
         data: form.serialize(),
         processData: false,

@@ -8,6 +8,8 @@ import com.ssm.dao.UserMapper;
 import com.ssm.model.Comment;
 import com.ssm.model.Post;
 import com.ssm.util.DateUtil;
+import com.sun.org.apache.xalan.internal.xsltc.compiler.SyntaxTreeNode;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -79,6 +81,5 @@ public class IPostServiceImpl implements IPostService{
     public boolean addPost(Post post) throws Exception {
         if(0!=this.postMapper.insert(post)) return true;
         return false;
-
     }
 }

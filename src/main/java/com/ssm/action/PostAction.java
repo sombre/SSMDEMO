@@ -4,16 +4,20 @@ import com.ssm.model.Post;
 import com.ssm.model.User;
 import com.ssm.service.IPostService;
 import com.ssm.util.DateUtil;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -35,9 +39,13 @@ public class PostAction {
 
 
 
+
+    @RequiresAuthentication
+//    @RequiresPermissions(value = "post:create",logical = Logical.OR)
     @RequestMapping(value = "/addpost",method = RequestMethod.POST)
     public String addPost(HttpSession session, HttpServletRequest request,Post post) throws Exception{
-
+        Subject currUser = SecurityUtils.getSubject();
+        currUser.isPermitted("post:create");
         User user = (User)session.getAttribute("user");
         if(null!=user && null!=post.getTitle()){
             post.setAuthorid(user.getUid());
@@ -50,7 +58,6 @@ public class PostAction {
         }
         return "index";
     }
-
 
 
 
