@@ -70,20 +70,33 @@
         </javaClientGenerator>
         <!-- 指定数据库表 -->
         <table tableName="permission">
-            <generatedKey column="permissionid" sqlStatement="Mysql" identity="true" type="post"/>
+            <generatedKey column="permission_id" sqlStatement="Mysql" identity="true" type="post"/>
         </table>
         <table tableName="role">
-            <generatedKey column="roleid" sqlStatement="Mysql" identity="true" type="post"/>
+            <generatedKey column="role_id" sqlStatement="Mysql" identity="true" type="post"/>
         </table>
-        <table tableName="group">
-            <generatedKey column="groupid" sqlStatement="Mysql" identity="true" type="post"/>
+        <table tableName="comm_group">
+            <generatedKey column="group_id" sqlStatement="Mysql" identity="true" type="post"/>
         </table>
         <table tableName="role_permission">
             <generatedKey column="role_per_id" sqlStatement="Mysql" identity="true" type="post"/>
         </table>
-        <table tableName="group_user">
+        <table tableName="comm_group_user">
             <generatedKey column="group_usr_id" sqlStatement="Mysql" identity="true" type="post"/>
         </table>
+        <table tableName="comm_group_role">
+            <generatedKey column="group_role_id" sqlStatement="Mysql" identity="true" type="post"/>
+        </table>
+        <table tableName="simple_permission">
+            <generatedKey column="simple_per_id" sqlStatement="Mysql" identity="true" type="post"/>
+        </table>
+        <table tableName="role_simple_permission">
+            <generatedKey column="role_simple_per_id" sqlStatement="Mysql" identity="true" type="post"/>
+        </table>
+        <table tableName="user_role">
+            <generatedKey column="user_role_id" sqlStatement="Mysql" identity="true" type="post"/>
+        </table>
+
 
     </context>
 </generatorConfiguration>

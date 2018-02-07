@@ -1,7 +1,9 @@
 package com.ssm.service.shiro;
 
+import com.ssm.dao.shiro.ShiroService;
 import com.ssm.model.User;
 
+import com.ssm.model.shiro.Role;
 import com.ssm.service.IUserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -12,12 +14,23 @@ import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
 public class MyAuthorizingRealm extends AuthorizingRealm {
 
-    private IUserService IUserService;
+    protected IUserService IUserService;
+
+    protected ShiroService shiroService;
+
+    public ShiroService getShiroService() {
+        return shiroService;
+    }
+    @Autowired
+    public void setShiroService(ShiroService shiroService) {
+        this.shiroService = shiroService;
+    }
 
     public IUserService getIUserService() {
         return IUserService;
@@ -47,9 +60,11 @@ public class MyAuthorizingRealm extends AuthorizingRealm {
         if(null!=tmpUser){
             Set<String> per = new HashSet<String>();
             per.add("user:add");
+            List<Role> roles = this.shiroService.getAllRolesByUserId(tmpUser.getUid());
             SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-            authorizationInfo.addStringPermission("post:add");
-            authorizationInfo.addStringPermissions(per);
+            for(Role role : roles){
+                authorizationInfo.addRole(role.getRoleName());
+            }
             return authorizationInfo;
         }
         return null;
