@@ -10,11 +10,11 @@
     <schema id="4" parent="1" name="mysql"/>
     <schema id="5" parent="1" name="performance_schema"/>
     <schema id="6" parent="1" name="sys"/>
-    <table id="7" parent="2" name="comment"/>
-    <table id="8" parent="2" name="cookie"/>
-    <table id="9" parent="2" name="group"/>
-    <table id="10" parent="2" name="group_role"/>
-    <table id="11" parent="2" name="group_user"/>
+    <table id="7" parent="2" name="comm_group"/>
+    <table id="8" parent="2" name="comm_group_role"/>
+    <table id="9" parent="2" name="comm_group_user"/>
+    <table id="10" parent="2" name="comment"/>
+    <table id="11" parent="2" name="cookie"/>
     <table id="12" parent="2" name="permission"/>
     <table id="13" parent="2" name="post"/>
     <table id="14" parent="2" name="reply"/>
@@ -25,114 +25,114 @@
     <table id="19" parent="2" name="src"/>
     <table id="20" parent="2" name="user"/>
     <table id="21" parent="2" name="user_role"/>
-    <column id="22" parent="7" name="cid">
-      <Position>1</Position>
-      <DataType>bigint(10)|0</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>1</SequenceIdentity>
-    </column>
-    <column id="23" parent="7" name="pid">
-      <Position>2</Position>
-      <DataType>bigint(10)|0</DataType>
-    </column>
-    <column id="24" parent="7" name="authorid">
-      <Position>3</Position>
-      <DataType>bigint(10)|0</DataType>
-    </column>
-    <column id="25" parent="7" name="content">
-      <Position>4</Position>
-      <DataType>text|0</DataType>
-    </column>
-    <column id="26" parent="7" name="create_at">
-      <Position>5</Position>
-      <DataType>bigint(10)|0</DataType>
-    </column>
-    <key id="27" parent="7" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>cid</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <column id="28" parent="8" name="auto_Id">
-      <Position>1</Position>
-      <DataType>bigint(11)|0</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>1</SequenceIdentity>
-    </column>
-    <column id="29" parent="8" name="auto_uIdName">
-      <Position>2</Position>
-      <DataType>varchar(20)|0</DataType>
-    </column>
-    <column id="30" parent="8" name="auto_uId">
-      <Position>3</Position>
-      <DataType>bigint(11)|0</DataType>
-    </column>
-    <column id="31" parent="8" name="auto_tokenName">
-      <Position>4</Position>
-      <DataType>varchar(20)|0</DataType>
-    </column>
-    <column id="32" parent="8" name="auto_token">
-      <Position>5</Position>
-      <Comment>自动登陆口令</Comment>
-      <DataType>varchar(20)|0</DataType>
-    </column>
-    <key id="33" parent="8" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>auto_Id</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <column id="34" parent="9" name="group_id">
+    <column id="22" parent="7" name="group_id">
       <Position>1</Position>
       <Comment>用户组表主键</Comment>
       <DataType>bigint(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="35" parent="9" name="group_name">
+    <column id="23" parent="7" name="group_name">
       <Position>2</Position>
       <Comment>用户组名</Comment>
       <DataType>varchar(255)|0</DataType>
     </column>
-    <key id="36" parent="9" name="PRIMARY">
+    <key id="24" parent="7" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>group_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="37" parent="10" name="group_role_id">
+    <column id="25" parent="8" name="group_role_id">
       <Position>1</Position>
       <DataType>bigint(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="38" parent="10" name="group_id">
+    <column id="26" parent="8" name="group_id">
       <Position>2</Position>
       <DataType>bigint(11)|0</DataType>
     </column>
-    <column id="39" parent="10" name="role_id">
+    <column id="27" parent="8" name="role_id">
       <Position>3</Position>
       <DataType>bigint(11)|0</DataType>
     </column>
-    <key id="40" parent="10" name="PRIMARY">
+    <key id="28" parent="8" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>group_role_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="41" parent="11" name="group_usr_id">
+    <column id="29" parent="9" name="group_usr_id">
       <Position>1</Position>
       <DataType>bigint(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="42" parent="11" name="group_id">
+    <column id="30" parent="9" name="group_id">
       <Position>2</Position>
       <DataType>bigint(11)|0</DataType>
     </column>
-    <column id="43" parent="11" name="uid">
+    <column id="31" parent="9" name="uid">
       <Position>3</Position>
       <DataType>bigint(11)|0</DataType>
     </column>
-    <key id="44" parent="11" name="PRIMARY">
+    <key id="32" parent="9" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>group_usr_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="33" parent="10" name="cid">
+      <Position>1</Position>
+      <DataType>bigint(10)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="34" parent="10" name="pid">
+      <Position>2</Position>
+      <DataType>bigint(10)|0</DataType>
+    </column>
+    <column id="35" parent="10" name="authorid">
+      <Position>3</Position>
+      <DataType>bigint(10)|0</DataType>
+    </column>
+    <column id="36" parent="10" name="content">
+      <Position>4</Position>
+      <DataType>text|0</DataType>
+    </column>
+    <column id="37" parent="10" name="create_at">
+      <Position>5</Position>
+      <DataType>bigint(10)|0</DataType>
+    </column>
+    <key id="38" parent="10" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>cid</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="39" parent="11" name="auto_Id">
+      <Position>1</Position>
+      <DataType>bigint(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="40" parent="11" name="auto_uIdName">
+      <Position>2</Position>
+      <DataType>varchar(20)|0</DataType>
+    </column>
+    <column id="41" parent="11" name="auto_uId">
+      <Position>3</Position>
+      <DataType>bigint(11)|0</DataType>
+    </column>
+    <column id="42" parent="11" name="auto_tokenName">
+      <Position>4</Position>
+      <DataType>varchar(20)|0</DataType>
+    </column>
+    <column id="43" parent="11" name="auto_token">
+      <Position>5</Position>
+      <Comment>自动登陆口令</Comment>
+      <DataType>varchar(20)|0</DataType>
+    </column>
+    <key id="44" parent="11" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>auto_Id</ColNames>
       <Primary>1</Primary>
     </key>
     <column id="45" parent="12" name="permission_id">
