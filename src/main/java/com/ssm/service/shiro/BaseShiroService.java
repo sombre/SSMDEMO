@@ -1,27 +1,25 @@
 package com.ssm.service.shiro;
 
 import com.ssm.model.User;
-import com.ssm.model.shiro.CommGroup;
-import com.ssm.model.shiro.Permission;
-import com.ssm.model.shiro.Role;
+import com.ssm.model.shiro.*;
 
 public interface BaseShiroService {
 
     //角色
-    int addUserToRoleById(long userId,long roleId);
-    int addRoleByName(String roleName);
+    int addUserToRole(UserRole userRole);
+    int createNewRole(Role role);
     int removeRoleByRoleId(long roleId);
 
     //用户组
-    int addUserToGroupById(long userId,long groupId);
-    int addRoleToGroupById(long roleId,long groupId);
-    int addGroupByName(String groupName);
+    int addUserToGroup(CommGroupUser commGroupUser);
+    int addRoleToGroup(CommGroupRole commGroupRole);
+    int createNewGroup(CommGroup commGroup);
     int removeGroupByGroupId(long groupId);
 
     //权限
-    int addPermissionToGroupById(long groupId,long permissionId);
-    int addPermissionToRoleById(long roleId, long permissionId);
-    int addPermission(Permission permission);
+    int addPermissionToGroup(long groupId,long permissionId);
+    int addPermissionToRole(RolePermission rolePermission);
+    int createNewPermission(Permission permission);
     int removePermissionById(long permissionId);
 
 }

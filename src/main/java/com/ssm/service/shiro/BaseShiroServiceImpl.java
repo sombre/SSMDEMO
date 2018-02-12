@@ -4,8 +4,9 @@ package com.ssm.service.shiro;
 import com.ssm.dao.shiro.baseshiro.*;
 import com.ssm.model.shiro.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class BaseShiroServiceImpl implements BaseShiroService{
 
 
@@ -73,16 +74,11 @@ public class BaseShiroServiceImpl implements BaseShiroService{
         this.commGroupRoleMapper = commGroupRoleMapper;
     }
 
-    public int addUserToRoleById(long userId, long roleId) {
-        UserRole userRole = new UserRole();
-        userRole.setUid(userId);
-        userRole.setRoleId(roleId);
+    public int addUserToRole(UserRole userRole) {
         int affected = this.userRoleMapper.insert(userRole);
         return affected;
     }
-    public int addRoleByName(String roleName) {
-        Role role = new Role();
-        role.setRoleName(roleName);
+    public int createNewRole(Role role) {
         int affected = this.roleMapper.insert(role);
         return affected;
     }
@@ -93,41 +89,30 @@ public class BaseShiroServiceImpl implements BaseShiroService{
 
 
 
-    public int addUserToGroupById(long userId, long groupId) {
-        CommGroupUser commGroupUser = new CommGroupUser();
-        commGroupUser.setUid(userId);
-        commGroupUser.setGroupId(groupId);
+    public int addUserToGroup(CommGroupUser commGroupUser) {
         int affected = this.commGroupUserMapper.insert(commGroupUser);
         return affected;
     }
-    public int addRoleToGroupById(long roleId, long groupId) {
-        CommGroupRole groupRole = new CommGroupRole();
-        groupRole.setRoleId(roleId);
-        groupRole.setGroupId(groupId);
-        int affected = this.commGroupRoleMapper.insert(groupRole);
+    public int addRoleToGroup(CommGroupRole commGroupRole) {
+        int affected = this.commGroupRoleMapper.insert(commGroupRole);
         return affected;
     }
-    public int addGroupByName(String groupName) {
-        CommGroup group = new CommGroup();
-        group.setGroupName(groupName);
-        int affected = this.commGroupMapper.insert(group);
+    public int createNewGroup(CommGroup commGroup) {
+        int affected = this.commGroupMapper.insert(commGroup);
         return affected;
     }
     public int removeGroupByGroupId(long groupId) {
         int affected = this.commGroupMapper.deleteByPrimaryKey(groupId);
         return affected;
     }
-    public int addPermissionToGroupById(long groupId, long permissionId) {
+    public int addPermissionToGroup(long groupId, long permissionId) {
         return 0;
     }
-    public int addPermissionToRoleById(long roleId, long permissionId) {
-        RolePermission rolePermission = new RolePermission();
-        rolePermission.setRoleId(roleId);
-        rolePermission.setPermissionId(permissionId);
+    public int addPermissionToRole(RolePermission rolePermission) {
         int affected = this.rolePermissionMapper.insert(rolePermission);
         return affected;
     }
-    public int addPermission(Permission permission) {
+    public int createNewPermission(Permission permission) {
         int affected =this.permissionMapper.insert(permission);
         return affected;
     }
