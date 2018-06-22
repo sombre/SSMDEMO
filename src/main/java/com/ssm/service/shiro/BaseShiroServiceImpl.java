@@ -17,6 +17,8 @@ public class BaseShiroServiceImpl implements BaseShiroService{
     protected UserRoleMapper userRoleMapper;
     protected RolePermissionMapper rolePermissionMapper;
     protected CommGroupRoleMapper commGroupRoleMapper;
+    protected SimplePermissionMapper simplePermissionMapper;
+    protected RoleSimplePermissionMapper roleSimplePermissionMapper;
 
     public RoleMapper getRoleMapper() {
         return roleMapper;
@@ -74,6 +76,23 @@ public class BaseShiroServiceImpl implements BaseShiroService{
         this.commGroupRoleMapper = commGroupRoleMapper;
     }
 
+
+    public SimplePermissionMapper getSimplePermissionMapper() {
+        return simplePermissionMapper;
+    }
+    @Autowired
+    public void setSimplePermissionMapper(SimplePermissionMapper simplePermissionMapper) {
+        this.simplePermissionMapper = simplePermissionMapper;
+    }
+
+    public RoleSimplePermissionMapper getRoleSimplePermissionMapper() {
+        return roleSimplePermissionMapper;
+    }
+    @Autowired
+    public void setRoleSimplePermissionMapper(RoleSimplePermissionMapper roleSimplePermissionMapper) {
+        this.roleSimplePermissionMapper = roleSimplePermissionMapper;
+    }
+
     public int addUserToRole(UserRole userRole) {
         int affected = this.userRoleMapper.insert(userRole);
         return affected;
@@ -122,11 +141,16 @@ public class BaseShiroServiceImpl implements BaseShiroService{
         return  affected;
     }
 
+    public int createNewSimplePermission(SimplePermission simplePermission) {
+        return this.simplePermissionMapper.insert(simplePermission);
+    }
 
+    public int addSimplePermissionToRole(RoleSimplePermission roleSimplePermission) {
+        return  this.roleSimplePermissionMapper.insert(roleSimplePermission);
+    }
 
-
-
-
-
+    public int removeSimplePermissionById(long simplePermissionId) {
+        return this.simplePermissionMapper.deleteByPrimaryKey(simplePermissionId);
+    }
 
 }

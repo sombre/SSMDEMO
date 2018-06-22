@@ -9,7 +9,7 @@
 <%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <head>
-    <jsp:include page="top.jsp"/>
+    <jsp:include page="main.jsp"/>
     <title>主页</title>
 </head>
 <body>

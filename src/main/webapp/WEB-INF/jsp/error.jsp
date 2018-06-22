@@ -12,6 +12,7 @@
 </head>
 <body>
     <h1>我们遇到了一个错误,请等待.该页面将在5秒后跳转......</h1>
+    <a href="index">返回主页</a>
     ${ex.message}
 <% response.setHeader("refresh","5;URL=http://localhost:8080/ssm/");%>
 </body>

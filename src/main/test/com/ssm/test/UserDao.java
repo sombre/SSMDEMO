@@ -10,4 +10,6 @@ public class UserDao implements IUserDao,ICustomer {
     public void doIt() {
         System.out.println("do");
     }
+
+    public void fly(){System.out.println("flying!");}
 }

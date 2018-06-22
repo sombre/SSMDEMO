@@ -9,7 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <jsp:include page="top.jsp"/>
+    <jsp:include page="header.jsp"/>
     <title>登陆</title>
 </head>
 <body>
@@ -19,11 +19,12 @@
 </p>
 
 
-<form method="post" id="shiro" onsubmit="return false;">
+<form method="post" id="shiro" action="user/doLogin">
     邮箱: <input name="email" type="text" autocomplete="你的用户名">
     密码: <input name="password" type="password" autocomplete="你的密码">
     <input type="checkbox" name="checked" value="true">记住我
-    <input type="submit" value="提交" onclick="shirologin()"> <a href="/index">忘记密码?</a>
+    <input type="submit" value="ajax提交" onclick="shirologin()"> <a href="index">忘记密码?</a>
+    <input type="submit" value="直接提交">
 </form>
 
 

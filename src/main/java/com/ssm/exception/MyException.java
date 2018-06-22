@@ -1,4 +1,4 @@
-package com.ssm.util;
+package com.ssm.exception;
 
 
 
@@ -23,4 +23,6 @@ public class MyException implements HandlerExceptionResolver {
         logger.debug(ex.getStackTrace());
         return new ModelAndView("error",model);
     }
+
+
 }

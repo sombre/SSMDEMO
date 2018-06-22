@@ -3,6 +3,8 @@ package com.ssm.service.shiro;
 import com.ssm.model.User;
 import com.ssm.model.shiro.*;
 
+import java.util.HashMap;
+
 public interface BaseShiroService {
 
     //角色
@@ -21,5 +23,10 @@ public interface BaseShiroService {
     int addPermissionToRole(RolePermission rolePermission);
     int createNewPermission(Permission permission);
     int removePermissionById(long permissionId);
+
+    //简单权限
+    int createNewSimplePermission(SimplePermission simplePermission);
+    int addSimplePermissionToRole(RoleSimplePermission roleSimplePermission);
+    int removeSimplePermissionById(long simplePermissionId);
 
 }

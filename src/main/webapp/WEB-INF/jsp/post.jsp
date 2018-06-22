@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <jsp:include page="top.jsp"/>
+    <jsp:include page="header.jsp"/>
     <title>话题</title>
 </head>
 

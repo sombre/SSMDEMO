@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.*;
-
 
 
 @Controller
@@ -35,7 +35,7 @@ public class UserAction {
     }
 
     @RequestMapping(value = "/showUser", method = RequestMethod.GET)
-    public ModelAndView selectUser(HttpServletRequest request, HttpServletResponse response, @RequestParam int uid) throws Exception {
+    public ModelAndView selectSingleUser(HttpServletRequest request, HttpServletResponse response, @RequestParam int uid) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
@@ -49,7 +49,7 @@ public class UserAction {
     @ResponseBody
     public List selectUserList(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String suid = request.getParameter("uid");
-        int uid = Integer.parseInt(request.getParameter("uid").toString());
+        int uid = Integer.parseInt(request.getParameter("uid"));
         User user = this.IUserService.selectUserById(uid);
         List<User> users = new ArrayList<User>();
         users.add(user);
@@ -80,68 +80,66 @@ public class UserAction {
         return "user";
     }
 
-//
-//    @RequestMapping(value = "/dologin", method = RequestMethod.POST)
-//    @ResponseBody
-//    public Map<String, Object> ajaxLogin(HttpSession session, HttpServletResponse response, User user, boolean checked) throws Exception {
-//        User tmpUser = this.IUserService.verifyUser(user);
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        HashMap<String, Object> dataMap = new HashMap<String, Object>();
-//        if (null != tmpUser) {
-//            dataMap.put("user", tmpUser);
-//            //session存储登录资料
-//            session.setAttribute("user",tmpUser);
-//            //如果选中自动登陆,更新Cookie
-//            if (true == checked) {
-//                String userJason = objectMapper.writeValueAsString(dataMap);
-//                System.out.print(userJason);
-//                this.refreshCookie(response, tmpUser.getUid().toString());
-//            }
-//            return dataMap;
-//        } else {
-//            dataMap.put("error", "用户名或者密码错误!");
-//            String message = objectMapper.writeValueAsString(dataMap);
-//            return dataMap;
-//        }
-//    }
 
-
-    @RequestMapping(value = "/dologin", method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String, Object> ajaxShiroLogin(HttpSession session, HttpServletResponse response, User user, boolean checked)  {
-        ObjectMapper objectMapper = new ObjectMapper();
-        HashMap<String, Object> dataMap = new HashMap<String, Object>();
+    @RequestMapping("/doLogin")
+    public ModelAndView ShiroLogin(HttpSession session, HttpServletResponse response, User user, boolean checked) throws Exception {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("index");
         Subject currentUser = SecurityUtils.getSubject();
-        if(!currentUser.isAuthenticated()){
+        if (!currentUser.isAuthenticated()) {
             UsernamePasswordToken up = new UsernamePasswordToken();
             up.setUsername(user.getEmail());
             up.setPassword(user.getPassword().toCharArray());
-            try{
                 currentUser.login(up);
                 User tmpUser = this.IUserService.selectUserByEmail(user.getEmail());
-                if(null!=tmpUser)
-                dataMap.put("user", tmpUser);
+                if (null != tmpUser) {
+                    modelAndView.addObject("user", tmpUser);
+                    //session存储登录资料
+                    session.setAttribute("user", tmpUser);
+                    //如果选中自动登陆,更新Cookie
+                    if (checked) {
+                        this.refreshCookie(response, tmpUser.getUid().toString());
+                    }
+                }
+
+        }
+        return modelAndView;
+    }
+
+
+    //ajax登陆
+    @RequestMapping(value = "/doAjaxLogin", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> ajaxShiroLogin(HttpSession session, HttpServletResponse response, User user, boolean checked) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        HashMap<String, Object> dataMap = new HashMap<String, Object>();
+        Subject currentUser = SecurityUtils.getSubject();
+        if (!currentUser.isAuthenticated()) {
+            UsernamePasswordToken up = new UsernamePasswordToken();
+            up.setUsername(user.getEmail());
+            up.setPassword(user.getPassword().toCharArray());
+            try {
+                currentUser.login(up);
+                User tmpUser = this.IUserService.selectUserByEmail(user.getEmail());
+                if (null != tmpUser)
+                    dataMap.put("user", tmpUser);
                 //session存储登录资料
-                session.setAttribute("user",tmpUser);
+                session.setAttribute("user", tmpUser);
                 //如果选中自动登陆,更新Cookie
-                if (true == checked) {
+                if (checked) {
                     String userJason = objectMapper.writeValueAsString(dataMap);
                     System.out.print(userJason);
                     this.refreshCookie(response, tmpUser.getUid().toString());
                 }
-            }
-            catch (Exception e){
-                dataMap.put("error","用户名密码错误!");
+            } catch (Exception e) {
+                dataMap.put("error", "用户名密码错误!");
             }
         }
         return dataMap;
     }
 
 
-
-
-
-    public boolean refreshCookie(HttpServletResponse response, String uid) {
+    public boolean refreshCookie(HttpServletResponse response, String uid) throws Exception{
         String salt = Md5.getRandomSalt();
         uid = AES.AESEncode(salt, uid);
         String token = AES.AESEncode(AES.PUBLIC_KEY, salt);
@@ -177,12 +175,12 @@ public class UserAction {
     }
 
 
-    @RequestMapping(value = "/logout",method = RequestMethod.GET)
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
         CookieUtil.removeCookie(request, response, "user");
         CookieUtil.removeCookie(request, response, "token");
         Subject curUser = SecurityUtils.getSubject();
-        if(curUser.isAuthenticated()) curUser.logout();
+        if (curUser.isAuthenticated()) curUser.logout();
         return "index";
     }
 

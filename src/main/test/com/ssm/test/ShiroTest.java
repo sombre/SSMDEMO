@@ -2,14 +2,11 @@ package com.ssm.test;
 
 
 
-import com.ssm.model.User;
 import com.ssm.model.shiro.*;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
-
-import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -189,11 +186,11 @@ public class ShiroTest extends BaseTest{
 //        myShiroUtility.removeUserFromGroupById(11,3);
 //        myShiroUtility.removeUserFromRoleById(11,9);
 //        myShiroUtility.removePermissionFromRoleById(9,9);
-//        myShiroUtility.removeGroupAndAllRelationShipsByGroupId(3l);
+//        myShiroUtility.removeGroupAndAllRelationByGroupId(3l);
 
-//        myShiroUtility.removePermissionAndAllRelationShipsByPermissionId(8l);
+//        myShiroUtility.removePermissionAndAllRelationByPermissionId(8l);
 
-//        myShiroUtility.removeRoleAndAllRelationShipsByRoleId();
+//        myShiroUtility.removeRoleAndAllRelationByRoleId();
 
     }
 
@@ -201,14 +198,14 @@ public class ShiroTest extends BaseTest{
     @Ignore
     public void testForRemove2(){
 
-        myShiroUtility.removeGroupAndAllRelationShipsByGroupId(1l);
-        myShiroUtility.removeGroupAndAllRelationShipsByGroupId(2l);
+        myShiroUtility.removeGroupAndAllRelationByGroupId(1l);
+        myShiroUtility.removeGroupAndAllRelationByGroupId(2l);
 
-        myShiroUtility.removePermissionAndAllRelationShipsByPermissionId(7l);
+        myShiroUtility.removePermissionAndAllRelationByPermissionId(7l);
 
-        myShiroUtility.removeRoleAndAllRelationShipsByRoleId(5l);
-        myShiroUtility.removeRoleAndAllRelationShipsByRoleId(6l);
-        myShiroUtility.removeRoleAndAllRelationShipsByRoleId(7l);
+        myShiroUtility.removeRoleAndAllRelationByRoleId(5l);
+        myShiroUtility.removeRoleAndAllRelationByRoleId(6l);
+        myShiroUtility.removeRoleAndAllRelationByRoleId(7l);
 
 //        myShiroUtility.removeUserAllPermissions(10l);
 

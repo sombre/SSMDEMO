@@ -3,6 +3,7 @@ package com.ssm.service.shiro;
 import com.ssm.model.User;
 import com.ssm.model.shiro.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface MyShiroUtility {
@@ -31,11 +32,11 @@ public interface MyShiroUtility {
     //移除角色的一个权限
     int removePermissionFromRoleById(long permissionId,long roleId);
     //移除一个角色以及与该角色关联的所有关系
-    int removeRoleAndAllRelationShipsByRoleId(long roleId);
+    int removeRoleAndAllRelationByRoleId(long roleId);
     //移除一个权限以及与该权限关联的所有关系
-    int removePermissionAndAllRelationShipsByPermissionId(long permissionId);
+    int removePermissionAndAllRelationByPermissionId(long permissionId);
     //移除一个组以及与该组关联的所有关系
-    int removeGroupAndAllRelationShipsByGroupId(long groupId);
+    int removeGroupAndAllRelationByGroupId(long groupId);
     //移除一个用户的所有权限
     int removeUserAllPermissions(long uid);
 
@@ -56,4 +57,24 @@ public interface MyShiroUtility {
     int addPermissionToGroup();
     //创建一个新权限
     int createNewPermission(Permission permission);
+
+
+
+    //创建一个新简单权限
+    int createNewSimplePermission(SimplePermission simplePermission);
+    //为角色添加一个新简单权限
+    int addSimplePermissionToRole(RoleSimplePermission roleSimplePermission);
+    //取用户的所有简单权限
+    List<SimplePermission> getUserAllSimplePermissionsByUId(long uid);
+    //取角色的所有简单权限
+    List<SimplePermission> getRoleAllSimplePermissionsByRoleId(long roleId);
+    //移除一个简单权限以及与其关联的所有关系
+    int removeSimplePermissionAndAllRelationBySimplePermissionId(long simplePermissionId);
+    //移除角色的一个简单权限
+    int removeSimplePermissionFromRoleById(long simplePermissionId,long roleId);
+    //移除角色的所有简单权限
+    int removeAllSimplePermissionFromRoleByRoleId(long roleId);
+    //移除用户的的所有简单权限
+    int removeUserAllSimplePermissionsById(long uid,long roleId);
+
 }

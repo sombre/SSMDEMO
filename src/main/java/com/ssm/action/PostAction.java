@@ -42,8 +42,8 @@ public class PostAction {
 
 
     @RequiresAuthentication
-//    @RequiresPermissions(value = "post:create",logical = Logical.OR)
-    @RequiresRoles(value = {"user","manager"},logical = Logical.OR)
+    @RequiresPermissions(value = "de:log",logical = Logical.OR)
+//    @RequiresRoles(value = {"user","manager"},logical = Logical.OR)
     @RequestMapping(value = "/addpost",method = RequestMethod.POST)
     public String addPost(HttpSession session, HttpServletRequest request,Post post) throws Exception{
         Subject currUser = SecurityUtils.getSubject();
@@ -60,7 +60,6 @@ public class PostAction {
         }
         return "index";
     }
-
 
 
 

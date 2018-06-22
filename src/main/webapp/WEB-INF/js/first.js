@@ -146,7 +146,7 @@ function Paging(currentPage, pageCount, perPageSize) {
             for (var i = 1; i <= totalPage; i++) {
                 var li = document.createElement('li');
                 if (i == currentPage) {
-                    li.setAttribute('class', 'page-cur');
+                    li.setAttribute('class', 'cur-page');
                     li.appendChild(document.createTextNode(i));
                     pageNavUl.appendChild(li);
                     continue;
@@ -155,8 +155,8 @@ function Paging(currentPage, pageCount, perPageSize) {
                 a.href = 'javascript:;';
                 a.appendChild(document.createTextNode(i));
                 a.setAttribute('class','normal-page');
-                if(a == 1) a.setAttribute('class','first-page');
-                if(a == totalPage) a.setAttribute('class','last-page');
+                if(i == first) a.setAttribute('class','first-page');
+                if(i == last) a.setAttribute('class','last-page');
                 li.appendChild(a);
                 pageNavUl.appendChild(li);
             }
@@ -167,7 +167,7 @@ function Paging(currentPage, pageCount, perPageSize) {
                 for (var i = 1; i <= 5; i++) {
                     var li = document.createElement('li');
                     if (i == currentPage) {
-                        li.setAttribute('class', 'page-cur');
+                        li.setAttribute('class', 'cur-page');
                         li.appendChild(document.createTextNode(i));
                         pageNavUl.appendChild(li);
                         continue;
@@ -205,7 +205,7 @@ function Paging(currentPage, pageCount, perPageSize) {
                     for(i = (currentPage-2); i <(currentPage+3);i++){
                         var li = document.createElement('li');
                         if (i == currentPage) {
-                            li.setAttribute('class', 'page-cur');
+                            li.setAttribute('class', 'cur-page');
                             li.appendChild(document.createTextNode(i));
                             pageNavUl.appendChild(li);
                             continue;
@@ -232,7 +232,7 @@ function Paging(currentPage, pageCount, perPageSize) {
                     for(i =(totalPage-4);i<=totalPage;i++){
                         var li = document.createElement('li');
                         if (i == currentPage) {
-                            li.setAttribute('class', 'page-cur');
+                            li.setAttribute('class', 'cur-page');
                             li.appendChild(document.createTextNode(i));
                             pageNavUl.appendChild(li);
                             continue;
@@ -256,11 +256,10 @@ function Paging(currentPage, pageCount, perPageSize) {
             addGoBar(pageNavUl);
         }
     }
-
     function addPrePage(pageNavUl) {
         var prePage = document.createElement('li');
         var prePageInner = document.createElement('a');
-        prePageInner.setAttribute('class', 'page-pre');
+        prePageInner.setAttribute('class', 'pre-page');
         prePageInner.href = 'javascript:;';
         prePageInner.appendChild(document.createTextNode('上一页'));
         prePage.appendChild(prePageInner);
@@ -269,7 +268,7 @@ function Paging(currentPage, pageCount, perPageSize) {
     function addNextPage(pageNavUl) {
         var nextPage = document.createElement('li');
         var nextPageInner = document.createElement('a');
-        nextPageInner.setAttribute('class', 'page-nxt');
+        nextPageInner.setAttribute('class', 'next-page');
         nextPageInner.href = 'javascript:;';
         nextPageInner.appendChild(document.createTextNode('下一页'));
         nextPage.appendChild(nextPageInner);
@@ -299,18 +298,6 @@ function Paging(currentPage, pageCount, perPageSize) {
         pageNavUl.appendChild(dotLi);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
     var pageNav = document.getElementsByClassName('page-list');
     var pageNavUl = pageNav[0].children[0];
     //点击普通按钮
@@ -320,13 +307,13 @@ function Paging(currentPage, pageCount, perPageSize) {
             norpage[i].addEventListener('click',function (callBack) {
                 var a =norpage[i].childNodes[0];
                 var page = a.nodeValue;
-                Paging(parseInt(page),1000,10);
+                Paging(parseInt(page),pageCount,perPageSize);
             });
         })(i)
     }
 
     //当前页
-    var currentPage = pageNavUl.getElementsByClassName('page-cur');
+    var currentPage = pageNavUl.getElementsByClassName('cur-page');
     currentPage = parseInt(currentPage[0].childNodes[0].nodeValue);
 
     //首页
@@ -338,8 +325,6 @@ function Paging(currentPage, pageCount, perPageSize) {
             Paging(first,pageCount,perPageSize);
         });
     }
-
-
     //尾页
     if(currentPage!=last){
         var lastPage = pageNavUl.getElementsByClassName('last-page');
@@ -350,32 +335,39 @@ function Paging(currentPage, pageCount, perPageSize) {
         })
     }
 
-
-
-
-
-    var nextPage = pageNavUl.getElementsByClassName('page-nxt');
-    nextPage = nextPage[0];
-    if(currentPage != last){
-        nextPage.addEventListener('click',function (callBack){
-            Paging(currentPage+1,pageCount,perPageSize);
-        });
-    }
-
-    var prePage = pageNavUl.getElementsByClassName('page-pre');
+    //上一页
+    var prePage = pageNavUl.getElementsByClassName('pre-page');
     prePage = prePage[0];
     if(currentPage!=first){
         prePage.addEventListener('click',function (callBack){
             Paging(currentPage-1,pageCount,perPageSize);
         });
     }
+    //下一页
+    var nextPage = pageNavUl.getElementsByClassName('next-page');
+    nextPage = nextPage[0];
+    if(currentPage != last){
+        nextPage.addEventListener('click',function (callBack){
+            Paging(currentPage+1,pageCount,perPageSize);
+        });
+    }
+    //跳转
+    var goInner = document.getElementsByClassName('go');
+    goInner = goInner[0];
+    goInner.addEventListener('keydown', function (e) {
+        var goValue = parseInt(goInner.value);
+        if (e.keyCode == 13 && goValue >= 0 && goValue <= totalPage) {
+            console.log(goValue);
+            Paging(goValue, pageCount, perPageSize);
+        }
+    });
 
 }
 
 
 
 $(function () {
-    Paging(6, 1000, 10);
+    Paging(25, 100, 1);
 })
 
 

@@ -13,5 +13,6 @@
     <!--<bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter">-->
         <!--<property name="defaultCharset" value="UTF-8"/>-->
     <!--</bean>-->
-    <!--<bean id="exceptionHandler" class="com.ssm.util.MyException"/>-->
+    <!--<bean id="exceptionHandler" class="com.ssm.exception.MyException"/>-->
+    <!--<bean id="ajaxExceptionHandler" class="com.ssm.exception.MyAjaxExceptionHandler"/>-->
 </beans>

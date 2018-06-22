@@ -88,7 +88,7 @@
             <generatedKey column="group_role_id" sqlStatement="Mysql" identity="true" type="post"/>
         </table>
         <table tableName="simple_permission">
-            <generatedKey column="simple_per_id" sqlStatement="Mysql" identity="true" type="post"/>
+            <generatedKey column="permission_id" sqlStatement="Mysql" identity="true" type="post"/>
         </table>
         <table tableName="role_simple_permission">
             <generatedKey column="role_simple_per_id" sqlStatement="Mysql" identity="true" type="post"/>

@@ -5,10 +5,10 @@ import com.ssm.model.User;
 import com.ssm.model.shiro.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -25,7 +25,6 @@ public class MyShiroUtilityImpl implements MyShiroUtility {
     }
 
     protected ShiroService shiroService;
-
     public ShiroService getShiroService() {
         return shiroService;
     }
@@ -38,6 +37,7 @@ public class MyShiroUtilityImpl implements MyShiroUtility {
 
     public List<Role> getAllRolesByUserId(long uid) {
         List<Role> roles = this.shiroService.getAllRolesByUserId(uid);
+
         if(null==roles || roles.isEmpty()) return null;
         return roles;
     }
@@ -139,13 +139,13 @@ public class MyShiroUtilityImpl implements MyShiroUtility {
     }
 
 
-    public int removeRoleAndAllRelationShipsByRoleId(long roleId) {
+    public int removeRoleAndAllRelationByRoleId(long roleId) {
 
 
         this.shiroService.removeAllRelationBetweenUsersAndRoleByRoleId(roleId);
         this.shiroService.removeAllRelationBetweenGroupsAndRoleByRoleId(roleId);
         this.shiroService.removeAllRelationBetweenPermissionsAndRoleByRoleId(roleId);
-
+        this.shiroService.removeAllSimplePermissionFromRoleByRoleId(roleId);
 //
 //        //取角色相关的用户
 //        List<User> users = this.shiroService.getAllUsersByRoleId(roleId);
@@ -206,13 +206,13 @@ public class MyShiroUtilityImpl implements MyShiroUtility {
         return this.shiroService.removePermissionFromRoleById(params);
     }
 
-    public int removePermissionAndAllRelationShipsByPermissionId(long permissionId) {
+    public int removePermissionAndAllRelationByPermissionId(long permissionId) {
         this.shiroService.removeAllRelationBetweenRolesAndPermissionByPermissionId(permissionId);
         int affected = this.baseShiroService.removePermissionById(permissionId);
         return affected;
     }
 
-    public int removeGroupAndAllRelationShipsByGroupId(long groupId) {
+    public int removeGroupAndAllRelationByGroupId(long groupId) {
 
 
         this.shiroService.removeAllRelationBetweenRolesAndGroupByGroupId(groupId);
@@ -279,6 +279,62 @@ public class MyShiroUtilityImpl implements MyShiroUtility {
 
     public int createNewPermission(Permission permission) {
         return this.baseShiroService.createNewPermission(permission);
+    }
+
+    public int createNewSimplePermission(SimplePermission simplePermission) {
+        return this.baseShiroService.createNewSimplePermission(simplePermission);
+    }
+
+    public int addSimplePermissionToRole(RoleSimplePermission roleSimplePermission) {
+        return this.baseShiroService.addSimplePermissionToRole(roleSimplePermission);
+    }
+
+    public List<SimplePermission> getUserAllSimplePermissionsByUId(long uid) {
+
+        List<Role> roles = this.getAllRolesByUserId(uid);
+        List<SimplePermission> simplePermissions = new ArrayList<SimplePermission>();
+        if(null!=roles && !roles.isEmpty()){
+            for(Role role : roles){
+                List<SimplePermission> roleAllSimplePermissions = this.getRoleAllSimplePermissionsByRoleId(role.getRoleId());
+                if(null!=roleAllSimplePermissions && !roleAllSimplePermissions.isEmpty()){
+                    for(SimplePermission simplePermission : roleAllSimplePermissions){
+                        if(!simplePermissions.contains(simplePermission)){
+                            simplePermissions.add(simplePermission);
+                        }
+                    }
+                }
+            }
+        }
+        if(!simplePermissions.isEmpty())
+        return simplePermissions;
+        return null;
+    }
+
+    public List<SimplePermission> getRoleAllSimplePermissionsByRoleId(long roleId) {
+        List<SimplePermission> simplePermissions = this.shiroService.getRoleAllSimplePermissionByRoleId(roleId);
+        if(null!=simplePermissions && !simplePermissions.isEmpty()) return simplePermissions;
+        return null;
+    }
+
+    public int removeSimplePermissionAndAllRelationBySimplePermissionId(long simplePermissionId) {
+        this.baseShiroService.removeSimplePermissionById(simplePermissionId);
+        return this.shiroService.removeAllRelationBetweenRolesAndSimplePermissionBySimplePermissionId(simplePermissionId);
+    }
+
+    public int removeSimplePermissionFromRoleById(long simplePermissionId, long roleId) {
+        HashMap<Object,Object> params= new HashMap<Object,Object>();
+        params.put("simplePermissionId",simplePermissionId);
+        params.put("roleId",roleId);
+        return this.shiroService.removeSimplePermissionFromRoleById(params);
+    }
+
+    public int removeAllSimplePermissionFromRoleByRoleId(long roleId) {
+        return this.shiroService.removeAllSimplePermissionFromRoleByRoleId(roleId);
+    }
+
+    public int removeUserAllSimplePermissionsById(long uid, long roleId) {
+
+        return 0;
     }
 
 

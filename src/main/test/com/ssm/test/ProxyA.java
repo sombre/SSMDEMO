@@ -43,6 +43,9 @@ public class ProxyA implements InvocationHandler{
 
         test.doIt();
 
+        IUserDao gew= (IUserDao) proxy;
+        gew.fly();
+
         ICustomer tmp = (ICustomer) Proxy.newProxyInstance(target.getClass().getClassLoader(),
                 target.getClass().getInterfaces(), new ProxyG(target));
         // 执行方法   【代理对象】

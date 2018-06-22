@@ -1,0 +1,718 @@
+.main {
+    margin: 0 auto;
+
+}
+.main-inner {
+    margin:0 auto;
+    width:1200px;
+}
+
+
+.banner {
+    padding:40px 0 0 0;
+}
+
+
+
+
+/*=========左边============*/
+.slide-part {
+    float:left;
+}
+
+.slide-body{
+    border: 1px solid #dedfe0;
+}
+.slideshow{
+    box-shadow: 0 0 3px rgba(0, 0, 0, .4);
+}
+.slide img {
+    width: 710px;
+    height: 445px;
+}
+
+
+
+/*VISIBLE AREA*/
+.skidder-viewport {
+    height:445px;
+    width:710px;
+    position: relative;
+    overflow: hidden;
+    transition: opacity 0.4s ease-in-out;
+}
+
+
+/*SLIDES CONTAINER*/
+.skidder-viewport .skidder-wrapper {
+    width: 20000em;
+    position: absolute;
+    z-index: 1;
+}
+
+/*SLIDES*/
+/*inactive style*/
+.skidder-viewport .skidder-wrapper .skidder-slide {
+    float: left;
+    position: relative;
+    z-index: 0;
+    opacity: 0.7;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.skidder-viewport.skidder-fade .skidder-wrapper {
+    width: auto;
+    margin: 0 auto;
+}
+
+.skidder-viewport.skidder-fade .skidder-wrapper .skidder-slide {
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+}
+/*active style*/
+.skidder-viewport .skidder-wrapper .skidder-slide.active,
+.skidder-viewport .skidder-wrapper .skidder-slide.disengage {
+    opacity: 1;
+    box-shadow: 0 0 15px 2px rgba(0,0,0,0.1);
+    z-index: 1;
+}
+
+/*CLICKABLE AREA FOR LEFT-RIGHT MOVEMENT*/
+.skidder-viewport .skidder-clickwrapper {
+    position: absolute;
+    width: 10%; /* reduce width if you want a clickable image area */
+    height: 100%;
+    z-index: 4;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+.skidder-viewport .skidder-prevwrapper {
+    left: 0;
+}
+.skidder-viewport .skidder-nextwrapper {
+    right: 0;
+}
+
+/*LEFT-RIGHT ICONS*/
+.skidder-viewport .skidder-clickwrapper .skidder-clickelement {
+    position: relative;
+    height: 100%;
+    width: 86px;
+    z-index: 5;
+    background-position: center center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+.skidder-viewport .skidder-clickwrapper:hover .skidder-clickelement {
+    opacity: 1;
+}
+.skidder-viewport .skidder-clickwrapper .skidder-prev {
+    float: left;
+    margin-left: 10px;
+    background-image: url('../img/slider/slide_left.png');
+}
+.skidder-viewport .skidder-clickwrapper .skidder-next {
+    float: right;
+    margin-right: 10px;
+    background-image: url('../img/slider/slide_right.png');
+}
+.skidder-viewport .skidder-clickwrapper .skidder-next.jumpback {
+    background-image: url('../img/slider/slide_left.png');
+}
+
+/*TOUCHWRAPPER*/
+.skidder-viewport .skidder-touchwrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+}
+
+/*PAGING*/
+.skidder-viewport .skidder-pager {
+    display: table;
+    position: relative;
+    top: 92%;
+    margin: 0 auto;
+    z-index: 4;
+    padding: 0 0 15px 0;
+}
+
+.skidder-viewport .skidder-pager .skidder-pager-dot {
+    display: table-cell;
+    box-sizing: border-box;
+    cursor: pointer;
+    float: left;
+    /*weström style*/
+    height: 12px;
+    width: 12px;
+    margin-right: 8px;
+    margin-bottom: 4px;
+    border-radius: 6px;
+    border: 2px solid #fff;
+    text-decoration: none;
+    background-color: transparent;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    box-shadow: 0 0 4px 2px rgba(0,0,0,0.1), 0 0 4px 2px rgba(0,0,0,0.1) inset;
+}
+.skidder-viewport .skidder-pager .skidder-pager-dot:last-child {
+    margin-right: 0;
+}
+.skidder-viewport .skidder-pager .skidder-pager-dot:hover,
+.skidder-viewport .skidder-pager .skidder-pager-dot.active {
+    background-color: #fff;
+    box-shadow: 0 0 4px 2px rgba(0,0,0,0.1);
+}
+.skidder-viewport:hover .skidder-pager .skidder-pager-dot {
+    opacity: 1;
+}
+
+
+
+
+/*=================右边===============*/
+
+.banner-info{
+    float: right;
+    height:445px;
+}
+
+.banner-body{
+    border:1px solid #dedfe0;
+    background-color: #fff;
+}
+
+.banner-info  .news{
+    width: 466px;
+    height: 290px;
+    margin-bottom: 20px;
+}
+
+.banner-info > .news > ul{
+    padding: 0 32px;
+}
+
+.banner-info > .news > li{
+    display: list-item;
+}
+
+.banner-info .news li.title,
+.banner-info .news li.link {
+    height: 50px;
+    line-height: 50px;
+    border-bottom: 1px solid #ebebeb;
+}
+
+.banner-info .news li.title {
+    font-size: 16px;
+    color: #666;
+}
+.banner-info .news li.tags{
+    padding: 18px 0;
+    border-bottom: 1px dashed #ebebeb;
+    font-size: 0;
+}
+.banner-info .news li.tags a{
+    padding:2px 3px;
+    font-size: 13px;
+    line-height:24px;
+    color: #fff;
+    background-color:#ff4466;
+}
+.banner-info .news li.tags span {
+    display: inline-block;
+    line-height: 24px;
+    width: 1px;
+    height: 12px;
+    margin: 0 16px;
+    background-color: #ddd;
+}
+
+ li.choose > ul >li{
+    display: inline-block;
+    padding:20px 0 0 0;
+}
+
+li.choose > ul > li > img{
+    width: 75px;
+    height: 75px;
+}
+
+.banner-info .news .link span{
+    width: 32px;
+    height: 20px;
+    margin-left: 5px;
+    line-height: 20px;
+    font-size: 12px;
+}
+
+
+/*===================精选专辑==================*/
+
+.main-inner-title{
+    position: relative;
+    height: 88px;
+    margin-top: 40px;
+    border-top: 1px solid #d4d5d5;
+}
+
+.main-inner-title h3{
+    font-size: 18px;
+    font-weight: normal;
+    line-height: 88px;
+}
+
+.main-inner .main-album .more{
+    position: absolute;
+    right: 0;
+    top: 30px;
+    padding:2px 0 0 0;
+    background-color: #ff6b96;
+    color: #fff;
+    text-align: center;
+    width: 70px;
+    height: 25px;
+}
+
+.main-album .album-list{
+    margin-right:-20px;
+}
+
+
+.main-album .item{
+    position: relative;
+    top: 0;
+    float: left;
+    width: 224px;
+    margin-right: 20px;
+    border: 1px solid #dedfe0;
+    background-color: #fff;
+    box-sizing: border-box;
+    transition: top 0.2s;
+}
+
+.main-album .item:hover{
+    top: -3px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .3);
+}
+
+.main-album .item .item-pic{
+    width: 100%;
+    height: 224px;
+}
+
+.main-album .item .item-pic img{
+    display: block;
+    width: 100%;
+    height: 224px;
+}
+
+.main-album .item{
+    float:left;
+    height: 328px;
+}
+
+.main-album .album-list .desc{
+    padding-left:12px;
+    font-size:13px
+
+}
+.main-album  .desc .title{
+    display: block;
+    margin: 15px 0 28px;
+    font-weight: 700;
+}
+
+.main-album .desc p {
+    line-height: 18px;
+    color: #888;
+}
+.main-album .desc .author{
+    display: inline;
+    color: #888;
+}
+.main-album .desc a:hover{
+    text-decoration:underline;
+}
+
+
+
+/*==============达人推荐=============*/
+
+.main-user{
+display: block;
+}
+
+.main-user .item{
+    position: relative;
+    top: 0;
+    float: left;
+    width: 224px;
+    margin-right: 20px;
+    border: 1px solid #dedfe0;
+    background-color: #fff;
+    box-sizing: border-box;
+    transition: top 0.2s;
+    height: 254px;
+}
+
+.main-user .item:hover{
+    top:-3px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .3);
+}
+
+.main-user .more{
+    position: absolute;
+    right: 0;
+    top: 30px;
+    padding: 2px 0 0 0;
+    background-color: #ff6b96;
+    color: #fff;
+    text-align: center;
+    width: 70px;
+    height: 25px;
+}
+
+.main-user .user-list{
+    margin-right:-20px;
+}
+.main-user .user-background{
+    display: block;
+}
+
+.main-user .user-background img{
+    display: block;
+    width: 100%;
+    height: 112px;
+}
+
+.main-user .profile{
+    position: absolute;
+    left: 50%;
+    top: 68px;
+    width: 88px;
+    height: 88px;
+    margin-left: -44px;
+    border-radius: 50%;
+    background-color: #fff;
+}
+
+.main-user .profile img{
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.main-user .info{
+    margin-top: 44px;
+    text-align: center;
+}
+
+.main-user .info .info-title{
+    line-height: 32px;
+    font-size:13px;
+}
+.main-user .info a.info-title:hover{
+    text-decoration: underline;
+}
+.main-user .info .icon-star{
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+    background: url(../img/1.png) -4px -52px no-repeat;
+    vertical-align: -2px;
+}
+
+.main-user p{
+    line-height: 20px;
+    color: #888;
+    font-size: 12px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*============瀑布流==============*/
+.waterfall {
+    position: relative;
+}
+
+/*这里很重要
+   让瀑布流重新布局的时候可以有CSS3动画效果
+*/
+.waterfall .item {
+    -webkit-transition: all 0.15s ease-out;
+    -moz-transition: all 0.15s ease-out;
+    -o-transition: all 0.15s ease-out;
+    transition: all 0.3s ease-out;
+    position:relative;
+    float: left;
+    background-color: #fff;
+    margin-bottom: 30px;
+    margin-right:20px;
+    width: 224px;
+    border: 1px solid #dedfe0;
+    font-size:13px;
+    box-sizing: border-box;
+
+}
+
+.waterfall .item:hover{
+    top: -3px;
+    transition: top 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .3);
+}
+.waterfall .pic{
+    width: 100%;
+    height:100%;
+}
+.waterfall .pic a{
+    display:block;
+}
+.waterfall .pic img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+
+
+.waterfall .item:hover .hover-info{
+    display: block;
+}
+
+.hover-info {
+    display: none;
+}
+.hover-info .mask{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+    background-color: rgba(0, 0, 0, .1);
+}
+
+.hover-info .collect{
+    display:block;
+    position:absolute;
+    top: 8px;
+    left: 8px;
+    width:85px;
+    height: 30px;
+    line-height: 30px;
+    color:white;
+    text-indent: 30px;
+    background-color: #ff4466;
+}
+.hover-info .collect:before{
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 5px;
+    width: 19px;
+    height: 18px;
+    background: url(../img/1.png) -2px -2px no-repeat;
+}
+
+.hover-info .white-btn{
+    display:block;
+    line-height: 30px;
+    position:absolute;
+    width:36px;
+    height:30px;
+    background-color: #fff;
+    border-radius: 3px;
+    text-align:center;
+}
+.hover-info .like{
+    top:8px;
+    right:52px;
+}
+.hover-info .comment{
+    top:8px;
+    right:8px;
+}
+.hover-info .like:before,.hover-info .comment:before{
+    content: "";
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    background:url("../img/1.png")  no-repeat;
+}
+.hover-info .like:before{
+    background-position:-28px -4px;
+}
+
+.hover-info .comment:before{
+    background-position:-52px -4px;
+}
+
+
+
+.waterfall-info .title{
+    line-height: 40px;
+    color: #000;
+}
+.waterfall-info{
+    height: 67px;
+    padding-left: 12px;
+    border-bottom: 1px solid #f0f0f0;
+}
+.waterfall-info .icon {
+    color: #bbb;
+}
+.waterfall-info .icon span {
+    display: inline-block;
+    padding-left: 16px;
+    background: url(../img/1.png) no-repeat;
+}
+.waterfall-info .icon span.icon-star {
+    margin-right: 10px;
+    background-position: -5px -53px;
+}
+.waterfall-info .icon span.icon-like {
+    background-position: -92px -53px;
+}
+
+.collect-info {
+    position: relative;
+    height: 60px;
+    padding-left: 44px;
+}
+.collect-info .headImg {
+    position: absolute;
+    left: 12px;
+    top: 8px;
+}
+
+.collect-info .headImg img {
+    display: block;
+    width: 24px;
+    height: 24px;
+    border-radius: 26px;
+}
+.collect-info p.title {
+    padding-top: 10px;
+}
+.collect-info .title a:hover{
+    text-decoration: underline;
+}
+.collect-info p {
+    line-height: 18px;
+    color: #888;
+}
+
+
+
+
+
+/*=================分页栏=================*/
+
+.page-nav{
+
+}
+
+.page-list{
+    height: 60px;
+    overflow: hidden;
+    padding-top: 16px;
+    line-height: 1;
+    text-align: center;
+}
+
+.page-list ul{
+    display: inline-block;
+}
+
+.page-nav .page-list li{
+    display: inline-block;
+    float:left;
+    height: 40px;
+    margin: 0 4px 0 0;
+}
+.page-list .normal-page{
+    display:inline-block;
+}
+
+.page-nav .page-list a, .page-nav .page-list .cur-page{
+    float: left;
+    min-width: 40px;
+    height: 24px;
+    padding: 10px 4px 0;
+    white-space: nowrap;
+    word-break: keep-all;
+     text-align: center;
+    border: 1px solid #e3e2e1;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #000;
+    font-size: 14px;
+}
+.page-nav .page-list a:hover{
+    background-color: #f6f6f6;
+}
+.page-nav .page-list .first-page{
+
+}
+.page-nav .page-list .last-page{
+
+}
+.page-nav .page-list .cur-page{
+    color:#fff;
+    background-color: #f46;
+}
+
+.page-nav .page-list .dot{
+    margin: 14px 8px 0 6px;
+    font-size:10px;
+    font-weight: 700;
+    background-color: #f1f2f3;
+}
+.page-nav .page-list .pre-page,.page-nav .page-list .next-page{
+    width: 68px;
+    font-weight: 400;
+}
+
+.page-nav .page-list .go{
+    height:34px;
+    width: 50px;
+    text-align: center;
+    border:1px solid #e3e2e1;
+    border-radius: 4px;
+    background-color: #fff;
+
+}
+.page-nav .page-list .go:focus{
+    border-color: #66afe9;
+    outline: 0;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+}
+
+.page-nav .page-list .go-btn{
+    display: inline-block;
+}
+
