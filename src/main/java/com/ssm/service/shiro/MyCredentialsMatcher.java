@@ -13,7 +13,7 @@ public class MyCredentialsMatcher extends SimpleCredentialsMatcher {
     /**
      * Description: 告诉shiro如何验证加密密码，通过SimpleCredentialsMatcher或HashedCredentialsMatcher
      *
-     * @Author: wjl
+     * @Author: wjj
      * @Create Date: 2017-3-14
      */
     @Override

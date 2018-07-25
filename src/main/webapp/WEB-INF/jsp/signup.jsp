@@ -9,16 +9,42 @@
 <html>
 <head>
     <jsp:include page="header.jsp"/>
+    <link href="css/signup.css" rel="stylesheet">
     <title>注册</title>
 </head>
 <body>
-<form action="http://localhost:8080/ssm/user/signupuser" method="post">
-    UserName: <input type="text" name="Name">
-    Email:<input type="text" name="Email">
-    PassWord: <input type="password" name="Password">
-    Gender: <input type="text" name="Gender">
-    <input type="submit" value="submit">
-</form>
+
+    <div class="signup">
+        <div class="signup-title"><span>注册</span></div>
+        <div class="sign-box">
+            <form action="http://localhost:8080/ssm/user/signupuser" method="post">
+                <div class="item clearfix">
+                    <span >用户名: </span>
+                    <input type="text"  name="Name">
+                </div>
+                <div class="item clearfix">
+                    <span>邮箱: </span>
+                    <input type="text" name="Email">
+                </div>
+                <div class="item clearfix">
+                    <span>密码: </span>
+                    <input type="password" name="Password">
+                </div >
+                <div class="item clearfix">
+                    <span>性别: </span>
+                    <input type="text" name="Gender">
+                </div>
+                <div class="item btn-box">
+                    <a href="user/signupuser" class="signup-btn">注册</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+
 
 </body>
 </html>

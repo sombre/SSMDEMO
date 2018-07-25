@@ -1,0 +1,261 @@
+/*============瀑布流==============*/
+.waterfall {
+    position: relative;
+}
+
+/*这里很重要
+   让瀑布流重新布局的时候可以有CSS3动画效果
+*/
+.waterfall .item {
+    -webkit-transition: all 0.15s ease-out;
+    -moz-transition: all 0.15s ease-out;
+    -o-transition: all 0.15s ease-out;
+    transition: all 0.3s ease-out;
+    position:relative;
+    float: left;
+    background-color: #fff;
+    margin-bottom: 30px;
+    margin-right:20px;
+    width: 224px;
+    border: 1px solid #dedfe0;
+    font-size:13px;
+    box-sizing: border-box;
+
+}
+
+.waterfall .item:hover{
+    top: -3px;
+    transition: top 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .3);
+}
+.waterfall .pic{
+    width: 100%;
+    height:100%;
+}
+.waterfall .pic a{
+    display:block;
+}
+.waterfall .pic img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+
+
+.waterfall .item:hover .hover-info{
+    display: block;
+}
+
+.hover-info {
+    display: none;
+}
+.hover-info .mask{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+    background-color: rgba(0, 0, 0, .1);
+}
+
+.hover-info .collect{
+    display:block;
+    position:absolute;
+    top: 8px;
+    left: 8px;
+    width:85px;
+    height: 30px;
+    line-height: 30px;
+    color:white;
+    text-indent: 30px;
+    background-color: #ff4466;
+}
+.hover-info .collect:before{
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 5px;
+    width: 19px;
+    height: 18px;
+    background: url(../img/1.png) -2px -2px no-repeat;
+}
+
+.hover-info .white-btn{
+    display:block;
+    line-height: 30px;
+    position:absolute;
+    width:36px;
+    height:30px;
+    background-color: #fff;
+    border-radius: 3px;
+    text-align:center;
+}
+.hover-info .like{
+    top:8px;
+    right:52px;
+}
+.hover-info .comment{
+    top:8px;
+    right:8px;
+}
+.hover-info .like:before,.hover-info .comment:before{
+    content: "";
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    background:url("../img/1.png")  no-repeat;
+}
+.hover-info .like:before{
+    background-position:-28px -4px;
+}
+
+.hover-info .comment:before{
+    background-position:-52px -4px;
+}
+
+
+
+.waterfall-info .title{
+    line-height: 40px;
+    color: #000;
+}
+.waterfall-info{
+    height: 67px;
+    padding-left: 12px;
+    border-bottom: 1px solid #f0f0f0;
+}
+.waterfall-info .icon {
+    color: #bbb;
+}
+.waterfall-info .icon span {
+    display: inline-block;
+    padding-left: 16px;
+    background: url(../img/1.png) no-repeat;
+}
+.waterfall-info .icon span.icon-star {
+    margin-right: 10px;
+    background-position: -5px -53px;
+}
+.waterfall-info .icon span.icon-like {
+    background-position: -92px -53px;
+}
+
+.collect-info {
+    position: relative;
+    height: 60px;
+    padding-left: 44px;
+}
+.collect-info .headImg {
+    position: absolute;
+    left: 12px;
+    top: 8px;
+}
+
+.collect-info .headImg img {
+    display: block;
+    width: 24px;
+    height: 24px;
+    border-radius: 26px;
+}
+.collect-info p.title {
+    padding-top: 10px;
+}
+.collect-info .title a:hover{
+    text-decoration: underline;
+}
+.collect-info p {
+    line-height: 18px;
+    color: #888;
+}
+
+
+
+
+
+
+/*=================分页栏=================*/
+
+.page-nav{
+
+}
+
+.page-list{
+    height: 60px;
+    overflow: hidden;
+    padding-top: 16px;
+    line-height: 1;
+    text-align: center;
+}
+
+.page-list ul{
+    display: inline-block;
+}
+
+.page-nav .page-list li{
+    display: inline-block;
+    float:left;
+    height: 40px;
+    margin: 0 4px 0 0;
+}
+.page-list .normal-page{
+    display:inline-block;
+}
+
+.page-nav .page-list a, .page-nav .page-list .cur-page{
+    float: left;
+    min-width: 40px;
+    height: 24px;
+    padding: 10px 4px 0;
+    white-space: nowrap;
+    word-break: keep-all;
+    text-align: center;
+    border: 1px solid #e3e2e1;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #000;
+    font-size: 14px;
+}
+.page-nav .page-list a:hover{
+    background-color: #f6f6f6;
+}
+.page-nav .page-list .first-page{
+
+}
+.page-nav .page-list .last-page{
+
+}
+.page-nav .page-list .cur-page{
+    color:#fff;
+    background-color: #f46;
+}
+
+.page-nav .page-list .dot{
+    margin: 14px 8px 0 6px;
+    font-size:10px;
+    font-weight: 700;
+    background-color: #f1f2f3;
+}
+.page-nav .page-list .pre-page,.page-nav .page-list .next-page{
+    width: 68px;
+    font-weight: 400;
+}
+
+.page-nav .page-list .go{
+    height:34px;
+    width: 50px;
+    text-align: center;
+    border:1px solid #e3e2e1;
+    border-radius: 4px;
+    background-color: #fff;
+
+}
+.page-nav .page-list .go:focus{
+    border-color: #66afe9;
+    outline: 0;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+}
+
+.page-nav .page-list .go-btn{
+    display: inline-block;
+}

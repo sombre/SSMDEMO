@@ -15,12 +15,18 @@
 
 .wrapper{
     margin:0 200px;
+    min-width:1200px;
 }
 
-@media  screen and (max-width: 1200px){
+@media  screen and (min-width: 1200px){
     .wrapper{
         margin:0 100px;
+        min-width:1200px;
     }
+}
+
+.wrapper a{
+    line-height: 28px;
 }
 
 
@@ -136,3 +142,8 @@ float:left;
     color:#fff;
     background-color:#FFB3CC;
 }
+
+
+
+
+

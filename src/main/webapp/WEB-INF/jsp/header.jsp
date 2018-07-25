@@ -18,10 +18,12 @@
     <base href="<%=basePath%>">
     <link href="css/common.css" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">
+    <link href="css/myAlert.css" rel="stylesheet">
     <meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="cache-control" content="no-cache">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/myAlert.js"></script>
     <script type="text/javascript" src="js/first.js"></script>
 </head>
 <body>
@@ -30,7 +32,7 @@
 <div class="header wrap">
 
     <div class="wrapper clearfix">
-        <div class="left-part">
+        <div class="left-part clearfix">
             <div class="logo"><a href="index"><img src="img/logo1.png" alt=""></a></div>
             <div class="menu">
                 <ul>
@@ -55,7 +57,10 @@
                     </shiro:notAuthenticated>
                     <shiro:authenticated>
                         <li><a href="#">${user.name}</a></li>
-                        <li><a href="user/logout">退出</a></li>
+                        <li><span class="vertical-divider"></span><a href="#">上传</a></li>
+                        <li><span class="vertical-divider"></span><a href="#">图片</a></li>
+                        <li><span class="vertical-divider"></span><a href="#">专辑</a></li>
+                        <li><span class="vertical-divider"></span><a href="user/logout">退出</a></li>
                     </shiro:authenticated>
                 </ul>
             </div>

@@ -25,8 +25,9 @@
     <script type="text/javascript" src="js/imagesloaded.js"></script>
     <script type="text/javascript" src="js/masonry.js"></script>
     <script type="text/javascript" src="js/jquery.skidder.js"></script>
-    <script type="text/javascript" src="js/smartresize.js"></script>
+    <script type="text/javascript" src="js/waterfall.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/pageNav.js"></script>
     <title>main</title>
 
 </head>

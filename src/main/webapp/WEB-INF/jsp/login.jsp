@@ -10,22 +10,42 @@
 <html>
 <head>
     <jsp:include page="header.jsp"/>
+    <link href="css/login.css" rel="stylesheet">
     <title>登陆</title>
 </head>
 <body>
 <p id="test">
     <c:out value="${message}"></c:out>
-    gasodfjm
 </p>
 
+<div class="login">
+    <div class="login-title"><span>登陆</span></div>
+    <div class="login-box">
+        <form method="post" id="shiro" action="user/doLogin">
+            <div class="item">
+                <span>邮箱: </span>
+                <input name="email" type="text" autocomplete="你的用户名">
+            </div>
+            <div class="item">
+                <span>密码: </span>
+                <input name="password" type="password" autocomplete="你的密码">
+            </div>
+            <div class="item">
+                <div class="check-box">
+                    <input class="login-check"  type="checkbox" name="checked" value="true" >记住我
+                </div>
+            </div>
+            <%--<div class="item">--%>
+                <%--<input type="submit" value="ajax提交" onclick="shirologin()">--%>
+            <%--</div>--%>
+            <div class="item">
+                <a href="user/doLogin" class="login-btn">登陆</a>
+                <a href="index" class="forget-pwd">忘记密码?</a>
+            </div>
+        </form>
+    </div>
+</div>
 
-<form method="post" id="shiro" action="user/doLogin">
-    邮箱: <input name="email" type="text" autocomplete="你的用户名">
-    密码: <input name="password" type="password" autocomplete="你的密码">
-    <input type="checkbox" name="checked" value="true">记住我
-    <input type="submit" value="ajax提交" onclick="shirologin()"> <a href="index">忘记密码?</a>
-    <input type="submit" value="直接提交">
-</form>
 
 
 <%--<button type="button" onclick="testforit()">onclick test</button>--%>
