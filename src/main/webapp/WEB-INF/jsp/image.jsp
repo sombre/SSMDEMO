@@ -9,12 +9,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
     <jsp:include page="header.jsp"/>
     <link rel="stylesheet" href="css/image.css">
     <script type="text/javascript" src="js/image.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
     <title>图片本身</title>
 </head>
 
@@ -87,15 +89,15 @@
                 <span>我来说两句</span>
             </div>
             <div class="post-box">
-                <form method="post" class="clearfix">
+                <form method="post" class="clearfix" action="addComment/${sessionScope.user.uid}/${picture.picId}">
                     <div class="avatar">
-                        <img src="upload/album/4.jpg" class="profile">
+                        <img src="${sessionScope.user.avatar}" class="profile">
                     </div>
                     <div class="post-content">
                         <textarea name="content" cols="90" rows="10"></textarea>
                     </div>
                     <div>
-                        <span><a href="#" class="post-btn">发表评论</a></span>
+                        <span><a href="addComment/${sessionScope.user.uid}/${picture.picId}" class="post-btn">发表评论</a></span>
                     </div>
                 </form>
             </div>

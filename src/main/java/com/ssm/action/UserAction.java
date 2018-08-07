@@ -2,7 +2,7 @@ package com.ssm.action;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssm.model.User;
-import com.ssm.service.MyPicture;
+import com.ssm.service.MyPictureService;
 import com.ssm.service.MyUserService;
 import com.ssm.util.AES;
 import com.ssm.util.CookieUtil;
@@ -27,7 +27,7 @@ public class UserAction {
 
     private MyUserService MyUserService;
 
-    private MyPicture myPicture;
+    private MyPictureService myPictureService;
 
     @Autowired
     public UserAction(MyUserService MyUserService) {
@@ -35,13 +35,13 @@ public class UserAction {
     }
 
 
-    public MyPicture getMyPicture() {
-        return myPicture;
+    public MyPictureService getMyPictureService() {
+        return myPictureService;
     }
 
     @Autowired
-    public void setMyPicture(MyPicture myPicture) {
-        this.myPicture = myPicture;
+    public void setMyPictureService(MyPictureService myPictureService) {
+        this.myPictureService = myPictureService;
     }
 
     @RequestMapping(value = "/showUser", method = RequestMethod.GET)

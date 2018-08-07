@@ -4,9 +4,15 @@ import com.ssm.dao.CommentMapper;
 import com.ssm.dao.CommentService;
 import com.ssm.model.Comment;
 import com.ssm.model.User;
+import com.ssm.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 
@@ -59,8 +65,12 @@ public class MyCommentServiceimpl implements MyCommentService{
 
 
 
-    public boolean addComment(Long pId, Comment comment) throws Exception {
-        return false;
+    @Transactional(isolation = Isolation.READ_COMMITTED,timeout = 3)
+    public int addComment(Long userId, Long pId, Comment comment) throws Exception {
+        comment.setCreateAt(DateUtil.getCurrentTimeLong());
+        comment.setPid(pId);
+        comment.setAuthorid(userId);
+        return commentMapper.insert(comment);
     }
 
 }

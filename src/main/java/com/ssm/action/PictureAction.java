@@ -7,7 +7,7 @@ import com.ssm.model.Comment;
 import com.ssm.model.Picture;
 import com.ssm.model.User;
 import com.ssm.service.MyCommentService;
-import com.ssm.service.MyPicture;
+import com.ssm.service.MyPictureService;
 import com.ssm.service.MyUserService;
 import com.ssm.util.DateUtil;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
@@ -27,11 +27,10 @@ import java.util.*;
 
 
 @Controller
-//@RequestMapping(value = "/picture")
 public class PictureAction {
 
     private MyUserService myUserService;
-    private MyPicture myPicture;
+    private MyPictureService myPictureService;
     private MyCommentService myCommentService;
 
     public MyUserService getMyUserService() {
@@ -41,12 +40,12 @@ public class PictureAction {
     public void setMyUserService(MyUserService myUserService) {
         this.myUserService = myUserService;
     }
-    public MyPicture getMyPicture() {
-        return myPicture;
+    public MyPictureService getMyPictureService() {
+        return myPictureService;
     }
     @Autowired
-    public void setMyPicture(MyPicture myPicture) {
-        this.myPicture = myPicture;
+    public void setMyPictureService(MyPictureService myPictureService) {
+        this.myPictureService = myPictureService;
     }
     public MyCommentService getMyCommentService() {
         return myCommentService;
@@ -97,10 +96,10 @@ public class PictureAction {
             picture.setUploadAt(DateUtil.getCurrentTimeLong());
             picture.setPath(filePath+fileSeparator+uuidFileName);
             picture.setUrl(url);
-            int affected = myPicture.addPicture(picture);
+            int affected = myPictureService.addPicture(picture);
             Long pId = picture.getPicId();
             if(0!=affected){
-                picture = myPicture.getPictureById(pId);
+                picture = myPictureService.getPictureById(pId);
                 if(null!=picture){
                     return picture;
                 }
@@ -114,7 +113,7 @@ public class PictureAction {
     public ModelAndView getPicture(@PathVariable("pId") Long pid) throws Exception{
         ModelAndView modelAndView = new ModelAndView();
         if(null!=pid){
-            Picture picture = myPicture.getPictureById(pid);
+            Picture picture = myPictureService.getPictureById(pid);
             if(null!=picture){
                 modelAndView.addObject("picture",picture);
                 modelAndView.setViewName("image");
@@ -140,7 +139,7 @@ public class PictureAction {
         User tmpUser = myUserService.selectUserById(uid);
         if(tmpUser!=null){
             PageHelper.startPage(page, 10);
-            List<Picture> pictureList = myPicture.getUserCollectedPicturesByUid(uid);
+            List<Picture> pictureList = myPictureService.getUserCollectedPicturesByUid(uid);
             ObjectMapper mapper = new ObjectMapper();
             String json = mapper.writeValueAsString(tmpUser);
             Map<Object,List> result = new HashMap<Object,List>();
@@ -148,6 +147,7 @@ public class PictureAction {
             return result;
         }
         return null;
+
     }
 
 
