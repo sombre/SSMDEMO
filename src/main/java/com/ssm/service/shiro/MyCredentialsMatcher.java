@@ -19,10 +19,14 @@ public class MyCredentialsMatcher extends SimpleCredentialsMatcher {
     @Override
     public boolean doCredentialsMatch(AuthenticationToken authcToken, AuthenticationInfo info) {
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
+        //取出token中的密码
         String pwd = new String(token.getPassword());
         SimpleAuthenticationInfo simpleinfo = (SimpleAuthenticationInfo) info;
+        //从认证信息中取出盐
         String salt = new String(simpleinfo.getCredentialsSalt().getBytes());
+        //将盐和token中的密码MD5散列
         String realpwd = Md5.encryptPassword(pwd,salt);
+        //从认证信息中取出账户密码
         Object accountCredentials = getCredentials(info);
         //将密码加密与系统加密后的密码校验，内容一致就返回true,不一致就返回false
         return equals(realpwd, accountCredentials);

@@ -22,9 +22,10 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="cache-control" content="no-cache">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="js/header.js"></script>
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="js/myAlert.js"></script>
-    <script type="text/javascript" src="js/first.js"></script>
+    <script type="text/javascript" src="js/header.js"></script>
 </head>
 <body>
 
@@ -57,9 +58,9 @@
                     </shiro:notAuthenticated>
                     <shiro:authenticated>
                         <li><a href="#">${user.name}</a></li>
-                        <li><span class="vertical-divider"></span><a href="#">上传</a></li>
-                        <li><span class="vertical-divider"></span><a href="#">图片</a></li>
-                        <li><span class="vertical-divider"></span><a href="#">专辑</a></li>
+                        <li><span class="vertical-divider"></span><a href="upload">上传</a></li>
+                        <li><span class="vertical-divider"></span><a href="user/${user.uid}/picture">图片</a></li>
+                        <li><span class="vertical-divider"></span><a href="user/${user.uid}/album">专辑</a></li>
                         <li><span class="vertical-divider"></span><a href="user/logout">退出</a></li>
                     </shiro:authenticated>
                 </ul>

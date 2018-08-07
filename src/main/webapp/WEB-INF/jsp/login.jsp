@@ -11,12 +11,10 @@
 <head>
     <jsp:include page="header.jsp"/>
     <link href="css/login.css" rel="stylesheet">
+    <script type="text/javascript" src="js/signup.js"></script>
     <title>登陆</title>
 </head>
 <body>
-<p id="test">
-    <c:out value="${message}"></c:out>
-</p>
 
 <div class="login">
     <div class="login-title"><span>登陆</span></div>
@@ -35,9 +33,6 @@
                     <input class="login-check"  type="checkbox" name="checked" value="true" >记住我
                 </div>
             </div>
-            <%--<div class="item">--%>
-                <%--<input type="submit" value="ajax提交" onclick="shirologin()">--%>
-            <%--</div>--%>
             <div class="item">
                 <a href="user/doLogin" class="login-btn">登陆</a>
                 <a href="index" class="forget-pwd">忘记密码?</a>
@@ -45,16 +40,6 @@
         </form>
     </div>
 </div>
-
-
-
-<%--<button type="button" onclick="testforit()">onclick test</button>--%>
-
-<br>
-<br>
-<br>
-
-
 
 </body>
 </html>

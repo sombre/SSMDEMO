@@ -3,10 +3,9 @@ package com.ssm.service.shiro;
 import com.ssm.dao.shiro.ShiroService;
 import com.ssm.model.User;
 
-import com.ssm.model.shiro.Permission;
 import com.ssm.model.shiro.Role;
 import com.ssm.model.shiro.SimplePermission;
-import com.ssm.service.IUserService;
+import com.ssm.service.MyUserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -23,7 +22,7 @@ import java.util.Set;
 
 public class MyAuthorizingRealm extends AuthorizingRealm {
 
-    protected IUserService IUserService;
+    protected MyUserService MyUserService;
 
     protected ShiroService shiroService;
 
@@ -45,13 +44,13 @@ public class MyAuthorizingRealm extends AuthorizingRealm {
         this.shiroService = shiroService;
     }
 
-    public IUserService getIUserService() {
-        return IUserService;
+    public MyUserService getMyUserService() {
+        return MyUserService;
     }
 
     @Autowired
-    public void setIUserService(IUserService IUserService) {
-        this.IUserService = IUserService;
+    public void setMyUserService(MyUserService myUserService) {
+        this.MyUserService = myUserService;
     }
 
     @Override
@@ -69,7 +68,7 @@ public class MyAuthorizingRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         Object myPrincipal = principalCollection.getPrimaryPrincipal();
         String email = myPrincipal.toString();
-        User tmpUser = this.IUserService.selectUserByEmail(email);
+        User tmpUser = this.MyUserService.selectUserByEmail(email);
         if(null!=tmpUser){
             Set<String> per = new HashSet<String>();
             per.add("user:add");
@@ -105,7 +104,7 @@ public class MyAuthorizingRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         UsernamePasswordToken upToken = (UsernamePasswordToken) authenticationToken;
         String email = upToken.getUsername();
-        User tempUser = IUserService.selectUserByEmail(email);
+        User tempUser = MyUserService.selectUserByEmail(email);
         if (null != tempUser) {
             return new SimpleAuthenticationInfo(email, tempUser.getPassword(), ByteSource.Util.bytes(tempUser.getSalt()),getName());
         }

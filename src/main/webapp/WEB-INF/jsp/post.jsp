@@ -23,16 +23,17 @@
 <br>
 <br>
 
-<c:out value="${collections}"></c:out>
+<%--<c:out value="${collections}"></c:out>--%>
 <br>
 
 <c:forEach var="item" items="${collections}">
     <c:forEach var="map" items="${item}">
         <c:out value="${map.key}"></c:out> : <c:out value="${map.value}"></c:out>
-        <%--<c:out value="${map.key.title}"></c:out>--%>
         <br>
         <br>
     </c:forEach>
 </c:forEach>
+
+
 </body>
 </html>

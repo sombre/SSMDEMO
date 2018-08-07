@@ -81,6 +81,15 @@
         <table tableName="reply">
             <generatedKey column="rid" sqlStatement="Mysql" identity="true" type="post"/>
         </table>
+        <table tableName="picture">
+            <generatedKey column="pic_id" sqlStatement="Mysql" identity="true" type="post"/>
+        </table>
+        <table tableName="album">
+            <generatedKey column="album_id" sqlStatement="Mysql" identity="true" type="post"/>
+        </table>
+        <table tableName="album_picture">
+            <generatedKey column="al_pic_id" sqlStatement="Mysql" identity="true" type="post"/>
+        </table>
 
     </context>
 </generatorConfiguration>

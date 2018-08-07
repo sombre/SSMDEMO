@@ -28,12 +28,10 @@ public class PageAction {
 
         return "test";
     }
-
     @RequestMapping("img")
     public String img(){
         return "image";
     }
-
 
     @RequestMapping("user")
     public String user(){

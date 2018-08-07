@@ -15,7 +15,6 @@
         SELECT user.uid,user.name,user.email,user.gender,user.avatar
         FROM user
         WHERE user.email = #{uid}
-
     </select>
 
     <resultMap id="UserResultMap" type="com.ssm.model.User">

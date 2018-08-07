@@ -43,7 +43,6 @@ public class PostAction {
 
     @RequiresAuthentication
     @RequiresPermissions(value = "de:log",logical = Logical.OR)
-//    @RequiresRoles(value = {"user","manager"},logical = Logical.OR)
     @RequestMapping(value = "/addpost",method = RequestMethod.POST)
     public String addPost(HttpSession session, HttpServletRequest request,Post post) throws Exception{
         Subject currUser = SecurityUtils.getSubject();
@@ -70,13 +69,6 @@ public class PostAction {
         this.IPostService.showPostAndComment();
         List<HashMap> resultCollection = this.IPostService.showPostAndComment();
         mv.addObject("collections",resultCollection);
-//        for(Map<String,Object> map : resultCollection){
-//            for(Map.Entry<String,Object> m : map.entrySet())
-//            {
-//                System.out.print(m.getKey()+ " ");
-//                System.out.print(m.getValue());
-//            }
-//        }
         mv.setViewName("post");
         return mv;
     }

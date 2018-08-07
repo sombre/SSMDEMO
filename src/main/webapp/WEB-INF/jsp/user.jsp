@@ -18,25 +18,10 @@
     <script type="text/javascript" src="js/masonry.js"></script>
     <script type="text/javascript" src="js/waterfall.js"></script>
     <script type="text/javascript" src="js/pageNav.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="js/user.js"></script>
     <title>个人主页</title>
 </head>
-<script>
-    $().ready(function(){
-        waterfall();
-        $(".tab-menu li:first-child ").addClass("change");
-        $(".tab-menu li").click(function(){
-            //通过 .index()方法获取元素下标，从0开始，赋值给某个变量
-            var _index = $(this).index();
-            //让内容框的第 _index 个显示出来，其他的被隐藏
-            $(".tab-box>div").eq(_index).show().siblings().hide();
-            //改变选中时候的选项框的样式，移除其他几个选项的样式
-            $(this).addClass("change").siblings().removeClass("change");
-            // ===============瀑布流==============
-            waterfall();
-        });
-    });
-</script>
-
 
 <body>
 
@@ -44,394 +29,19 @@
     <div class="tab">
         <div class="tab-menu clearfix">
             <ul>
-                <li><a href="javascript:void (0);"><span>图片</span></a></li>
-                <li><a href="javascript:void (0);"><span>专辑</span></a></li>
-                <li><a href="javascript:void (0);"><span>设置</span></a></li>
+                <li><a href="javascript:void (0);" class="pic-item"><span>图片</span></a></li>
+                <li><a href="javascript:void (0);" class="album-item"><span>专辑</span></a></li>
+                <li><a href="javascript:void (0);" class="setting-item"><span>设置</span></a></li>
             </ul>
         </div>
         <div class="tab-box">
 
             <div class="user-image">
                 <div class="image-scan clearfix">
-                    <%--<ul>--%>
-                        <%--<li>--%>
-                            <%--<div class="image-item">--%>
-                                <%--<div class="image-inner">--%>
-                                    <%--<img src="upload/1.jpg" class="collected-image">--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                        <%--</li>--%>
-                        <%--<li>--%>
-                            <%--<div class="image-item">--%>
-                                <%--<div class="image-inner">--%>
-                                    <%--<img src="upload/1.jpg" class="collected-image">--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                        <%--</li>--%>
-                        <%--<li>--%>
-                            <%--<div class="image-item">--%>
-                                <%--<div class="image-inner">--%>
-                                    <%--<img src="upload/1.jpg" class="collected-image">--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                        <%--</li>--%>
-                        <%--<li>--%>
-                            <%--<div class="image-item">--%>
-                                <%--<div class="image-inner">--%>
-                                    <%--<img src="upload/1.jpg" class="collected-image">--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                        <%--</li>--%>
-                    <%--</ul>--%>
                     <div class="main-waterfall">
                         <div class="main-inner-title">
                         </div>
                         <div id="waterfall" class="waterfall clearfix">
-                            <div class="item">
-                                <div class="pic">
-                                    <a href="#"><img src="upload/1.jpg"></a>
-                                </div>
-                                <div class="hover-info">
-                                    <span class="mask"></span>
-                                    <a href="#" class="collect">收藏 10</a>
-                                    <a href="#" class="like white-btn"></a>
-                                    <a href="#" class="comment white-btn"></a>
-                                </div>
-                                <div class="waterfall-info">
-                                    <p class="title">无论如何,我也不会认输的!</p>
-                                    <p class="icon">
-                                        <span class="icon-star">88</span>
-                                        <span class="icon-like">10</span>
-                                    </p>
-                                </div>
-                                <div class="collect-info">
-                                    <a href="#" class="headImg"><img src="img/cont/waterfall_headImg1.jpeg"></a>
-                                    <p class="title"><a href="#">大魔王梦梦呀 </a></p>
-                                    <p class="to">发表于 <a href="">2018-1-1</a></p>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="pic">
-                                    <a href="#"><img src="upload/2.jpg"></a>
-                                </div>
-                                <div class="hover-info">
-                                    <span class="mask"></span>
-                                    <a href="#" class="collect">收藏 10</a>
-                                    <a href="#" class="like white-btn"></a>
-                                    <a href="#" class="comment white-btn"></a>
-                                </div>
-                                <div class="waterfall-info">
-                                    <p class="title">无论如何,我也不会认输的!</p>
-                                    <p class="icon">
-                                        <span class="icon-star">88</span>
-                                        <span class="icon-like">10</span>
-                                    </p>
-                                </div>
-                                <div class="collect-info">
-                                    <a href="#" class="headImg"><img src="img/cont/waterfall_headImg1.jpeg"></a>
-                                    <p class="title"><a href="#">大魔王梦梦呀 </a></p>
-                                    <p class="to">发表于 <a href="">2018-1-1</a></p>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="pic">
-                                    <a href="#"><img src="upload/3.jpg"></a>
-                                </div>
-                                <div class="hover-info">
-                                    <span class="mask"></span>
-                                    <a href="#" class="collect">收藏 10</a>
-                                    <a href="#" class="like white-btn"></a>
-                                    <a href="#" class="comment white-btn"></a>
-                                </div>
-                                <div class="waterfall-info">
-                                    <p class="title">无论如何,我也不会认输的!</p>
-                                    <p class="icon">
-                                        <span class="icon-star">88</span>
-                                        <span class="icon-like">10</span>
-                                    </p>
-                                </div>
-                                <div class="collect-info">
-                                    <a href="#" class="headImg"><img src="img/cont/waterfall_headImg1.jpeg"></a>
-                                    <p class="title"><a href="#">大魔王梦梦呀 </a></p>
-                                    <p class="to">发表于 <a href="">2018-1-1</a></p>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="pic">
-                                    <a href="#"><img src="upload/4.jpg"></a>
-                                </div>
-                                <div class="hover-info">
-                                    <span class="mask"></span>
-                                    <a href="#" class="collect">收藏 10</a>
-                                    <a href="#" class="like white-btn"></a>
-                                    <a href="#" class="comment white-btn"></a>
-                                </div>
-                                <div class="waterfall-info">
-                                    <p class="title">无论如何,我也不会认输的!</p>
-                                    <p class="icon">
-                                        <span class="icon-star">88</span>
-                                        <span class="icon-like">10</span>
-                                    </p>
-                                </div>
-                                <div class="collect-info">
-                                    <a href="#" class="headImg"><img src="img/cont/waterfall_headImg1.jpeg"></a>
-                                    <p class="title"><a href="#">大魔王梦梦呀 </a></p>
-                                    <p class="to">发表于 <a href="">2018-1-1</a></p>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="pic">
-                                    <a href="#"><img src="upload/5.jpg"></a>
-                                </div>
-                                <div class="hover-info">
-                                    <span class="mask"></span>
-                                    <a href="#" class="collect">收藏 10</a>
-                                    <a href="#" class="like white-btn"></a>
-                                    <a href="#" class="comment white-btn"></a>
-                                </div>
-                                <div class="waterfall-info">
-                                    <p class="title">无论如何,我也不会认输的!</p>
-                                    <p class="icon">
-                                        <span class="icon-star">88</span>
-                                        <span class="icon-like">10</span>
-                                    </p>
-                                </div>
-                                <div class="collect-info">
-                                    <a href="#" class="headImg"><img src="img/cont/waterfall_headImg1.jpeg"></a>
-                                    <p class="title"><a href="#">大魔王梦梦呀 </a></p>
-                                    <p class="to">发表于 <a href="">2018-1-1</a></p>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="pic">
-                                    <a href="#"><img src="upload/6.jpg"></a>
-                                </div>
-                                <div class="hover-info">
-                                    <span class="mask"></span>
-                                    <a href="#" class="collect">收藏 10</a>
-                                    <a href="#" class="like white-btn"></a>
-                                    <a href="#" class="comment white-btn"></a>
-                                </div>
-                                <div class="waterfall-info">
-                                    <p class="title">无论如何,我也不会认输的!</p>
-                                    <p class="icon">
-                                        <span class="icon-star">88</span>
-                                        <span class="icon-like">10</span>
-                                    </p>
-                                </div>
-                                <div class="collect-info">
-                                    <a href="#" class="headImg"><img src="img/cont/waterfall_headImg1.jpeg"></a>
-                                    <p class="title"><a href="#">大魔王梦梦呀 </a></p>
-                                    <p class="to">发表于 <a href="">2018-1-1</a></p>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="pic">
-                                    <a href="#"><img src="upload/7.jpg"></a>
-                                </div>
-                                <div class="hover-info">
-                                    <span class="mask"></span>
-                                    <a href="#" class="collect">收藏 10</a>
-                                    <a href="#" class="like white-btn"></a>
-                                    <a href="#" class="comment white-btn"></a>
-                                </div>
-                                <div class="waterfall-info">
-                                    <p class="title">无论如何,我也不会认输的!</p>
-                                    <p class="icon">
-                                        <span class="icon-star">88</span>
-                                        <span class="icon-like">10</span>
-                                    </p>
-                                </div>
-                                <div class="collect-info">
-                                    <a href="#" class="headImg"><img src="img/cont/waterfall_headImg1.jpeg"></a>
-                                    <p class="title"><a href="#">大魔王梦梦呀 </a></p>
-                                    <p class="to">发表于 <a href="">2018-1-1</a></p>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="pic">
-                                    <a href="#"><img src="upload/8.jpg"></a>
-                                </div>
-                                <div class="hover-info">
-                                    <span class="mask"></span>
-                                    <a href="#" class="collect">收藏 10</a>
-                                    <a href="#" class="like white-btn"></a>
-                                    <a href="#" class="comment white-btn"></a>
-                                </div>
-                                <div class="waterfall-info">
-                                    <p class="title">无论如何,我也不会认输的!</p>
-                                    <p class="icon">
-                                        <span class="icon-star">88</span>
-                                        <span class="icon-like">10</span>
-                                    </p>
-                                </div>
-                                <div class="collect-info">
-                                    <a href="#" class="headImg"><img src="img/cont/waterfall_headImg1.jpeg"></a>
-                                    <p class="title"><a href="#">大魔王梦梦呀 </a></p>
-                                    <p class="to">发表于 <a href="">2018-1-1</a></p>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="pic">
-                                    <a href="#"><img src="upload/9.jpg"></a>
-                                </div>
-                                <div class="hover-info">
-                                    <span class="mask"></span>
-                                    <a href="#" class="collect">收藏 10</a>
-                                    <a href="#" class="like white-btn"></a>
-                                    <a href="#" class="comment white-btn"></a>
-                                </div>
-                                <div class="waterfall-info">
-                                    <p class="title">无论如何,我也不会认输的!</p>
-                                    <p class="icon">
-                                        <span class="icon-star">88</span>
-                                        <span class="icon-like">10</span>
-                                    </p>
-                                </div>
-                                <div class="collect-info">
-                                    <a href="#" class="headImg"><img src="img/cont/waterfall_headImg1.jpeg"></a>
-                                    <p class="title"><a href="#">大魔王梦梦呀 </a></p>
-                                    <p class="to">发表于 <a href="">2018-1-1</a></p>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="pic">
-                                    <a href="#"><img src="upload/10.jpg"></a>
-                                </div>
-                                <div class="hover-info">
-                                    <span class="mask"></span>
-                                    <a href="#" class="collect">收藏 10</a>
-                                    <a href="#" class="like white-btn"></a>
-                                    <a href="#" class="comment white-btn"></a>
-                                </div>
-                                <div class="waterfall-info">
-                                    <p class="title">无论如何,我也不会认输的!</p>
-                                    <p class="icon">
-                                        <span class="icon-star">88</span>
-                                        <span class="icon-like">10</span>
-                                    </p>
-                                </div>
-                                <div class="collect-info">
-                                    <a href="#" class="headImg"><img src="img/cont/waterfall_headImg1.jpeg"></a>
-                                    <p class="title"><a href="#">大魔王梦梦呀 </a></p>
-                                    <p class="to">发表于 <a href="">2018-1-1</a></p>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="pic">
-                                    <a href="#"><img src="upload/11.jpg"></a>
-                                </div>
-                                <div class="hover-info">
-                                    <span class="mask"></span>
-                                    <a href="#" class="collect">收藏 10</a>
-                                    <a href="#" class="like white-btn"></a>
-                                    <a href="#" class="comment white-btn"></a>
-                                </div>
-                                <div class="waterfall-info">
-                                    <p class="title">无论如何,我也不会认输的!</p>
-                                    <p class="icon">
-                                        <span class="icon-star">88</span>
-                                        <span class="icon-like">10</span>
-                                    </p>
-                                </div>
-                                <div class="collect-info">
-                                    <a href="#" class="headImg"><img src="img/cont/waterfall_headImg1.jpeg"></a>
-                                    <p class="title"><a href="#">大魔王梦梦呀 </a></p>
-                                    <p class="to">发表于 <a href="">2018-1-1</a></p>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="pic">
-                                    <a href="#"><img src="upload/12.jpg"></a>
-                                </div>
-                                <div class="hover-info">
-                                    <span class="mask"></span>
-                                    <a href="#" class="collect">收藏 10</a>
-                                    <a href="#" class="like white-btn"></a>
-                                    <a href="#" class="comment white-btn"></a>
-                                </div>
-                                <div class="waterfall-info">
-                                    <p class="title">无论如何,我也不会认输的!</p>
-                                    <p class="icon">
-                                        <span class="icon-star">88</span>
-                                        <span class="icon-like">10</span>
-                                    </p>
-                                </div>
-                                <div class="collect-info">
-                                    <a href="#" class="headImg"><img src="img/cont/waterfall_headImg1.jpeg"></a>
-                                    <p class="title"><a href="#">大魔王梦梦呀 </a></p>
-                                    <p class="to">发表于 <a href="">2018-1-1</a></p>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="pic">
-                                    <a href="#"><img src="upload/13.jpg"></a>
-                                </div>
-                                <div class="hover-info">
-                                    <span class="mask"></span>
-                                    <a href="#" class="collect">收藏 10</a>
-                                    <a href="#" class="like white-btn"></a>
-                                    <a href="#" class="comment white-btn"></a>
-                                </div>
-                                <div class="waterfall-info">
-                                    <p class="title">无论如何,我也不会认输的!</p>
-                                    <p class="icon">
-                                        <span class="icon-star">88</span>
-                                        <span class="icon-like">10</span>
-                                    </p>
-                                </div>
-                                <div class="collect-info">
-                                    <a href="#" class="headImg"><img src="img/cont/waterfall_headImg1.jpeg"></a>
-                                    <p class="title"><a href="#">大魔王梦梦呀 </a></p>
-                                    <p class="to">发表于 <a href="">2018-1-1</a></p>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="pic">
-                                    <a href="#"><img src="upload/14.jpg"></a>
-                                </div>
-                                <div class="hover-info">
-                                    <span class="mask"></span>
-                                    <a href="#" class="collect">收藏 10</a>
-                                    <a href="#" class="like white-btn"></a>
-                                    <a href="#" class="comment white-btn"></a>
-                                </div>
-                                <div class="waterfall-info">
-                                    <p class="title">无论如何,我也不会认输的!</p>
-                                    <p class="icon">
-                                        <span class="icon-star">88</span>
-                                        <span class="icon-like">10</span>
-                                    </p>
-                                </div>
-                                <div class="collect-info">
-                                    <a href="#" class="headImg"><img src="img/cont/waterfall_headImg1.jpeg"></a>
-                                    <p class="title"><a href="#">大魔王梦梦呀 </a></p>
-                                    <p class="to">发表于 <a href="">2018-1-1</a></p>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="pic">
-                                    <a href="#"><img src="upload/15.jpg"></a>
-                                </div>
-                                <div class="hover-info">
-                                    <span class="mask"></span>
-                                    <a href="#" class="collect">收藏 10</a>
-                                    <a href="#" class="like white-btn"></a>
-                                    <a href="#" class="comment white-btn"></a>
-                                </div>
-                                <div class="waterfall-info">
-                                    <p class="title">无论如何,我也不会认输的!</p>
-                                    <p class="icon">
-                                        <span class="icon-star">88</span>
-                                        <span class="icon-like">10</span>
-                                    </p>
-                                </div>
-                                <div class="collect-info">
-                                    <a href="#" class="headImg"><img src="img/cont/waterfall_headImg1.jpeg"></a>
-                                    <p class="title"><a href="#">大魔王梦梦呀 </a></p>
-                                    <p class="to">发表于 <a href="">2018-1-1</a></p>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
@@ -456,6 +66,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="album-box clearfix">
                 <div class="album-item">
                         <div class="album-avatar">
@@ -502,7 +113,6 @@
             </div>
 
             <div class="user-setting">
-
                     <div class="setting-box">
                         <div class="setting-title"><span>修改信息</span></div>
                         <div class="modify-box">

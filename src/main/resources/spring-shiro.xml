@@ -65,22 +65,23 @@
         <!--<property name="loginUrl" value="/login.jsp"/>&lt;!&ndash; 登录页面 &ndash;&gt;-->
         <!--<property name="successUrl" value="/list.jsp"/>&lt;!&ndash; 登录成功页面 &ndash;&gt;-->
         <!--<property name="unauthorizedUrl" value="/unauthorized.jsp"/>&lt;!&ndash; 没有权限的页面 &ndash;&gt;-->
-        <!-- The 'filters' property is not necessary since any declared javax.servlet.Filter bean
-             defined will be automatically acquired and available via its beanName in chain
-             definitions, but you can perform overrides or parent/child consolidated configuration
-             here if you like: -->
-        <!-- <property name="filters">
-            <util:map>
-                <entry key="aName" value-ref="someFilterPojo"/>
-            </util:map>
-        </property> -->
-        <!--
-            配置哪些页面需要受保护
-            以及访问这些页面需要的权限
-            1). anon(anonymous) 可以被匿名访问，即不需要登录就可以访问
-            2). authc(authentication) 必须认证之后，即登录后才可以访问
-            3). URL 权限采取第一次匹配优先的方式，即从开头使用第一个匹配的url模式对应的拦截器链。
-         -->
+        <!--The 'filters' property is not necessary since any declared javax.servlet.Filter bean-->
+             <!--defined will be automatically acquired and available via its beanName in chain-->
+             <!--definitions, but you can perform overrides or parent/child consolidated configuration-->
+             <!--here if you like:-->
+        <!--<property name="filters">-->
+            <!--<util:map>-->
+                <!--<entry key="aName" value-ref="someFilterPojo"/>-->
+            <!--</util:map>-->
+        <!--</property> -->
+
+
+            <!--配置哪些页面需要受保护-->
+            <!--以及访问这些页面需要的权限-->
+            <!--1). anon(anonymous) 可以被匿名访问，即不需要登录就可以访问-->
+            <!--2). authc(authentication) 必须认证之后，即登录后才可以访问-->
+            <!--3). URL 权限采取第一次匹配优先的方式，即从开头使用第一个匹配的url模式对应的拦截器链。-->
+
         <!--<property name="filterChainDefinitions">-->
         <!--<value>-->
         <!--/login.jsp= anon-->

@@ -1,8 +1,8 @@
 
 .user-box{
-    margin:50px auto 0 auto;
+    margin:0 auto;
     padding:20px;
-    width:1200px;
+    width:1500px;
 }
 
 .tab{
@@ -56,6 +56,9 @@
     display:block;
 }
 
+#waterfall{
+    min-height: 500px;
+}
 
 .tab-box .image-scan{
 }

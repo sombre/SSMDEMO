@@ -1,4 +1,5 @@
-<%--
+<%@ page import="java.util.Date" %>
+<%@ page import="com.ssm.model.Picture" %><%--
   Created by IntelliJ IDEA.
   User: John
   Date: 2017/12/25
@@ -6,8 +7,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,41 +18,18 @@
     <title>图片本身</title>
 </head>
 
-
-<style>
-
-</style>
-<script>
-//function changeHeart(){
-//    var hh= document.getElementsByClassName("blank_heart")[0];
-//    if(hh!=null && hh!=undefined){
-//        hh.setAttribute("class","full_heart");
-//    }
-//    else{
-//        hh = document.getElementsByClassName("full_heart")[0];
-//        if(hh!=null && hh!=undefined){
-//            hh.setAttribute("class","blank_heart");
-//        }
-//    }
-//
-//    console.log(hh);
-//}
-//$(function () {
-//    var doit = document.getElementsByClassName("like")[0];
-//    doit.addEventListener("click",changeHeart);
-//    console.log(doit);
-//})
-</script>
-
-
 <body>
 <div class="image-box">
     <div class="image-inner">
         <div class="image-header">
             <div class="user-box">
-                <div class="profile-box"><a href="#"><img src="upload/album/1.jpg" class="profile"></a></div>
-                <div class="user-name"><a href="#">我就是我</a></div>
-                <div class="post-time">2018年5月25日 14:43:25</div>
+                <div class="profile-box"><a href="#"><img src="${author.avatar}" class="profile"></a></div>
+                <div class="user-name"><a href="#">${author.name}</a></div>
+                <div class="post-time">
+                    <%--<fmt:parseDate value="${picture.uploadAt}" pattern="yyyy-MM-dd" var="dateObj"/>--%>
+                    <fmt:formatDate var="reTime" value="${Date(picture.uploadAt)}" pattern="yyyy-MM-dd"/>
+                    ${reTime}
+                </div>
                 <div class="heart">
                     <a href="javascript:void(0);" class="like">
                         <span class="blank_heart"></span>
@@ -61,22 +39,23 @@
             </div>
         </div>
         <div class="image-desc">
-            <p>这到底是个啥</p>
+            <p>${picture.picDesc}</p>
         </div>
         <div class="image-content">
             <div class="img">
-                <img src="upload/album/2.jpg" class="adapted">
+                <img src="${picture.url}" class="adapted">
             </div>
         </div>
 
         <div class="comment-box">
+            <c:forEach var="comment" items="${userCommentMap}">
             <div class="comment-item">
                 <div class="avatar">
                     <img src="upload/album/3.jpg" class="profile">
                 </div>
                 <div class="comment-info">
                     <div class="nav">
-                        <span><a href="#" class="author-name">西游动物</a></span>
+                        <span><a href="#" class="author-name">${items.name}</a></span>
                         <span class="post-time">发表于:2018-9-10</span>
                         <shiro:authenticated>
                             <span class="reply"><a href="javascript:void(0);" class="show-editor">回复</a></span>
@@ -99,18 +78,8 @@
                             241654631631</p>
                     </div>
                 </div>
-                <%--<div class="edit-box">--%>
-                    <%--<p>回复:西游洞府</p>--%>
-                    <%--<div>--%>
-                        <%--<textarea name="edit-area" id="" cols="90" rows="10"></textarea>--%>
-                    <%--</div>--%>
-                    <%--<div class="btn-box">--%>
-                        <%--<a href="javascript:void(0);" class="reply-btn">回复</a>--%>
-                        <%--<a href="javascript:void (0);" class="cancel-btn">取消</a>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
             </div>
-
+            </c:forEach>
 
 
             <shiro:authenticated>
@@ -168,6 +137,7 @@
                 </div>
             </form>
         </div>
+
 
 
     </div>
