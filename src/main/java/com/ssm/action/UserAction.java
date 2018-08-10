@@ -8,6 +8,7 @@ import com.ssm.util.AES;
 import com.ssm.util.CookieUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,18 +56,6 @@ public class UserAction {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/showUserList", method = RequestMethod.GET)
-    @ResponseBody
-    public List selectUserList(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String suid = request.getParameter("uid");
-        int uid = Integer.parseInt(request.getParameter("uid"));
-        User user = this.MyUserService.selectUserById(uid);
-        List<User> users = new ArrayList<User>();
-        users.add(user);
-        ObjectMapper objectMapper = new ObjectMapper();
-        String usersJson = objectMapper.writeValueAsString(users);
-        return users;
-    }
 
     @RequestMapping("/signup")
     public String prepareSignUp() throws Exception {
@@ -94,10 +83,8 @@ public class UserAction {
     public ModelAndView userSpace(HttpSession session, HttpServletResponse response,@PathVariable("uid") Long uid) throws Exception{
         ModelAndView modelAndView = new ModelAndView();
         if(null!=uid){
-            User curUser = (User) session.getAttribute("user");
-            if(null!=curUser){
-                modelAndView.setViewName("user");
-            }
+            modelAndView.setViewName("user");
+            modelAndView.addObject("userSpaceId",uid);
         }
         return modelAndView;
     }
@@ -108,6 +95,7 @@ public class UserAction {
         ModelAndView modelAndView = new ModelAndView();
         if(null!=uid){
             modelAndView.setViewName("user");
+            modelAndView.addObject("userSpaceId",uid);
         }
         return modelAndView;
     }
@@ -118,6 +106,7 @@ public class UserAction {
         ModelAndView modelAndView = new ModelAndView();
         if(null!=uid){
             modelAndView.setViewName("user");
+            modelAndView.addObject("userSpaceId",uid);
         }
         return  modelAndView;
     }
@@ -138,6 +127,7 @@ public class UserAction {
                     modelAndView.addObject("user", tmpUser);
                     //session存储登录资料
                     session.setAttribute("user", tmpUser);
+                    session.setMaxInactiveInterval(3600*24*7);
                     //如果选中自动登陆,更新Cookie
                     if (checked) {
                         this.refreshCookie(response, tmpUser.getUid().toString());
@@ -153,39 +143,21 @@ public class UserAction {
 
 
 
-
-
-
-    //ajax登陆
-    @RequestMapping(value = "/doAjaxLogin", method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String, Object> ajaxShiroLogin(HttpSession session, HttpServletResponse response, User user, boolean checked) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        HashMap<String, Object> dataMap = new HashMap<String, Object>();
-        Subject currentUser = SecurityUtils.getSubject();
-        if (!currentUser.isAuthenticated()) {
-            UsernamePasswordToken up = new UsernamePasswordToken();
-            up.setUsername(user.getEmail());
-            up.setPassword(user.getPassword().toCharArray());
-            try {
-                currentUser.login(up);
-                User tmpUser = this.MyUserService.selectUserByEmail(user.getEmail());
-                if (null != tmpUser)
-                    dataMap.put("user", tmpUser);
-                //session存储登录资料
-                session.setAttribute("user", tmpUser);
-                //如果选中自动登陆,更新Cookie
-                if (checked) {
-                    String userJason = objectMapper.writeValueAsString(dataMap);
-                    System.out.print(userJason);
-                    this.refreshCookie(response, tmpUser.getUid().toString());
-                }
-            } catch (Exception e) {
-                dataMap.put("error", "用户名密码错误!");
-            }
-        }
-        return dataMap;
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+        CookieUtil.removeCookie(request, response, "user");
+        CookieUtil.removeCookie(request, response, "token");
+        Subject curUser = SecurityUtils.getSubject();
+        if (curUser.isAuthenticated()) curUser.logout();
+        return "index";
     }
+
+
+
+
+
+
+
 
 
     public boolean refreshCookie(HttpServletResponse response, String uid) throws Exception{
@@ -212,26 +184,17 @@ public class UserAction {
             String token = tokenCookie.getValue();
             String salt = AES.AESDncode(AES.PUBLIC_KEY, token);
             uid = AES.AESDncode(salt, uid);
-            int realUid = Integer.parseInt(uid);
+            Long realUid = Long.parseLong(uid);
             User tmpUser = this.MyUserService.selectUserById(realUid);
             if (null != tmpUser) {
                 this.refreshCookie(response, uid);
             }
         }
         dataMap.put("error", "无法自动登陆");
-        String message = objectMapper.writeValueAsString(objectMapper);
-        return message;
+        return objectMapper.writeValueAsString(objectMapper);
     }
 
 
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
-        CookieUtil.removeCookie(request, response, "user");
-        CookieUtil.removeCookie(request, response, "token");
-        Subject curUser = SecurityUtils.getSubject();
-        if (curUser.isAuthenticated()) curUser.logout();
-        return "index";
-    }
 
 
 }

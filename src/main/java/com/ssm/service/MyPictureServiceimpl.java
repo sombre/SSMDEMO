@@ -48,8 +48,7 @@ public class MyPictureServiceimpl implements MyPictureService {
     }
 
     public List<Picture> getUserCollectedPicturesByUid(long userId) throws Exception{
-        List<Picture> pictureList = pictureService.getUserPicture(userId);
-        return pictureList;
+          return pictureService.getUserCollectedPicture(userId);
     }
 
     public boolean updatePicture(Picture picture) throws Exception{

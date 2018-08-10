@@ -7,10 +7,11 @@ import com.ssm.model.shiro.CommGroup;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface MyCommentService {
 
-    HashMap<User,Comment> getCommentsByPictureId(Long pictureId) throws Exception;
-    int addComment(Long userId,Long pId, Comment comment) throws Exception;
-
+    List<Map<User,Comment>> getCommentsByPictureId(Long pictureId) throws Exception;
+    int addComment(Comment comment) throws Exception;
+    int addReply(Comment comment) throws Exception;
 }

@@ -23,7 +23,13 @@
         <!--FROM picture WHERE uploader_id = #{uid};-->
     <!--</select>-->
 
-    <select id="getUserPicture" resultMap="PictureResultMap" parameterType="long">
+    <select id="getUserCollectedPicture" resultMap="PictureResultMap" parameterType="long">
+        SELECT p.pic_id,p.pic_title,p.pic_desc,p.uploader_id,p.upload_at,p.path,p.url
+        FROM user_picture AS up LEFT JOIN picture AS p
+                ON up.picture_id = p.pic_id WHERE up.user_id =#{userId}
+    </select>
+
+    <select id="getUserUploadPicture" resultMap="PictureResultMap" parameterType="long">
         SELECT pic_id,pic_title,pic_desc,uploader_id,upload_at,path,url
         FROM picture WHERE uploader_id = #{uid}
     </select>

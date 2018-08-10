@@ -1,13 +1,17 @@
 package com.ssm.action;
 
 import com.ssm.model.Comment;
+import com.ssm.model.User;
 import com.ssm.service.MyCommentService;
 import com.ssm.service.MyPictureService;
 import com.ssm.service.MyUserService;
+import com.ssm.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class CommentAction {
@@ -41,11 +45,28 @@ public class CommentAction {
     }
 
     @RequestMapping("addComment/{userId}/{pId}")
-    public String addComment(@PathVariable("userId") Long userId, @PathVariable("pId") Long pId, Comment comment) throws Exception{
-        int affected=myCommentService.addComment(userId,pId,comment);
+    @ResponseBody
+    public Comment addComment(@PathVariable("userId") Long userId, @PathVariable("pId") Long pId, Comment comment) throws Exception{
+        comment.setAuthorid(userId);
+        comment.setPid(pId);
+        comment.setCreateAt(DateUtil.getCurrentTimeLong());
+        int affected=myCommentService.addComment(comment);
         if(0!=affected){
-            return "redirect: /picture/" + userId.toString();
+            return comment;
         }
+        return null;
+    }
+
+    @RequestMapping(value = "addReply/{userId}/{pId}")
+    @ResponseBody
+    public Comment addReply(@PathVariable("userId") Long userId,@PathVariable("pId") Long pId,Comment comment,Long replyTo) throws Exception{
+        comment.setAuthorid(userId);
+        comment.setPid(pId);
+        comment.setCreateAt(DateUtil.getCurrentTimeLong());
+        comment.setType("reply");
+        comment.setReplyTo(replyTo);
+        int affected = myCommentService.addReply(comment);
+        if(0!=affected) return comment;
         return null;
     }
 }

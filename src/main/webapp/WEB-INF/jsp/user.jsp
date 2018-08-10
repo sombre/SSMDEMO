@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,13 +26,19 @@
 
 <body>
 
+<div class="cards">
+    <span class="userspace-card">${userSpaceId}</span>
+</div>
+
 <div class="user-box">
     <div class="tab">
         <div class="tab-menu clearfix">
             <ul>
                 <li><a href="javascript:void (0);" class="pic-item"><span>图片</span></a></li>
                 <li><a href="javascript:void (0);" class="album-item"><span>专辑</span></a></li>
-                <li><a href="javascript:void (0);" class="setting-item"><span>设置</span></a></li>
+                <shiro:authenticated>
+                    <li><a href="javascript:void (0);" class="setting-item"><span>设置</span></a></li>
+                </shiro:authenticated>
             </ul>
         </div>
         <div class="tab-box">
@@ -75,7 +82,6 @@
                                     <img src="upload/1.jpg" class="album-profile">
                                 </a>
                             </div>
-
                         </div>
                         <div class="album-info">
                             <h3>专辑名字</h3>
@@ -89,7 +95,6 @@
                                 <img src="upload/1.jpg" class="album-profile">
                             </a>
                         </div>
-
                     </div>
                     <div class="album-info">
                         <h3>专辑名字</h3>
@@ -103,7 +108,6 @@
                                 <img src="upload/1.jpg" class="album-profile">
                             </a>
                         </div>
-
                     </div>
                     <div class="album-info">
                         <h3>专辑名字</h3>
@@ -143,7 +147,40 @@
 
 
 
-            <div>789</div>
+
+            <div class="mask">
+            </div>
+            <div class="mask-inner">
+                <h3 class="mask-title">添加到专辑:</h3>
+                <form action="#" method="post">
+                    <div class="album-div">
+                        <table>
+                            <tr>
+                                <td>专辑名：</td>
+                                <td class="zhezhao_value">
+                                    <input type="checkbox" name="album" value="Bike"> 夏天在静静地流淌
+                                    <br>
+                                    <input type="checkbox" name="album" value="Car"> I have a car
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="btn-div">
+                        <input type="submit" class="submit" value="确定" />
+                        <input type="button" class="concel" value="取消" onclick="hideMask()" />
+                        <input type="reset" class="reset" value="清空"  />
+                    </div>
+                </form>
+            </div>
+
+
+
+
+
+
+
+
+
 
 
         </div>

@@ -96,7 +96,7 @@ $(function(){
         else alert("用户名或密码为空");
         return false;
     });
-})
+});
 
 
 // 校验注册表单,如果没问题,提交注册表单
@@ -114,7 +114,7 @@ $(function(){
         else alert("用户名或密码为空");
         return false;
     });
-})
+});
 
 
 

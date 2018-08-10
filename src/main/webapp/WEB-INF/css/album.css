@@ -1,0 +1,101 @@
+
+
+
+@media screen and (min-width: 1200px){
+    .wrapper-box{
+    position: relative;
+    margin: 0 auto;
+    border: 0;
+    width: 1200px;
+    }
+}
+
+
+.wrapper-box .board{
+    margin: 20px 0 ;
+    background: #FFF;
+    position: relative;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.02), 0 4px 8px 0 rgba(0,0,0,.02);
+}
+
+.board .board-inner{
+    padding: 20px 20px 15px;
+    position: relative;
+}
+
+.wrapper-box .board-line{
+    margin-bottom: 20px;
+}
+
+.board-line .board-name{
+    display: inline-block;
+    font-weight:700;
+    font-size:20px;
+}
+
+.board-line .board-tag{
+    display: inline-block;
+    padding-left: 15px;
+    margin-left: 15px;
+    border-left: 1px solid #DDD;
+    color: #999;
+}
+
+.board-inner .board-description{
+    color: #777;
+    line-height: 1.5;
+    padding-right: 250px;
+    max-height: 102px;
+    overflow: hidden;
+}
+
+.board .board-bar{
+    background: #FAFAFA;
+    border-top: 1px solid #EDEDED;
+    height: 50px;
+    position: relative;
+}
+
+.board .user-unit{
+    display: block;
+    background: #FFF;
+    height: 30px;
+    line-height: 30px;
+    text-decoration: none;
+    position: absolute;
+    left: 20px;
+    top: 10px;
+    color: #444;
+    padding-left: 30px;
+}
+
+.board .user-unit img{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.board .user-unit .name{
+    padding: 0 10px;
+}
+
+.board .board-bar .tabs{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.board .board-bar .tabs a:hover{
+    color:#c90000;
+}
+.board .board-bar .tabs .tab{
+    display: inline-block;
+    padding: 0 20px;
+    height: 50px;
+    line-height: 50px;
+    border-left: 1px solid #EDEDED;
+    text-decoration: none;
+    color: #777;
+}

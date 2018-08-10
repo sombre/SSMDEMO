@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface PictureService {
 
-    List<Picture> getUserPicture(Long uid);
+    List<Picture> getUserCollectedPicture(Long uid);
 }

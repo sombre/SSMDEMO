@@ -14,14 +14,6 @@
     <title>主页</title>
 </head>
 <body>
-<br>
-<br>
-<p id="gogo">Hello World!</p>
-<button type="button" onclick="selectUser()">onclick test</button>
-
-<br>
-<br>
-<p>${user}</p>
 
 </body>
 </html>

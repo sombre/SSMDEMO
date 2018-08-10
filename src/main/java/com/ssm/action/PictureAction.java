@@ -6,8 +6,10 @@ import com.github.pagehelper.PageHelper;
 import com.ssm.model.Comment;
 import com.ssm.model.Picture;
 import com.ssm.model.User;
+import com.ssm.model.UserPicture;
 import com.ssm.service.MyCommentService;
 import com.ssm.service.MyPictureService;
+import com.ssm.service.MyUserPictureService;
 import com.ssm.service.MyUserService;
 import com.ssm.util.DateUtil;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
@@ -32,6 +34,7 @@ public class PictureAction {
     private MyUserService myUserService;
     private MyPictureService myPictureService;
     private MyCommentService myCommentService;
+    private MyUserPictureService myUserPictureService;
 
     public MyUserService getMyUserService() {
         return myUserService;
@@ -54,8 +57,13 @@ public class PictureAction {
     public void setMyCommentService(MyCommentService myCommentService) {
         this.myCommentService = myCommentService;
     }
-
-
+    public MyUserPictureService getMyUserPictureService() {
+        return myUserPictureService;
+    }
+    @Autowired
+    public void setMyUserPictureService(MyUserPictureService myUserPictureService) {
+        this.myUserPictureService = myUserPictureService;
+    }
 
     @RequiresAuthentication
     @ResponseBody
@@ -118,9 +126,9 @@ public class PictureAction {
                 modelAndView.addObject("picture",picture);
                 modelAndView.setViewName("image");
                 //查询图片的所有评论
-                HashMap<User,Comment> userCommentHashMap = myCommentService.getCommentsByPictureId(pid);
-                if(null!=userCommentHashMap && 0!=userCommentHashMap.size()){
-                    modelAndView.addObject("userCommentMap",userCommentHashMap);
+                List<Map<User,Comment>> userCommentList = myCommentService.getCommentsByPictureId(pid);
+                if(null!=userCommentList && 0!=userCommentList.size()){
+                    modelAndView.addObject("userCommentList",userCommentList);
                 }
                 //查询图片上传者资料
                 User author = myUserService.selectUserById(picture.getUploaderId());
@@ -147,8 +155,56 @@ public class PictureAction {
             return result;
         }
         return null;
-
     }
+
+    @RequiresAuthentication
+    @RequestMapping(value = "picture/collectPicture")
+    @ResponseBody
+    public Map<String, String> collectPicture(Long userId,Long pictureId) throws Exception{
+        Map<String,String> map = new HashMap<String, String>();
+        UserPicture userPicture = new UserPicture();
+        userPicture.setUserId(userId);
+        userPicture.setPictureId(pictureId);
+        int affected = myUserPictureService.addUserPicture(userPicture);
+        if(0!=affected){
+            map.put("message","success");
+            return map;
+        }
+        map.put("message","error");
+        return map;
+    }
+
+    @RequiresAuthentication
+    @RequestMapping(value = "picture/removePicture")
+    @ResponseBody
+    public Map<String,String> removeCollectedPicture(Long userId,Long pictureId) throws Exception{
+        UserPicture userPicture = myUserPictureService.getUserPictureByIds(userId,pictureId);
+        Map<String,String> map = new HashMap<String, String>();
+        if(null!=userPicture)
+        {
+            if(myUserPictureService.removeUserPicture(userPicture)) {
+                map.put("message","success");
+                return map;
+            }
+        }
+        map.put("message","error");
+        return map;
+    }
+
+    @RequestMapping(value = "/picture/getCollectedPicture")
+    @ResponseBody
+    public Map<String,Object> getCollectedPicture(Long userId,Long pictureId) throws Exception{
+        UserPicture userPicture = myUserPictureService.getUserPictureByIds(userId,pictureId);
+        Map<String,Object> map = new HashMap<String, Object>();
+        if(null!=userPicture)
+        {
+            map.put("userPicture",userPicture);
+            return map;
+        }
+        map.put("message","error");
+        return map;
+    }
+
 
 
 

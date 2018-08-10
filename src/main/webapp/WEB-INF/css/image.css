@@ -4,6 +4,10 @@
     margin:0 auto;
 }
 
+.image-box .cards{
+    display:none;
+}
+
 .image-inner{
     margin: 40px 0 0 0 ;
     background-color:#fff;

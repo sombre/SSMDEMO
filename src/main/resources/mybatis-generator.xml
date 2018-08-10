@@ -90,6 +90,12 @@
         <table tableName="album_picture">
             <generatedKey column="al_pic_id" sqlStatement="Mysql" identity="true" type="post"/>
         </table>
+        <table tableName="user_picture">
+            <generatedKey column="user_picture_id" sqlStatement="Mysql" identity="true" type="post"/>
+        </table>
+        <table tableName="user_album">
+            <generatedKey column="user_album_id" sqlStatement="Mysql" identity="true" type="post"/>
+        </table>
 
     </context>
 </generatorConfiguration>

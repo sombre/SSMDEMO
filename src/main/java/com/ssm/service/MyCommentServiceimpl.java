@@ -4,17 +4,14 @@ import com.ssm.dao.CommentMapper;
 import com.ssm.dao.CommentService;
 import com.ssm.model.Comment;
 import com.ssm.model.User;
-import com.ssm.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MyCommentServiceimpl implements MyCommentService{
@@ -48,28 +45,30 @@ public class MyCommentServiceimpl implements MyCommentService{
         this.commentService = commentService;
     }
 
-    public HashMap<User, Comment> getCommentsByPictureId(Long pictureId) throws Exception{
+    public List<Map<User, Comment>> getCommentsByPictureId(Long pictureId) throws Exception{
+        List<Map<User,Comment>> userCommentList= new LinkedList<Map<User, Comment>>();
         List<Comment> commentList = commentService.getPictureComments(pictureId);
-        HashMap<User,Comment> userCommentHashMap = new HashMap<User, Comment>();
         if(null!=commentList && 0!=commentList.size()){
             for ( Comment comment : commentList ){
                 User user = myUserService.selectUserById(comment.getAuthorid());
                 if(null!=user){
+                    HashMap<User,Comment> userCommentHashMap = new HashMap<User, Comment>();
                     userCommentHashMap.put(user,comment);
+                    userCommentList.add(userCommentHashMap);
                 }
             }
-            return userCommentHashMap;
+            return userCommentList;
         }
         return null;
     }
 
-
+    @Transactional(isolation = Isolation.READ_COMMITTED,timeout = 3)
+    public int addComment(Comment comment) throws Exception {
+        return commentMapper.insert(comment);
+    }
 
     @Transactional(isolation = Isolation.READ_COMMITTED,timeout = 3)
-    public int addComment(Long userId, Long pId, Comment comment) throws Exception {
-        comment.setCreateAt(DateUtil.getCurrentTimeLong());
-        comment.setPid(pId);
-        comment.setAuthorid(userId);
+    public int addReply(Comment comment) throws Exception {
         return commentMapper.insert(comment);
     }
 

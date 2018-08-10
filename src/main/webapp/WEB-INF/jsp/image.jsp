@@ -21,23 +21,38 @@
 </head>
 
 <body>
+
 <div class="image-box">
+    <div class="cards">
+        <span class="picture-card">${picture.picId}</span>
+        <span class="author-card">${picture.uploaderId}</span>
+        <span class="current-card">${sessionScope.user.uid}</span>
+    </div>
     <div class="image-inner">
         <div class="image-header">
             <div class="user-box">
-                <div class="profile-box"><a href="#"><img src="${author.avatar}" class="profile"></a></div>
-                <div class="user-name"><a href="#">${author.name}</a></div>
+                <div class="profile-box">
+                    <a href="#">
+                        <img src="${author.avatar}" class="profile">
+                    </a>
+                </div>
+                <div class="user-name">
+                    <a href="#">
+                        ${author.name}
+                    </a>
+                </div>
                 <div class="post-time">
-                    <%--<fmt:parseDate value="${picture.uploadAt}" pattern="yyyy-MM-dd" var="dateObj"/>--%>
                     <fmt:formatDate var="reTime" value="${Date(picture.uploadAt)}" pattern="yyyy-MM-dd"/>
                     ${reTime}
                 </div>
-                <div class="heart">
-                    <a href="javascript:void(0);" class="like">
-                        <span class="blank_heart"></span>
-                    </a>
-                    <a href="javascript:void(0);" class="add-album">加入专辑</a>
-                </div>
+                <shiro:authenticated>
+                    <div class="heart">
+                        <a href="javascript:void(0);" class="like">
+                            <span class="blank_heart"></span>
+                        </a>
+                        <a href="javascript:void(0);" class="add-album">加入专辑</a>
+                    </div>
+                </shiro:authenticated>
             </div>
         </div>
         <div class="image-desc">
@@ -50,37 +65,32 @@
         </div>
 
         <div class="comment-box">
-            <c:forEach var="comment" items="${userCommentMap}">
-            <div class="comment-item">
+            <c:forEach var="commentMap" items="${userCommentList}">
+                <c:forEach var="map" items="${commentMap}">
+                <div class="comment-item">
                 <div class="avatar">
-                    <img src="upload/album/3.jpg" class="profile">
+                    <img src="${map.key.avatar}" class="profile">
                 </div>
                 <div class="comment-info">
                     <div class="nav">
-                        <span><a href="#" class="author-name">${items.name}</a></span>
-                        <span class="post-time">发表于:2018-9-10</span>
+                        <span><a href="#" class="author-name">${map.key.name}</a></span>
+                        <input name="replyTo-card" style="display:none" value="${map.key.uid}"/>
+                        <input name="picture-card" style="display:none"  value="${picture.picId}"/>
+                        <input name="user-card" style="display:none"  value="${sessionScope.user.uid}"/>
+                        <span class="post-time">发表于:
+                            <fmt:formatDate var="creatTime" value="${Date(map.value.createAt)}" pattern="yyyy-MM-dd"/>
+                                ${creatTime}
+                        </span>
                         <shiro:authenticated>
                             <span class="reply"><a href="javascript:void(0);" class="show-editor">回复</a></span>
                         </shiro:authenticated>
                     </div>
                     <div class="content">
-                        <p>时代之音，没说的
-                                到底是为什么呢哈哈哈
-                            我就是这么帅,你有什么办法吗
-                            有种来打我啊,我就是这么吊
-                            哈哈哈哈哈,我就是狂霸酷吊炫的代表
-                            你要来不要,要来就干
-                            不来就滚
-                            我就是这么有个性啊
-                            16461.135434156454
-                            154313496874643203.
-                            6046046764643203
-                            54345614678941.32465456
-                            21443464946312
-                            241654631631</p>
+                            ${map.value.content}
                     </div>
                 </div>
             </div>
+                </c:forEach>
             </c:forEach>
 
 
@@ -89,15 +99,19 @@
                 <span>我来说两句</span>
             </div>
             <div class="post-box">
-                <form method="post" class="clearfix" action="addComment/${sessionScope.user.uid}/${picture.picId}">
+                <form method="post" class="clearfix">
                     <div class="avatar">
                         <img src="${sessionScope.user.avatar}" class="profile">
                     </div>
                     <div class="post-content">
-                        <textarea name="content" cols="90" rows="10"></textarea>
+                        <textarea name="content" id="content" cols="90" rows="10"></textarea>
                     </div>
                     <div>
-                        <span><a href="addComment/${sessionScope.user.uid}/${picture.picId}" class="post-btn">发表评论</a></span>
+                        <input name="author-card" style="display:none" value="${sessionScope.user.uid}"/>
+                        <input name="picture-card" style="display:none"  value="${picture.picId}"/>
+                    </div>
+                    <div>
+                        <span><a href="javascript:void (0);" class="post-btn">发表评论</a></span>
                     </div>
                 </form>
             </div>
