@@ -8,7 +8,6 @@ import com.ssm.util.AES;
 import com.ssm.util.CookieUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,13 +25,13 @@ import java.util.*;
 @RequestMapping("/user")
 public class UserAction {
 
-    private MyUserService MyUserService;
+    private MyUserService myUserService;
 
     private MyPictureService myPictureService;
 
     @Autowired
     public UserAction(MyUserService MyUserService) {
-        this.MyUserService = MyUserService;
+        this.myUserService = MyUserService;
     }
 
 
@@ -50,7 +49,7 @@ public class UserAction {
         ModelAndView modelAndView = new ModelAndView();
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-        User user = this.MyUserService.selectUserById(uid);
+        User user = this.myUserService.selectUserById(uid);
         modelAndView.addObject("user", user);
         modelAndView.setViewName("index");
         return modelAndView;
@@ -66,7 +65,7 @@ public class UserAction {
     @RequestMapping(value = "/signupuser", method = RequestMethod.POST)
     public ModelAndView signUpUser(HttpServletRequest request, HttpServletResponse response, User user) throws Exception {
         ModelAndView mv = new ModelAndView();
-        if (this.MyUserService.signUpUser(user)) {
+        if (this.myUserService.signUpUser(user)) {
             mv.setViewName("index");
             return mv;
         }
@@ -122,7 +121,7 @@ public class UserAction {
             up.setUsername(user.getEmail());
             up.setPassword(user.getPassword().toCharArray());
                 currentUser.login(up);
-                User tmpUser = this.MyUserService.selectUserByEmail(user.getEmail());
+                User tmpUser = this.myUserService.selectUserByEmail(user.getEmail());
                 if (null != tmpUser) {
                     modelAndView.addObject("user", tmpUser);
                     //session存储登录资料
@@ -185,7 +184,7 @@ public class UserAction {
             String salt = AES.AESDncode(AES.PUBLIC_KEY, token);
             uid = AES.AESDncode(salt, uid);
             Long realUid = Long.parseLong(uid);
-            User tmpUser = this.MyUserService.selectUserById(realUid);
+            User tmpUser = this.myUserService.selectUserById(realUid);
             if (null != tmpUser) {
                 this.refreshCookie(response, uid);
             }

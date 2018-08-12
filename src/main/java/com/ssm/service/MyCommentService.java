@@ -11,7 +11,7 @@ import java.util.Map;
 
 public interface MyCommentService {
 
-    List<Map<User,Comment>> getCommentsByPictureId(Long pictureId) throws Exception;
+    List<Map<User,Comment>> getCommentsByPictureId(Long pictureId,int page,int pageSize) throws Exception;
     int addComment(Comment comment) throws Exception;
     int addReply(Comment comment) throws Exception;
 }

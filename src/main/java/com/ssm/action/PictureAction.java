@@ -34,7 +34,7 @@ public class PictureAction {
     private MyUserService myUserService;
     private MyPictureService myPictureService;
     private MyCommentService myCommentService;
-    private MyUserPictureService myUserPictureService;
+
 
     public MyUserService getMyUserService() {
         return myUserService;
@@ -56,13 +56,6 @@ public class PictureAction {
     @Autowired
     public void setMyCommentService(MyCommentService myCommentService) {
         this.myCommentService = myCommentService;
-    }
-    public MyUserPictureService getMyUserPictureService() {
-        return myUserPictureService;
-    }
-    @Autowired
-    public void setMyUserPictureService(MyUserPictureService myUserPictureService) {
-        this.myUserPictureService = myUserPictureService;
     }
 
     @RequiresAuthentication
@@ -126,7 +119,7 @@ public class PictureAction {
                 modelAndView.addObject("picture",picture);
                 modelAndView.setViewName("image");
                 //查询图片的所有评论
-                List<Map<User,Comment>> userCommentList = myCommentService.getCommentsByPictureId(pid);
+                List<Map<User,Comment>> userCommentList = myCommentService.getCommentsByPictureId(pid,1,10);
                 if(null!=userCommentList && 0!=userCommentList.size()){
                     modelAndView.addObject("userCommentList",userCommentList);
                 }
@@ -146,8 +139,7 @@ public class PictureAction {
     public Map<Object,List> getUserCollectedPictureByUid(@PathVariable("uid") Long uid,@PathVariable("page") int page) throws Exception{
         User tmpUser = myUserService.selectUserById(uid);
         if(tmpUser!=null){
-            PageHelper.startPage(page, 10);
-            List<Picture> pictureList = myPictureService.getUserCollectedPicturesByUid(uid);
+            List<Picture> pictureList = myPictureService.getUserCollectedPicturesByUid(uid,page,10);
             ObjectMapper mapper = new ObjectMapper();
             String json = mapper.writeValueAsString(tmpUser);
             Map<Object,List> result = new HashMap<Object,List>();
@@ -165,7 +157,7 @@ public class PictureAction {
         UserPicture userPicture = new UserPicture();
         userPicture.setUserId(userId);
         userPicture.setPictureId(pictureId);
-        int affected = myUserPictureService.addUserPicture(userPicture);
+        int affected = myPictureService.addUserPicture(userPicture);
         if(0!=affected){
             map.put("message","success");
             return map;
@@ -178,11 +170,11 @@ public class PictureAction {
     @RequestMapping(value = "picture/removePicture")
     @ResponseBody
     public Map<String,String> removeCollectedPicture(Long userId,Long pictureId) throws Exception{
-        UserPicture userPicture = myUserPictureService.getUserPictureByIds(userId,pictureId);
+        UserPicture userPicture = myPictureService.getUserPictureByIds(userId,pictureId);
         Map<String,String> map = new HashMap<String, String>();
         if(null!=userPicture)
         {
-            if(myUserPictureService.removeUserPicture(userPicture)) {
+            if(myPictureService.removeUserPicture(userPicture)) {
                 map.put("message","success");
                 return map;
             }
@@ -194,7 +186,7 @@ public class PictureAction {
     @RequestMapping(value = "/picture/getCollectedPicture")
     @ResponseBody
     public Map<String,Object> getCollectedPicture(Long userId,Long pictureId) throws Exception{
-        UserPicture userPicture = myUserPictureService.getUserPictureByIds(userId,pictureId);
+        UserPicture userPicture = myPictureService.getUserPictureByIds(userId,pictureId);
         Map<String,Object> map = new HashMap<String, Object>();
         if(null!=userPicture)
         {

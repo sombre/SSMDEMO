@@ -75,6 +75,7 @@
             </div>
 
             <div class="album-box clearfix">
+
                 <div class="album-item">
                         <div class="album-avatar">
                             <div>

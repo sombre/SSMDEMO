@@ -17,6 +17,9 @@ $().ready(function(){
         }
         //专辑选项卡,读取用户专辑
         if(_index===1){
+            console.log(userId);
+            getAlbumData(userId,createAlbumItem);
+
 
         }
         //设置选项卡,读取用户资料,可以修改
@@ -43,7 +46,7 @@ $().ready(function(){
 
 function initTab(userId) {
     $(".tab-menu li:first-child ").addClass("change");
-    getPictureData(userId,appendItemToWaterFall);
+    // getPictureData(userId,appendItemToWaterFall);
 }
 
 
@@ -142,8 +145,13 @@ function getAlbumData(userId,callBack) {
         url: "user/" + userId + "/album/" + page,
         dataType: "json",
         async:true,
+        data:{
+          "page":page,
+          "pageSize":10
+        },
         content: "application/x-www-form-urlencoded",
         success: function (data) {
+            console.log(data);
             callBack(data);
         },
         error: function (data) {
@@ -151,6 +159,22 @@ function getAlbumData(userId,callBack) {
         }
     });
 }
+
+function createAlbumItem() {
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -164,7 +188,9 @@ function displayByUrl(tabMenuLi,tabBox,location) {
     }
     if((-1)!==location.search(/album/)){
         tabBox.find(".album-box").show().siblings().hide();
-        userId = getCookie("user");
+        userId = $(".userspace-card").text();
+        console.log(userId);
+        getAlbumData(userId,createAlbumItem);
         // data = getAlbumData(userId);
         tabMenuLi.eq(1).addClass("change").siblings().removeClass("change");
     }

@@ -1,20 +1,26 @@
 package com.ssm.service;
 
+import com.ssm.dao.AlbumMapper;
+import com.ssm.dao.AlbumService;
 import com.ssm.dao.UserAlbumMapper;
+import com.ssm.dao.UserAlbumService;
+import com.ssm.model.Album;
 import com.ssm.model.UserAlbum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class MyUserAlbumServiceImpl implements MyUserAlbumService {
+
     private UserAlbumMapper userAlbumMapper;
 
     public UserAlbumMapper getUserAlbumMapper() {
         return userAlbumMapper;
     }
-
     @Autowired
     public void setUserAlbumMapper(UserAlbumMapper userAlbumMapper) {
         this.userAlbumMapper = userAlbumMapper;

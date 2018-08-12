@@ -121,9 +121,9 @@
     color: #000;
 }
 .waterfall-info{
-    height: 67px;
     padding-left: 12px;
     border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 20px;
 }
 .waterfall-info .icon {
     color: #bbb;
