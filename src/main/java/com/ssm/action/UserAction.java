@@ -84,6 +84,10 @@ public class UserAction {
         if(null!=uid){
             modelAndView.setViewName("user");
             modelAndView.addObject("userSpaceId",uid);
+            User user = myUserService.selectUserById(uid);
+            if(null!=user){
+                modelAndView.addObject("space",user);
+            }
         }
         return modelAndView;
     }
@@ -95,6 +99,10 @@ public class UserAction {
         if(null!=uid){
             modelAndView.setViewName("user");
             modelAndView.addObject("userSpaceId",uid);
+            User user = myUserService.selectUserById(uid);
+            if(null!=user){
+                modelAndView.addObject("space",user);
+            }
         }
         return modelAndView;
     }
@@ -106,6 +114,10 @@ public class UserAction {
         if(null!=uid){
             modelAndView.setViewName("user");
             modelAndView.addObject("userSpaceId",uid);
+            User user = myUserService.selectUserById(uid);
+            if(null!=user){
+                modelAndView.addObject("space",user);
+            }
         }
         return  modelAndView;
     }

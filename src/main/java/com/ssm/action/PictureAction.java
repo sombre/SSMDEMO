@@ -136,10 +136,10 @@ public class PictureAction {
 
     @ResponseBody
     @RequestMapping(value = "user/{uid}/picture/{page}")
-    public Map<Object,List> getUserCollectedPictureByUid(@PathVariable("uid") Long uid,@PathVariable("page") int page) throws Exception{
+    public Map<Object,List> getUserCollectedPictureByUid(@PathVariable("uid") Long uid,@PathVariable("page") int page,int pageSize) throws Exception{
         User tmpUser = myUserService.selectUserById(uid);
         if(tmpUser!=null){
-            List<Picture> pictureList = myPictureService.getUserCollectedPicturesByUid(uid,page,10);
+            List<Picture> pictureList = myPictureService.getUserCollectedPicturesByUid(uid,page,pageSize);
             ObjectMapper mapper = new ObjectMapper();
             String json = mapper.writeValueAsString(tmpUser);
             Map<Object,List> result = new HashMap<Object,List>();

@@ -15,11 +15,11 @@
 
     <select id="getUserCreatedAlbum" resultMap="AlbumResultMap" parameterType="long">
         SELECT album_id,author_id,create_at,album_title,album_desc FROM album
-        WHERE author_id = #{userId,jdbcType=BIGINT};
+        WHERE author_id = #{userId,jdbcType=BIGINT}
     </select>
 
     <select id="getUserCollectedAlbum" resultMap="AlbumResultMap" parameterType="long">
-        SELECT ab.album_id,ab.author_id,ab.create_at,ab.album_title,ab.album_desc FROM album as ab LEFT JOIN user_album as ua
+        SELECT ab.album_id,ab.author_id,ab.create_at,ab.album_title,ab.album_desc FROM album as ab RIGHT JOIN user_album as ua
         ON ab.album_id = ua.album_id AND ua.user_id = #{userId}
     </select>
 

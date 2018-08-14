@@ -26,98 +26,93 @@
 
 <body>
 
-<div class="cards">
-    <span class="userspace-card">${userSpaceId}</span>
-</div>
 
-<div class="user-box">
-    <div class="tab">
-        <div class="tab-menu clearfix">
-            <ul>
-                <li><a href="javascript:void (0);" class="pic-item"><span>图片</span></a></li>
-                <li><a href="javascript:void (0);" class="album-item"><span>专辑</span></a></li>
-                <shiro:authenticated>
-                    <li><a href="javascript:void (0);" class="setting-item"><span>设置</span></a></li>
-                </shiro:authenticated>
-            </ul>
-        </div>
-        <div class="tab-box">
+<div class="container">
 
-            <div class="user-image">
-                <div class="image-scan clearfix">
-                    <div class="main-waterfall">
-                        <div class="main-inner-title">
-                        </div>
-                        <div id="waterfall" class="waterfall clearfix">
-                        </div>
-                    </div>
 
-                    <div class="page-nav">
-                        <div class="page-list">
-                            <ul>
-                                <li><a href="#" class="pre-page">上一页</a></li>
-                                <li><a href="#" class="first-page">1</a></li>
-                                <li class="dot">...</li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li class="cur-page">6</li>
-                                <li><a href="#">7</a></li>
-                                <li><a href="#">8</a></li>
-                                <li class="dot">...</li>
-                                <li><a href="#" class="last-page">30</a></li>
-                                <li><a href="#" class="next-page">下一页</a></li>
-                                <li><input type="text" class="go"></li>
-                                <li><a href="#" class="go-btn">Go</a></li>
-                            </ul>
-                        </div>
+    <div class="user-card">
+        <div class="inner">
+            <div class="inner-content">
+                <div class="avatar-unit">
+                    <div class="img">
+                        <img src="upload/1.jpg" class="current-avatar">
                     </div>
                 </div>
+                <div class="head-line">
+                    <div class="name">
+                        ${space.name}
+                    </div>
+                </div>
+                <div class="introduction">
+                    我的天啊,这个世界真是好玩
+                </div>
+            </div>
+            <div class="user-tabs">
+                <a href="javascript:void(0);" class="which-tab">新建专辑</a>
+                <a href="javascript:void(0);" class="which-tab">删除专辑</a>
+            </div>
+        </div>
+
+
+
+
+        <div class="cards">
+            <span class="userspace-card">${userSpaceId}</span>
+        </div>
+    </div>
+
+    <div class="space-wrapper">
+
+        <div class="space-inner">
+
+            <div class="space-tabs clearfix">
+                <ul>
+                    <li><a href="javascript:void (0);" class="pic-item"><span>图片</span></a></li>
+                    <li><a href="javascript:void (0);" class="album-item"><span>专辑</span></a></li>
+                    <shiro:authenticated>
+                        <li><a href="javascript:void (0);" class="setting-item"><span>设置</span></a></li>
+                    </shiro:authenticated>
+                </ul>
             </div>
 
-            <div class="album-box clearfix">
 
-                <div class="album-item">
-                        <div class="album-avatar">
-                            <div>
-                                <a href="javascript:void(0);">
-                                    <img src="upload/1.jpg" class="album-profile">
-                                </a>
+            <div class="space-content">
+
+                <div class="user-image">
+                    <div class="image-scan clearfix">
+                        <div class="main-waterfall">
+                            <div class="main-inner-title">
+                            </div>
+                            <div id="waterfall" class="waterfall clearfix">
                             </div>
                         </div>
-                        <div class="album-info">
-                            <h3>专辑名字</h3>
-                            <p>224图片 · 4319收藏</p>
-                        </div>
-                    </div>
-                <div class="album-item">
-                    <div class="album-avatar">
-                        <div>
-                            <a href="javascript:void(0);">
-                                <img src="upload/1.jpg" class="album-profile">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="album-info">
-                        <h3>专辑名字</h3>
-                        <p>224图片 · 4319收藏</p>
-                    </div>
-                </div>
-                <div class="album-item">
-                    <div class="album-avatar">
-                        <div>
-                            <a href="javascript:void(0);">
-                                <img src="upload/1.jpg" class="album-profile">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="album-info">
-                        <h3>专辑名字</h3>
-                        <p>224图片 · 4319收藏</p>
-                    </div>
-                </div>
-            </div>
 
-            <div class="user-setting">
+                        <div class="page-nav">
+                            <div class="page-list">
+                                <ul>
+                                    <li><a href="#" class="pre-page">上一页</a></li>
+                                    <li><a href="#" class="first-page">1</a></li>
+                                    <li class="dot">...</li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li class="cur-page">6</li>
+                                    <li><a href="#">7</a></li>
+                                    <li><a href="#">8</a></li>
+                                    <li class="dot">...</li>
+                                    <li><a href="#" class="last-page">30</a></li>
+                                    <li><a href="#" class="next-page">下一页</a></li>
+                                    <li><input type="text" class="go"></li>
+                                    <li><a href="#" class="go-btn">Go</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="album-box clearfix">
+                </div>
+
+                <div class="user-setting">
                     <div class="setting-box">
                         <div class="setting-title"><span>修改信息</span></div>
                         <div class="modify-box">
@@ -144,49 +139,41 @@
                             </form>
                         </div>
                     </div>
+                </div>
+
+
+                <div class="mask">
+                </div>
+                <div class="mask-inner">
+                    <h3 class="mask-title">添加到专辑:</h3>
+                    <form action="#" method="post">
+                        <div class="album-div">
+                            <table>
+                                <tr>
+                                    <td>专辑名：</td>
+                                    <td class="zhezhao_value">
+                                        <input type="checkbox" name="album" value="Bike"> 夏天在静静地流淌
+                                        <br>
+                                        <input type="checkbox" name="album" value="Car"> I have a car
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="btn-div">
+                            <input type="submit" class="submit" value="确定" />
+                            <input type="button" class="concel" value="取消" onclick="hideMask()" />
+                            <input type="reset" class="reset" value="清空"  />
+                        </div>
+                    </form>
+                </div>
             </div>
-
-
-
-
-            <div class="mask">
-            </div>
-            <div class="mask-inner">
-                <h3 class="mask-title">添加到专辑:</h3>
-                <form action="#" method="post">
-                    <div class="album-div">
-                        <table>
-                            <tr>
-                                <td>专辑名：</td>
-                                <td class="zhezhao_value">
-                                    <input type="checkbox" name="album" value="Bike"> 夏天在静静地流淌
-                                    <br>
-                                    <input type="checkbox" name="album" value="Car"> I have a car
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="btn-div">
-                        <input type="submit" class="submit" value="确定" />
-                        <input type="button" class="concel" value="取消" onclick="hideMask()" />
-                        <input type="reset" class="reset" value="清空"  />
-                    </div>
-                </form>
-            </div>
-
-
-
-
-
-
-
-
-
-
 
         </div>
+
     </div>
+
 </div>
+
 
 
 

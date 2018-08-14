@@ -63,8 +63,7 @@ public class MyPictureServiceImpl implements MyPictureService {
     }
 
     public Picture getPictureById(long pictureId) throws Exception{
-        Picture pic = pictureMapper.selectByPrimaryKey(pictureId);
-        return pic;
+        return pictureMapper.selectByPrimaryKey(pictureId);
     }
 
     public List<Picture> getUserCollectedPicturesByUid(long userId,int page,int pageSize) throws Exception{

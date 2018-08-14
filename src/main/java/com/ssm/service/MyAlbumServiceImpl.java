@@ -1,10 +1,7 @@
 package com.ssm.service;
 
 import com.github.pagehelper.PageHelper;
-import com.ssm.dao.AlbumPictureService;
-import com.ssm.dao.AlbumService;
-import com.ssm.dao.UserPictureMapper;
-import com.ssm.dao.UserPictureService;
+import com.ssm.dao.*;
 import com.ssm.model.Album;
 import com.ssm.model.AlbumPicture;
 import com.ssm.model.UserPicture;
@@ -19,6 +16,7 @@ import java.util.List;
 public class MyAlbumServiceImpl implements MyAlbumService {
 
     private AlbumService albumService;
+    private AlbumMapper albumMapper;
 
     private UserPictureMapper userPictureMapper;
     private UserPictureService userPictureService;
@@ -58,23 +56,32 @@ public class MyAlbumServiceImpl implements MyAlbumService {
         this.albumService = albumService;
     }
 
+    public AlbumMapper getAlbumMapper() {
+        return albumMapper;
+    }
+    @Autowired
+    public void setAlbumMapper(AlbumMapper albumMapper) {
+        this.albumMapper = albumMapper;
+    }
 
-
-
-    public List<Album> getUserCollectedAlbum(Long userId,int page,int pageSize) throws Exception{
+    public List<Album> getUserCollectedAlbum(Long userId, int page, int pageSize) throws Exception{
         PageHelper.startPage(1,10);
         return albumService.getUserCollectedAlbum(userId);
     }
 
 
+    public Album getAlbumDataByAlbumId(Long albumId) throws Exception {
+        return albumMapper.selectByPrimaryKey(albumId);
+    }
 
-    public List<Album> getUserCreatedAlbum(Long userId,int page,int pageSize) throws Exception {
+    public List<Album> getUserCreatedAlbum(Long userId, int page, int pageSize) throws Exception {
 //        PageHelper.startPage(page, pageSize);
         return albumService.getUserCreatedAlbum(userId);
     }
 
     @Transactional(isolation = Isolation.READ_COMMITTED,timeout = 3)
-    public List<AlbumPicture> getAlbumPicturesByAlbumId(Long albumId) throws Exception {
+    public List<AlbumPicture> getAlbumPicturesByAlbumId(Long albumId,int page,int pageSize) throws Exception {
+        PageHelper.startPage(page,pageSize);
         return albumPictureService.getAlbumPictures(albumId);
     }
 

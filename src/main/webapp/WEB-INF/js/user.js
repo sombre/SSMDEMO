@@ -1,7 +1,7 @@
 
 $().ready(function(){
     waterfall();
-    var tabMenuLi = $(".tab-menu li");
+    var tabMenuLi = $(".space-tabs li");
     var userId=$(".userspace-card").text();
     //初始化选项卡
     initTab(userId);
@@ -18,16 +18,14 @@ $().ready(function(){
         //专辑选项卡,读取用户专辑
         if(_index===1){
             console.log(userId);
-            getAlbumData(userId,createAlbumItem);
-
-
+            getAlbumData(userId,appendItemToAlbum);
         }
         //设置选项卡,读取用户资料,可以修改
         if(_index===2){
 
         }
         //让内容框的第 _index 个显示出来，其他的被隐藏
-        $(".tab-box>div").eq(_index).show().siblings().hide();
+        $(".space-content>div").eq(_index).show().siblings().hide();
         //改变选中时候的选项框的样式，移除其他几个选项的样式
         $(this).addClass("change").siblings().removeClass("change");
         // ===============瀑布流==============
@@ -36,7 +34,7 @@ $().ready(function(){
 
     //根据url的不同,显示不同的选项卡
     waterfall();
-    var tabBox = $(".tab-box");
+    var tabBox = $(".space-content");
     var location = window.location.pathname;
     displayByUrl(tabMenuLi,tabBox,location);
 
@@ -45,8 +43,7 @@ $().ready(function(){
 
 
 function initTab(userId) {
-    $(".tab-menu li:first-child ").addClass("change");
-    // getPictureData(userId,appendItemToWaterFall);
+    $(".space-tabs li:first-child ").addClass("change");
 }
 
 
@@ -56,10 +53,14 @@ function initTab(userId) {
 //获取当前用户空间的图片资料
 function getPictureData(userId,callBack) {
     var items = $("#waterfall").find("div.item");
-    var page = Math.floor(items.length/10)+1;
+    var pageSize =10;
+    var page = Math.floor(items.length/pageSize)+1;
     $.ajax({
         method: "POST",
         url: "user/" + userId + "/picture/" + page,
+        data:{
+            "pageSize": pageSize
+        },
         dataType: "json",
         async:true,
         content: "application/x-www-form-urlencoded",
@@ -139,7 +140,8 @@ function appendItemToWaterFall(data) {
 
 function getAlbumData(userId,callBack) {
     var items = $("#waterfall").find("div.item");
-    var page = Math.floor(items.length/10)+1;
+    var pageSize =10;
+    var page = Math.floor(items.length/pageSize)+1;
     $.ajax({
         method: "POST",
         url: "user/" + userId + "/album/" + page,
@@ -160,7 +162,43 @@ function getAlbumData(userId,callBack) {
     });
 }
 
-function createAlbumItem() {
+
+
+function appendItemToAlbum(data) {
+    var user,album;
+    var albumBox = $(".album-box");
+    for(var i in data){
+        for(var j in data[i]){
+            user =j;
+            album = data[i][j];
+            var albumItem = createAlbumItem(user,album);
+            albumBox.append(albumItem);
+        }
+
+    }
+
+
+}
+
+function createAlbumItem(user,album) {
+    var items = $("#waterfall").find("div.item");
+    var pageSize =10;
+    var page = Math.floor(items.length/pageSize)+1;
+    var albumItem = ' <div class="album-item">\n' +
+        '                        <div class="album-avatar">\n' +
+        '                            <div>\n' +
+        '                                <a href='+'album/'+album.albumId+'>\n' +
+        '                                    <img src="upload/1.jpg" class="album-profile">\n' +
+        '                                </a>\n' +
+        '                            </div>\n' +
+        '                        </div>\n' +
+        '                        <div class="album-info">\n' +
+        '                            <h3>'+album.albumTitle+'</h3>\n' +
+        '                            <p>224图片 · 4319收藏</p>\n' +
+        '                        </div>\n' +
+        '                    </div>';
+
+    return $(albumItem);
 
 }
 
@@ -189,9 +227,7 @@ function displayByUrl(tabMenuLi,tabBox,location) {
     if((-1)!==location.search(/album/)){
         tabBox.find(".album-box").show().siblings().hide();
         userId = $(".userspace-card").text();
-        console.log(userId);
-        getAlbumData(userId,createAlbumItem);
-        // data = getAlbumData(userId);
+        getAlbumData(userId,appendItemToAlbum);
         tabMenuLi.eq(1).addClass("change").siblings().removeClass("change");
     }
 

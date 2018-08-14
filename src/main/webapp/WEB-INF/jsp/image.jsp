@@ -30,7 +30,7 @@
     </div>
     <div class="image-inner">
         <div class="image-header">
-            <div class="user-box">
+            <div class="space-wrapper">
                 <div class="profile-box">
                     <a href="#">
                         <img src="${author.avatar}" class="profile">
