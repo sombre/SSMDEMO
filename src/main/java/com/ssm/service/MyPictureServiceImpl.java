@@ -71,8 +71,9 @@ public class MyPictureServiceImpl implements MyPictureService {
         return pictureService.getUserCollectedPicture(userId);
     }
 
-    public boolean updatePicture(Picture picture) throws Exception{
-        return false;
+    @Transactional(isolation = Isolation.READ_COMMITTED,timeout = 3)
+    public int updatePicture(Picture picture) throws Exception{
+        return pictureMapper.updateByPrimaryKey(picture);
     }
 
 
@@ -93,6 +94,7 @@ public class MyPictureServiceImpl implements MyPictureService {
         if(null!=userPicture) return userPicture;
         return null;
     }
+
 
 
 

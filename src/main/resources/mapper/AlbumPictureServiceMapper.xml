@@ -16,6 +16,14 @@
         WHERE album_picture.album_id =#{albumId}
     </select>
 
+    <delete id="deleteAlbumPictureByIds" parameterType="long">
+        DELETE FROM album_picture WHERE album_id=#{arg0} AND picture_id = #{arg1}
+    </delete>
+
+    <delete id="deleteAlbumPictureByAlbumId" parameterType="long">
+        DELETE FROM album_picture WHERE album_id=#{albumId}
+    </delete>
+
 
 
 </mapper>

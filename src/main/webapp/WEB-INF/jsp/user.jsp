@@ -48,8 +48,9 @@
                 </div>
             </div>
             <div class="user-tabs">
-                <a href="javascript:void(0);" class="which-tab">新建专辑</a>
-                <a href="javascript:void(0);" class="which-tab">删除专辑</a>
+                <shiro:authenticated>
+                    <a href="javascript:void(0);" class="which-tab create-album">新建专辑</a>
+                </shiro:authenticated>
             </div>
         </div>
 
@@ -141,31 +142,6 @@
                     </div>
                 </div>
 
-
-                <div class="mask">
-                </div>
-                <div class="mask-inner">
-                    <h3 class="mask-title">添加到专辑:</h3>
-                    <form action="#" method="post">
-                        <div class="album-div">
-                            <table>
-                                <tr>
-                                    <td>专辑名：</td>
-                                    <td class="zhezhao_value">
-                                        <input type="checkbox" name="album" value="Bike"> 夏天在静静地流淌
-                                        <br>
-                                        <input type="checkbox" name="album" value="Car"> I have a car
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="btn-div">
-                            <input type="submit" class="submit" value="确定" />
-                            <input type="button" class="concel" value="取消" onclick="hideMask()" />
-                            <input type="reset" class="reset" value="清空"  />
-                        </div>
-                    </form>
-                </div>
             </div>
 
         </div>
@@ -174,6 +150,34 @@
 
 </div>
 
+
+<div class="mask">
+</div>
+<div class="mask-inner">
+    <h3 class="mask-title">新建专辑:</h3>
+    <form action="#" method="post">
+        <div class="album-div">
+            <div class="mask-head">
+                <div class="mask-albumTitle">
+                    <p>
+                        专辑名:
+                    </p>
+                    <input type="text" name="albumTitle" class="title-text"  placeholder="专辑名">
+                </div>
+                <div class="mask-albumDesc">
+                    <p>
+                        专辑描述:
+                    </p>
+                    <textarea name="albumDesc" id="albumDesc" class="desc-text" cols="50" rows="10" placeholder="专辑描述"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="btn-div">
+            <a  href="javascript:void(0);" class="submit" >确定</a>
+            <a  href="javascript:void(0);" class="cancel" >取消</a>
+        </div>
+    </form>
+</div>
 
 
 

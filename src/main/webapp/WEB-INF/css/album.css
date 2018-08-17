@@ -1,15 +1,14 @@
 
 
-
-@media screen and (min-width: 1200px){
-    .wrapper-box{
+.wrapper-box{
     position: relative;
     margin: 0 auto;
     border: 0;
     width: 1200px;
-    }
 }
-
+.album-card{
+    display: none;
+}
 
 .wrapper-box .board{
     margin: 20px 0 ;
@@ -98,4 +97,29 @@
     border-left: 1px solid #EDEDED;
     text-decoration: none;
     color: #777;
+}
+
+
+
+
+.album-div .mask-albumTitle{
+    margin-bottom: 20px;
+}
+
+.album-div .mask-albumTitle .title-text{
+    width: 300px;
+    height: 30px;
+    padding-left: 4px;
+    margin-top: 10px;
+    border: 1px solid #c5c5c5;
+    box-sizing: border-box;
+}
+
+
+.mask-albumDesc{
+
+}
+
+.mask-albumDesc .desc-text{
+    margin-top:10px;
 }

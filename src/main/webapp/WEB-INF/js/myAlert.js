@@ -9,7 +9,7 @@
 			    title:"提示",
                 message:"程序员太傻，忘记输入提示内容啦……",
                 callback:function(){}
-			}
+			};
 			if(typeof(options)==="string"){
 				option.message=options
 			}else{
@@ -27,7 +27,7 @@
             // {title:'Title',
             // message:'message',
             // callback:function(){alert('callback')}}or"需要提示的话"$.myConfrim()
-			var option={title:"提示",message:"程序员太傻，忘记输入提示内容啦……",callback:function(){}}
+			var option={title:"提示",message:"程序员太傻，忘记输入提示内容啦……",callback:function(){}};
 			if(typeof(options)=="string"){
 				option.message=options
 			}else{
@@ -58,4 +58,4 @@
 			},1000)
 		}
 	});
-})(jQuery)
+})(jQuery);

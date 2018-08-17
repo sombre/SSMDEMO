@@ -2,14 +2,14 @@ package com.ssm.action;
 
 
 import com.github.pagehelper.PageHelper;
-import com.ssm.model.Album;
-import com.ssm.model.AlbumPicture;
-import com.ssm.model.Picture;
-import com.ssm.model.User;
+import com.ssm.model.*;
 import com.ssm.service.*;
 import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -82,6 +82,84 @@ public class AlbumAction {
         }
         modelAndView.setViewName("album");
         return  modelAndView;
+    }
+
+    @RequiresAuthentication
+    @RequestMapping(value = "album/createAlbum")
+    @ResponseBody
+    @Transactional(isolation = Isolation.READ_COMMITTED,timeout = 300,rollbackFor = {Exception.class})
+    public Map<Object,Object> createAlbum(Long userId,String albumTitle,String albumDesc) throws Exception{
+        Map<Object,Object> map = new HashMap<Object,Object>();
+        if(null!=userId && null!=albumTitle && null!=albumDesc){
+            Album album = new Album();
+            album.setAuthorId(userId);
+            album.setAlbumTitle(albumTitle);
+            album.setAlbumDesc(albumDesc);
+            int affected = myAlbumService.createAlbum(album);
+            if(0!=affected){
+                UserAlbum userAlbum = new UserAlbum();
+                userAlbum.setAlbumId(album.getAlbumId());
+                userAlbum.setUserId(userId);
+                affected = myAlbumService.collectedAlbum(userAlbum);
+                if(0!=affected){
+                    map.put("album",album);
+                    map.put("message","添加专辑成功!");
+                    return map;
+                }
+            }
+        }
+        return  null;
+    }
+
+
+    @RequiresAuthentication
+    @RequestMapping(value = "album/deleteAlbum")
+    @ResponseBody
+    @Transactional(isolation = Isolation.READ_COMMITTED,timeout = 300,rollbackFor = {Exception.class})
+    public Map<Object,Object> deleteAlbum(Long albumId,Long userId) throws Exception{
+        Map<Object,Object> map = new HashMap<Object,Object>();
+        Album album = myAlbumService.getAlbumDataByAlbumId(albumId);
+        if(null!=album){
+            int affected = myAlbumService.deleteAlbum(album);
+            if(0!=affected){
+                UserAlbum userAlbum = new UserAlbum();
+                userAlbum.setUserId(userId);
+                userAlbum.setAlbumId(albumId);
+                affected = myAlbumService.removeCollectedAlbum(userAlbum);
+                if(0!=affected){
+                    myAlbumService.removeAlbumAllPicture(albumId);
+                    map.put("message","成功删除专辑!");
+                    return map;
+                }
+            }
+        }
+        return  null;
+    }
+
+
+
+    @RequiresAuthentication
+    @RequestMapping(value = "album/updateAlbum")
+    @ResponseBody
+    @Transactional(isolation = Isolation.READ_COMMITTED,timeout = 300,rollbackFor = {Exception.class})
+    public Map<Object,Object> updateAlbum(Long albumId,String albumTitle,String albumDesc) throws Exception{
+        Map<Object,Object> map = new HashMap<Object,Object>();
+        if(null!=albumId){
+            Album album = myAlbumService.getAlbumDataByAlbumId(albumId);
+            if(null!=album){
+                if(null!=albumTitle && null!=albumDesc){
+                    album.setAlbumTitle(albumTitle);
+                    album.setAlbumDesc(albumDesc);
+                    int affected = myAlbumService.updateAlbum(album);
+                    if(0!=affected){
+                        map.put("album",album);
+                        map.put("message","修改成功!");
+                        return map;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
 

@@ -9,4 +9,5 @@ public interface AlbumService {
     List<Album> getUserCreatedAlbum(Long userId) throws Exception;
     List<Album> getUserCollectedAlbum(Long userId) throws Exception;
 
+
 }

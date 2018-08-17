@@ -10,11 +10,15 @@ public interface MyPictureService {
     int addPicture(Picture picture) throws Exception;
     Picture getPictureById(long pictureId) throws Exception;
     List<Picture> getUserCollectedPicturesByUid(long userId,int page,int pageSize) throws Exception;
-    boolean updatePicture(Picture picture) throws Exception;
+    int updatePicture(Picture picture) throws Exception;
 
 
     int addUserPicture(UserPicture userPicture) throws Exception;
     boolean removeUserPicture(UserPicture userPicture) throws Exception;
     UserPicture getUserPictureByIds(Long userId,Long pictureId) throws Exception;
+
+
+
+
 
 }

@@ -3,10 +3,7 @@ package com.ssm.action;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
-import com.ssm.model.Comment;
-import com.ssm.model.Picture;
-import com.ssm.model.User;
-import com.ssm.model.UserPicture;
+import com.ssm.model.*;
 import com.ssm.service.MyCommentService;
 import com.ssm.service.MyPictureService;
 import com.ssm.service.MyUserPictureService;
@@ -149,6 +146,49 @@ public class PictureAction {
         return null;
     }
 
+
+
+
+
+    @RequestMapping(value = "picture/addPictureThumbNum")
+    @ResponseBody
+    public Map<Object,Object> addPictureThumbNum(Long pictureId) throws Exception{
+        Map<Object,Object> map = new HashMap<Object,Object>();
+        Picture picture = myPictureService.getPictureById(pictureId);
+        if(null!=picture){
+            picture.setThumbNum(picture.getThumbNum()+1);
+            int affected = myPictureService.updatePicture(picture);
+            if(0!=affected){
+                map.put("message","点赞成功!");
+                return map;
+            }
+        }
+        map.put("message","点赞失败!");
+        return null;
+    }
+
+
+    @RequestMapping(value = "picture/removePictureThumbNum")
+    @ResponseBody
+    public Map<Object,Object> removePictureThumbNum(Long pictureId) throws Exception{
+        Map<Object,Object> map = new HashMap<Object,Object>();
+        Picture picture = myPictureService.getPictureById(pictureId);
+        if(null!=picture){
+            picture.setThumbNum(picture.getThumbNum()-1);
+            int affected = myPictureService.updatePicture(picture);
+            if(0!=affected){
+                map.put("message","取消点赞成功!");
+                return map;
+            }
+        }
+        map.put("message","取消点赞失败!");
+        return null;
+    }
+
+
+
+
+
     @RequiresAuthentication
     @RequestMapping(value = "picture/collectPicture")
     @ResponseBody
@@ -159,10 +199,18 @@ public class PictureAction {
         userPicture.setPictureId(pictureId);
         int affected = myPictureService.addUserPicture(userPicture);
         if(0!=affected){
-            map.put("message","success");
-            return map;
+            Picture picture = myPictureService.getPictureById(pictureId);
+            if(null!=picture){
+                picture.setCollectedNum(picture.getCollectedNum()+1);
+                affected = myPictureService.updatePicture(picture);
+                if(0!=affected){
+                    map.put("message","收藏成功!");
+                    return map;
+                }
+            }
+
         }
-        map.put("message","error");
+        map.put("message","收藏失败!");
         return map;
     }
 
@@ -175,13 +223,22 @@ public class PictureAction {
         if(null!=userPicture)
         {
             if(myPictureService.removeUserPicture(userPicture)) {
-                map.put("message","success");
-                return map;
+                Picture picture = myPictureService.getPictureById(pictureId);
+                if(null!=picture){
+                    picture.setCollectedNum(picture.getCollectedNum()-1);
+                    int affected = myPictureService.updatePicture(picture);
+                    if(0!=affected){
+                        map.put("message","取消收藏成功!");
+                        return map;
+                    }
+                }
             }
         }
-        map.put("message","error");
+        map.put("message","取消失败!");
         return map;
     }
+
+
 
     @RequestMapping(value = "/picture/getCollectedPicture")
     @ResponseBody
@@ -193,7 +250,7 @@ public class PictureAction {
             map.put("userPicture",userPicture);
             return map;
         }
-        map.put("message","error");
+        map.put("message","获取图片失败!");
         return map;
     }
 

@@ -6,6 +6,5 @@ import java.util.List;
 
 public interface UserAlbumService {
 
-//    List<Album> getUserCreatedAlbum(Long userId) throws Exception;
-
+    int deleteUserAlbumByIds(Long userId,Long albumId);
 }

@@ -16,6 +16,8 @@
     <jsp:include page="header.jsp"/>
     <link rel="stylesheet" href="css/album.css">
     <link rel="stylesheet" href="css/waterfall.css">
+    <link rel="stylesheet" href="css/myAlert.css">
+    <script type="text/javascript" src="js/myAlert.js"></script>
     <script type="text/javascript" src="js/imagesloaded.js"></script>
     <script type="text/javascript" src="js/masonry.js"></script>
     <script type="text/javascript" src="js/common.js"></script>
@@ -27,6 +29,11 @@
 <body>
 
 <div class="wrapper-box">
+    <div class="cards">
+        <div class="album-card">
+            ${album.albumId}
+        </div>
+    </div>
 
     <div class="board">
         <div class="board-inner">
@@ -46,10 +53,12 @@
                 <img src="upload/1.jpg" alt="">
                 <span class="name">${author.name}</span>
             </a>
-            <div class="tabs">
-                <a href="javascript:void (0);" class="tab">编辑</a>
-                <a href="javascript:void(0);" class="tab">删除</a>
-            </div>
+            <shiro:authenticated>
+                <div class="tabs">
+                    <a href="javascript:void (0);" class="tab edit-album">编辑</a>
+                    <a href="javascript:void(0);" class="tab remove-album">删除</a>
+                </div>
+            </shiro:authenticated>
         </div>
     </div>
 
@@ -76,10 +85,10 @@
                         </p>
                     </div>
                     <div class="collect-info">
-                        <a href="#" class="headImg"><img src="img/cont/waterfall_headImg1.jpeg"></a>
-                        <p class="title"><a href="#">${author.name} </a></p>
+                        <a href="#" class="headImg"><img src="${map.key.avatar}"></a>
+                        <p class="title"><a href="user/${author.uid}/picture">${author.name} </a></p>
                         <p class="to">发表于:
-                            <a href="">
+                            <a href="javascript:void(0);">
                                 <fmt:formatDate var="creatTime" value="${Date(map.value.uploadAt)}" pattern="yyyy-MM-dd"/>
                                     ${creatTime}
                             </a>
@@ -87,16 +96,42 @@
                     </div>
                 </div>
             </c:forEach>
-
         </c:forEach>
-
-
     </div>
 
-
-
-
 </div>
+
+<div class="mask">
+</div>
+<div class="mask-inner">
+    <h3 class="mask-title">编辑专辑:</h3>
+    <form action="#" method="post">
+        <div class="album-div">
+            <div class="mask-head">
+                <div class="mask-albumTitle">
+                    <p>
+                        专辑名:
+                    </p>
+                    <input type="text" name="albumTitle" class="title-text"  placeholder="${album.albumTitle}">
+                </div>
+                <div class="mask-albumDesc">
+                    <p>
+                        专辑描述:
+                    </p>
+                    <textarea name="albumDesc" id="albumDesc" class="desc-text" cols="50" rows="10" placeholder="${album.albumDesc}"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="btn-div">
+            <a  href="javascript:void(0);" class="submit" >确定</a>
+            <a  href="javascript:void(0);" class="cancel" >取消</a>
+        </div>
+    </form>
+</div>
+
+
+
+
 
 
 </body>

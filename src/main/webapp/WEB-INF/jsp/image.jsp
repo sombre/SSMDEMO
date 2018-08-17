@@ -16,7 +16,6 @@
     <jsp:include page="header.jsp"/>
     <link rel="stylesheet" href="css/image.css">
     <script type="text/javascript" src="js/image.js"></script>
-    <script type="text/javascript" src="js/common.js"></script>
     <title>图片本身</title>
 </head>
 

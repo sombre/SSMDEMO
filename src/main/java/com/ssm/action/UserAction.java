@@ -11,6 +11,8 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -63,6 +65,7 @@ public class UserAction {
 
 
     @RequestMapping(value = "/signupuser", method = RequestMethod.POST)
+    @Transactional(isolation = Isolation.READ_COMMITTED,timeout = 300,rollbackFor = {Exception.class})
     public ModelAndView signUpUser(HttpServletRequest request, HttpServletResponse response, User user) throws Exception {
         ModelAndView mv = new ModelAndView();
         if (this.myUserService.signUpUser(user)) {

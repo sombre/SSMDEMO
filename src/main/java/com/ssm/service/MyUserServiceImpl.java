@@ -2,6 +2,7 @@ package com.ssm.service;
 
 import com.ssm.dao.UserMapper;
 import com.ssm.dao.UserService;
+import com.ssm.model.Album;
 import com.ssm.model.User;
 import com.ssm.util.DateUtil;
 import com.ssm.util.Md5;
@@ -13,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MyUserServiceImpl implements MyUserService {
+
+
 
     private UserMapper userMapper;
 
@@ -71,7 +74,7 @@ public class MyUserServiceImpl implements MyUserService {
         return null;
     }
 
-    @Transactional(isolation = Isolation.READ_COMMITTED,timeout = 3)
+    @Transactional(isolation = Isolation.READ_COMMITTED,timeout = 300,rollbackFor = {Exception.class})
     public boolean signUpUser(User user) throws Exception{
         String email = user.getEmail();
         User tmpUser = selectUserByEmail(email);
@@ -88,4 +91,5 @@ public class MyUserServiceImpl implements MyUserService {
         }
         return false;
     }
+
 }
