@@ -10,6 +10,7 @@
 <head>
     <jsp:include page="header.jsp"/>
     <link href="css/signup.css" rel="stylesheet">
+    <script type="text/javascript" src="js/signup.js"></script>
     <title>注册</title>
 </head>
 <body>
@@ -17,7 +18,7 @@
     <div class="signup">
         <div class="signup-title"><span>注册</span></div>
         <div class="sign-box">
-            <form action="http://localhost:8080/ssm/user/signupuser" method="post">
+            <form action="user/signupuser" method="post">
                 <div class="item clearfix">
                     <span >用户名: </span>
                     <input type="text"  name="Name">
@@ -35,7 +36,7 @@
                     <input type="text" name="Gender">
                 </div>
                 <div class="item btn-box">
-                    <a href="user/signupuser" class="signup-btn">注册</a>
+                    <a href="javascript:void(0);" class="signup-btn">注册</a>
                 </div>
             </form>
         </div>

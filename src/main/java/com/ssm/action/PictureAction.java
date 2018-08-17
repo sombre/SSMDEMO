@@ -4,10 +4,7 @@ package com.ssm.action;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.ssm.model.*;
-import com.ssm.service.MyCommentService;
-import com.ssm.service.MyPictureService;
-import com.ssm.service.MyUserPictureService;
-import com.ssm.service.MyUserService;
+import com.ssm.service.*;
 import com.ssm.util.DateUtil;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +28,7 @@ public class PictureAction {
     private MyUserService myUserService;
     private MyPictureService myPictureService;
     private MyCommentService myCommentService;
+    private MyUserPictureService myUserPictureService;
 
 
     public MyUserService getMyUserService() {
@@ -54,13 +52,21 @@ public class PictureAction {
     public void setMyCommentService(MyCommentService myCommentService) {
         this.myCommentService = myCommentService;
     }
+    public MyUserPictureService getMyUserPictureService() {
+        return myUserPictureService;
+    }
+    @Autowired
+    public void setMyUserPictureService(MyUserPictureService myUserPictureService) {
+        this.myUserPictureService = myUserPictureService;
+    }
 
     @RequiresAuthentication
     @ResponseBody
     @RequestMapping(value = "/doUpload")
-    public Picture uploadPicture(HttpSession session, HttpServletRequest request,
+    public Map<Object,Object> uploadPicture(HttpSession session, HttpServletRequest request,
                                       @RequestParam(value = "pic",required = true)CommonsMultipartFile pic, String title, String desc) throws Exception{
         User curUser = (User)session.getAttribute("user");
+        Map<Object,Object> map = new HashMap<Object,Object>();
         if(null!= curUser && null!=title && null!=desc){
             //取文件名
             String fileName = pic.getOriginalFilename();
@@ -99,11 +105,21 @@ public class PictureAction {
             if(0!=affected){
                 picture = myPictureService.getPictureById(pId);
                 if(null!=picture){
-                    return picture;
+                    UserPicture userPicture = new UserPicture();
+                    userPicture.setPictureId(picture.getPicId());
+                    userPicture.setUserId(curUser.getUid());
+                    affected = myUserPictureService.addUserPicture(userPicture);
+                    if(0!=affected){
+                           map.put("picture",picture);
+                           map.put("uploader",curUser);
+                           map.put("message","上传成功!");
+                           return map;
+                    }
                 }
             }
         }
-        return null;
+        map.put("message","上传失败!");
+        return map;
     }
 
 
@@ -133,17 +149,30 @@ public class PictureAction {
 
     @ResponseBody
     @RequestMapping(value = "user/{uid}/picture/{page}")
-    public Map<Object,List> getUserCollectedPictureByUid(@PathVariable("uid") Long uid,@PathVariable("page") int page,int pageSize) throws Exception{
-        User tmpUser = myUserService.selectUserById(uid);
-        if(tmpUser!=null){
+    public Map<Object,Object> getUserCollectedPictureByUid(@PathVariable("uid") Long uid,@PathVariable("page") int page,int pageSize) throws Exception{
+        User spaceOwner = myUserService.selectUserById(uid);
+        Map<Object,Object> map = new HashMap<Object,Object>();
+        List<Object> pictureDataList = new ArrayList<Object>();
+        if(spaceOwner!=null){
             List<Picture> pictureList = myPictureService.getUserCollectedPicturesByUid(uid,page,pageSize);
-            ObjectMapper mapper = new ObjectMapper();
-            String json = mapper.writeValueAsString(tmpUser);
-            Map<Object,List> result = new HashMap<Object,List>();
-            result.put(json,pictureList);
-            return result;
+            if(null!=pictureList){
+                for(Picture picture : pictureList){
+                    Map<Object,Object> pictureDataMap = new HashMap<Object,Object>();
+                    User uploader = myUserService.selectUserById(picture.getUploaderId());
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    if(null!=uploader){
+                        pictureDataMap.put(objectMapper.writeValueAsString(uploader),picture);
+                        pictureDataList.add(pictureDataMap);
+                    }
+                }
+                map.put("pictureDataList",pictureDataList);
+                map.put("spaceOwner",spaceOwner);
+                map.put("message","查询完毕");
+            }
+            return map;
         }
-        return null;
+        map.put("message","查询用户收藏的图片失败!");
+        return map;
     }
 
 

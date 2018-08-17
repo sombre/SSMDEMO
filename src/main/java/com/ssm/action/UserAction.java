@@ -1,6 +1,7 @@
 package com.ssm.action;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssm.model.Picture;
 import com.ssm.model.User;
 import com.ssm.service.MyPictureService;
 import com.ssm.service.MyUserService;
@@ -81,6 +82,9 @@ public class UserAction {
     }
 
 
+
+
+
     @RequestMapping("/{uid}")
     public ModelAndView userSpace(HttpSession session, HttpServletResponse response,@PathVariable("uid") Long uid) throws Exception{
         ModelAndView modelAndView = new ModelAndView();
@@ -89,7 +93,7 @@ public class UserAction {
             modelAndView.addObject("userSpaceId",uid);
             User user = myUserService.selectUserById(uid);
             if(null!=user){
-                modelAndView.addObject("space",user);
+                modelAndView.addObject("spaceOwner",user);
             }
         }
         return modelAndView;
@@ -104,7 +108,7 @@ public class UserAction {
             modelAndView.addObject("userSpaceId",uid);
             User user = myUserService.selectUserById(uid);
             if(null!=user){
-                modelAndView.addObject("space",user);
+                modelAndView.addObject("spaceOwner",user);
             }
         }
         return modelAndView;
@@ -119,7 +123,7 @@ public class UserAction {
             modelAndView.addObject("userSpaceId",uid);
             User user = myUserService.selectUserById(uid);
             if(null!=user){
-                modelAndView.addObject("space",user);
+                modelAndView.addObject("spaceOwner",user);
             }
         }
         return  modelAndView;
@@ -168,6 +172,33 @@ public class UserAction {
 
 
 
+
+    @RequestMapping(value = "/settingUserAvatar")
+    @Transactional(isolation = Isolation.READ_COMMITTED,timeout = 300,rollbackFor = {Exception.class})
+    @ResponseBody
+    public Map<Object,Object> settingUserAvatar(Long userId,Long pictureId,HttpSession session) throws Exception{
+        Map<Object,Object> map = new HashMap<Object,Object>();
+        if(null!=pictureId && null!=userId){
+            Picture picture = myPictureService.getPictureById(pictureId);
+            if(null!=picture){
+                User user = myUserService.selectUserById(userId);
+                if(null!=user){
+                    user.setAvatar(picture.getUrl());
+                    int affected = myUserService.updateUser(user);
+                    if(0!=affected){
+                        map.put("user",user);
+                        map.put("picture",picture);
+                        map.put("message","设定成功!");
+                        session.setAttribute("user",user);
+                        session.setMaxInactiveInterval(3600*24*7);
+                        return map;
+                    }
+                }
+            }
+        }
+        map.put("message","设定失败!");
+        return map;
+    }
 
 
 

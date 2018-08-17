@@ -92,4 +92,8 @@ public class MyUserServiceImpl implements MyUserService {
         return false;
     }
 
+    public int updateUser(User user) throws Exception {
+        return  userMapper.updateByPrimaryKey(user);
+    }
+
 }

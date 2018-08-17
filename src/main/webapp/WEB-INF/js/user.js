@@ -3,7 +3,6 @@ $().ready(function(){
     waterfall();
     var tabMenuLi = $(".space-tabs li");
     var userId=$(".userspace-card").text();
-
     //初始化选项卡
     initTab(userId);
     //绑定选项卡点击事件
@@ -78,9 +77,12 @@ function getPictureData(userId,callBack) {
 
 //创建瀑布流item
 function createPictureItem(user, picture) {
+    console.log(user);
+    console.log(picture);
+    user = $.parseJSON(user);
     var string_timestamp = picture.uploadAt;// String时间戳
     var time = new Date(parseInt(string_timestamp));
-    time = time.Format("yyyy-MM-dd");
+    time = time.format("yyyy-MM-dd");
     var itemHtml = '            <div class="item">\n' +
         '                                <div class="pic">\n' +
         '                                    <a href="picture/'+picture.picId+'"><img src="'+picture.url+'"></a>\n' +
@@ -100,9 +102,9 @@ function createPictureItem(user, picture) {
         '                                </div>\n' +
         '                                <div class="collect-info">\n' +
         '                                    <a href="#" class="headImg">' +
-        '                                           <img src="'+picture.url+'">' +
+        '                                           <img src="'+user.avatar+'">' +
         '                                   </a>\n' +
-        '                                    <p class="title"><a href="user/'+user.uid+'/picture">柠檬橙子 </a></p>\n' +
+        '                                    <p class="title"><a href="user/'+picture.uploaderId+'/picture">'+user.name+' </a></p>\n' +
         '                                    <p class="to">发表于 <a href="">'+time+'</a></p>\n' +
         '                                </div>\n' +
         '                            </div>' ;
@@ -111,11 +113,9 @@ function createPictureItem(user, picture) {
 
 //将瀑布流item更新到waterfall
 function appendItemToWaterFall(data) {
-    var user,pictures;
-    for(var i in data){
-        user = $.parseJSON(i);
-        pictures = data[i];
-    }
+    var spaceOwner= data.spaceOwner;
+    var pictureDataList = data.pictureDataList;
+
     var waterFall = $("#waterfall");
     waterFall.masonry({
         itemSelector: '.item',
@@ -127,10 +127,13 @@ function appendItemToWaterFall(data) {
         //假如这个参数为真,容器container的宽度为100,列宽度为30,则列数应该为100/30=3.333
         //四舍五入,3.33取3.假如列宽度为28,则列数为100/28=3.57...,这个时候列数会取为4,即四舍五入.
     });
-    for(i=0;i<pictures.length;i++){
-        var item = createPictureItem(user,pictures[i]);
-        waterFall.append(item).masonry("appended",item);
-    }
+    $.each(pictureDataList,function (i) {
+        $.each(pictureDataList[i],function (j) {
+            var item = createPictureItem(j,pictureDataList[i][j]);
+            waterFall.append(item).masonry("appended",item);
+        })
+    });
+
     waterfall();
 }
 

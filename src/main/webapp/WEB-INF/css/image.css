@@ -64,6 +64,10 @@
     color:#FE739B;
 }
 
+.image-header .heart .setting-avatar{
+    color:#FE739B;
+}
+
 
 
 .image-desc{
@@ -128,6 +132,11 @@
 .comment-item .reply{
     position:absolute;
     right:20px;
+}
+
+.comment-item .remove {
+    position: absolute;
+    right: 60px;
 }
 
 .comment-item .content{

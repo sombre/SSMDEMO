@@ -15,6 +15,8 @@
 <head>
     <jsp:include page="header.jsp"/>
     <link rel="stylesheet" href="css/image.css">
+    <link rel="stylesheet" href="css/myAlert.css">
+    <script type="text/javascript" src="js/myAlert.js"></script>
     <script type="text/javascript" src="js/image.js"></script>
     <title>图片本身</title>
 </head>
@@ -50,6 +52,7 @@
                             <span class="blank_heart"></span>
                         </a>
                         <a href="javascript:void(0);" class="add-album">加入专辑</a>
+                        <a href="javascript:void(0);" class="setting-avatar">设为头像</a>
                     </div>
                 </shiro:authenticated>
             </div>
@@ -64,33 +67,42 @@
         </div>
 
         <div class="comment-box">
-            <c:forEach var="commentMap" items="${userCommentList}">
-                <c:forEach var="map" items="${commentMap}">
-                <div class="comment-item">
-                <div class="avatar">
-                    <img src="${map.key.avatar}" class="profile">
-                </div>
-                <div class="comment-info">
-                    <div class="nav">
-                        <span><a href="#" class="author-name">${map.key.name}</a></span>
-                        <input name="replyTo-card" style="display:none" value="${map.key.uid}"/>
-                        <input name="picture-card" style="display:none"  value="${picture.picId}"/>
-                        <input name="user-card" style="display:none"  value="${sessionScope.user.uid}"/>
-                        <span class="post-time">发表于:
+            <div class="comment-inner">
+                <c:forEach var="commentMap" items="${userCommentList}">
+                    <c:forEach var="map" items="${commentMap}">
+                        <div class="comment-item">
+                            <div class="avatar">
+                                <img src="${map.key.avatar}" class="profile">
+                            </div>
+                            <div class="comment-info">
+                                <div class="nav">
+                                    <span><a href="user/${map.key.uid}/picture" class="author-name">${map.key.name}</a></span>
+                                    <div class="cards">
+                                        <input name="author-card"  value="${map.value.authorid}"/>
+                                        <input name="picture-card"  value="${picture.picId}"/>
+                                        <input name="user-card"   value="${sessionScope.user.uid}"/>
+                                        <input name="comment-card"  value="${map.value.cid}"/>
+                                    </div>
+                                    <span class="post-time">发表于:
                             <fmt:formatDate var="creatTime" value="${Date(map.value.createAt)}" pattern="yyyy-MM-dd"/>
                                 ${creatTime}
                         </span>
-                        <shiro:authenticated>
-                            <span class="reply"><a href="javascript:void(0);" class="show-editor">回复</a></span>
-                        </shiro:authenticated>
-                    </div>
-                    <div class="content">
-                            ${map.value.content}
-                    </div>
-                </div>
-            </div>
+                                    <shiro:authenticated>
+                                        <span class="reply"><a href="javascript:void(0);" class="show-editor">回复</a></span>
+                                        <c:if test="${map.value.authorid==sessionScope.get('user').uid}">
+                                            <span class="remove"><a href="javascript:void(0);" class="remove-confirm">删除</a></span>
+                                        </c:if>
+                                    </shiro:authenticated>
+                                </div>
+                                <div class="content">
+                                        ${map.value.content}
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
                 </c:forEach>
-            </c:forEach>
+            </div>
+
 
 
             <shiro:authenticated>
@@ -137,18 +149,17 @@
                     <table>
                         <tr>
                             <td>专辑名：</td>
-                            <td class="zhezhao_value">
-                                <input type="checkbox" name="album" value="Bike"> 夏天在静静地流淌
-                                <br>
-                                <input type="checkbox" name="album" value="Car"> I have a car
+                            <td class="check-albums">
+                                <%--<input type="checkbox" value="Bike" data-card="95"><label>夏天在静静地流淌</label>--%>
+                                <%--<br>--%>
+                                <%--<input type="checkbox" value="Car" data-card="30"><label>I have a Car</label>--%>
                             </td>
                         </tr>
                     </table>
                 </div>
                 <div class="btn-div">
-                    <input type="submit" class="submit" value="确定" />
-                    <input type="button" class="concel" value="取消" onclick="hideMask()" />
-                    <input type="reset" class="reset" value="清空"  />
+                    <a class="submit" href="javascript:void(0);">确定</a>
+                    <a class="cancel"  onclick="hideMask()" href="javascript:void(0);">取消</a>
                 </div>
             </form>
         </div>
@@ -157,6 +168,13 @@
 
     </div>
 </div>
+
+
+
+
+
+
+
 
 
 </body>

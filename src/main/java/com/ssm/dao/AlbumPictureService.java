@@ -12,5 +12,7 @@ public interface AlbumPictureService {
 
     int deleteAlbumPictureByAlbumId(Long albumId) throws Exception;
 
+    AlbumPicture getAlbumPictureByIds(Long albumId,Long pictureId) throws Exception;
+
 
 }

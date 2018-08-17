@@ -64,14 +64,19 @@ public class MyCommentServiceImpl implements MyCommentService{
         return null;
     }
 
-    @Transactional(isolation = Isolation.READ_COMMITTED,timeout = 3)
+    @Transactional(isolation = Isolation.READ_COMMITTED,timeout = 300)
     public int addComment(Comment comment) throws Exception {
         return commentMapper.insert(comment);
     }
 
-    @Transactional(isolation = Isolation.READ_COMMITTED,timeout = 3)
+    @Transactional(isolation = Isolation.READ_COMMITTED,timeout = 300)
     public int addReply(Comment comment) throws Exception {
         return commentMapper.insert(comment);
+    }
+
+    @Transactional(isolation = Isolation.READ_COMMITTED,timeout = 300)
+    public int removeCommentById(Long commentId) throws Exception {
+        return commentMapper.deleteByPrimaryKey(commentId);
     }
 
 }

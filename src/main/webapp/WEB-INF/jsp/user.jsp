@@ -35,12 +35,12 @@
             <div class="inner-content">
                 <div class="avatar-unit">
                     <div class="img">
-                        <img src="upload/1.jpg" class="current-avatar">
+                        <img src="${spaceOwner.avatar}" class="current-avatar">
                     </div>
                 </div>
                 <div class="head-line">
                     <div class="name">
-                        ${space.name}
+                        ${spaceOwner.name}
                     </div>
                 </div>
                 <div class="introduction">

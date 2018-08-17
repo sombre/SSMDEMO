@@ -8,4 +8,5 @@ public interface MyAlbumPictureService {
 
     List<AlbumPicture> getAlbumPicturesByAlbumId(Long albumId) throws Exception;
 
+
 }

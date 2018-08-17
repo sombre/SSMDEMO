@@ -25,5 +25,10 @@
     </delete>
 
 
+    <select id="getAlbumPictureByIds" parameterType="long" resultMap="AlbumPictureResultMap">
+        SELECT album_picture.alb_pic_id,album_picture.album_id ,album_picture.picture_id FROM album_picture
+        WHERE album_picture.album_id =#{arg0} AND album_picture.picture_id =#{arg1}
+    </select>
+
 
 </mapper>

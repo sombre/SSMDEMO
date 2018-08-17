@@ -54,10 +54,13 @@
                 <span class="name">${author.name}</span>
             </a>
             <shiro:authenticated>
-                <div class="tabs">
-                    <a href="javascript:void (0);" class="tab edit-album">编辑</a>
-                    <a href="javascript:void(0);" class="tab remove-album">删除</a>
-                </div>
+                <c:if test="${sessionScope.get('user').uid ==author.uid}">
+                    <div class="tabs">
+                        <a href="javascript:void (0);" class="tab edit-album">编辑</a>
+                        <a href="javascript:void(0);" class="tab remove-album">删除</a>
+                    </div>
+                </c:if>
+
             </shiro:authenticated>
         </div>
     </div>
@@ -73,15 +76,15 @@
                     </div>
                     <div class="hover-info">
                         <span class="mask"></span>
-                        <a href="#" class="collect">收藏 10</a>
-                        <a href="#" class="like white-btn"></a>
-                        <a href="#" class="comment white-btn"></a>
+                        <a href="javascript:void(0);" class="collect">${map.value.collectedNum}</a>
+                        <a href="javascript:void(0);" class="like white-btn"></a>
+                        <a href="javascript:void(0);" class="comment white-btn"></a>
                     </div>
                     <div class="waterfall-info">
-                        <p class="title">无论如何,我也不会认输的!</p>
+                        <p class="title">${map.value.picTitle}</p>
                         <p class="icon">
-                            <span class="icon-star">88</span>
-                            <span class="icon-like">10</span>
+                            <span class="icon-star">${map.value.collectedNum}</span>
+                            <span class="icon-like">${map.value.thumbNum}</span>
                         </p>
                     </div>
                     <div class="collect-info">

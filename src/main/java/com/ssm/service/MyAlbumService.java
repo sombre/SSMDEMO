@@ -21,7 +21,7 @@ public interface MyAlbumService {
     List<Album> getUserCreatedAlbum(Long userId,int page ,int pageSize) throws Exception;
     //获取用户收藏的专辑
     List<Album> getUserCollectedAlbum(Long userId,int page,int pageSize) throws Exception;
-    //通过ID获取专辑信息
+    //通过ID获取专辑收录的图片
     List<AlbumPicture> getAlbumPicturesByAlbumId(Long albumId,int page,int pageSize) throws Exception;
     //用户收藏专辑
     int collectedAlbum(UserAlbum userAlbum) throws Exception;
@@ -33,6 +33,10 @@ public interface MyAlbumService {
     int removeAlbumAllPicture(Long albumId) throws Exception;
     //取消专辑收藏的图片
     int removeAlbumPicture(Long albumId,Long pictureId) throws Exception;
+    //将图片加入专辑中
+    int collectPictureToAlbum(AlbumPicture albumPicture) throws Exception;
+    //通过ID获取用户收录的专辑图片
+    AlbumPicture getAlbumPictureByIds(Long albumId,Long PictureId) throws Exception;
 
 
 

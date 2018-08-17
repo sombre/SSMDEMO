@@ -163,6 +163,33 @@ public class AlbumAction {
     }
 
 
+    @RequiresAuthentication
+    @RequestMapping(value = "album/CollectPicture")
+    @ResponseBody
+    @Transactional(isolation = Isolation.READ_COMMITTED,timeout = 300,rollbackFor = {Exception.class})
+    public Map<Object,Object> addPictureToAlbums(Long pictureId,Long[] albumIds) throws Exception{
+        Map<Object,Object> map = new HashMap<Object,Object>();
+        if(albumIds.length!=0){
+            for(Long albumId : albumIds){
+                AlbumPicture albumPicture = new AlbumPicture();
+                albumPicture.setAlbumId(albumId);
+                albumPicture.setPictureId(pictureId);
+                AlbumPicture tmp = myAlbumService.getAlbumPictureByIds(pictureId,albumId);
+                if(null!=tmp){
+                    continue;
+                }
+                int affected = myAlbumService.collectPictureToAlbum(albumPicture);
+                if(0!=affected){
+                    map.put("message","添加成功!");
+                }
+            }
+            return map;
+        }
+        map.put("message","添加失败");
+        return null;
+    }
+
+
 
 
 
@@ -179,9 +206,17 @@ public class AlbumAction {
 
     @RequestMapping(value = "/album/getCollectedAlbum")
     @ResponseBody
-    public Map<String,Object> getCollectedAlbum(Long userId,Long pictureId) throws Exception{
-        Map<String,Object> map = new HashMap<String, Object>();
-        return map;
+    public Map<Object,Object> getCollectedAlbum(Long userId,int page,int pageSize) throws Exception{
+        Map<Object,Object> map = new HashMap<Object, Object>();
+        List<Album> albumList = myAlbumService.getUserCollectedAlbum(userId,page,pageSize);
+        if(null!=albumList && albumList.size()!=0){
+            for(Album album : albumList){
+                User user = myUserService.selectUserById(album.getAuthorId());
+                map.put(user,album);
+            }
+            return map;
+        }
+        return null;
     }
 
     @RequestMapping(value = "user/{uid}/album/{page}")

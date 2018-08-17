@@ -102,7 +102,8 @@ $(function(){
 // 校验注册表单,如果没问题,提交注册表单
 $(function(){
     $(".signup-btn").click(function(){
-        var href = $(this).attr("href");
+        console.log("Hhhh");
+        var href = "user/signupuser";
         var email = $("input[name=Email]").val();
         var password = $("input[name=Password]").val();
         var usrName = $("input[name=Name]");

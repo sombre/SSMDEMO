@@ -26,6 +26,7 @@ public class MyAlbumServiceImpl implements MyAlbumService {
     private UserAlbumMapper userAlbumMapper;
     private UserAlbumService userAlbumService;
 
+    private AlbumPictureMapper albumPictureMapper;
     private AlbumPictureService albumPictureService;
 
 
@@ -44,6 +45,14 @@ public class MyAlbumServiceImpl implements MyAlbumService {
     @Autowired
     public void setUserPictureService(UserPictureService userPictureService) {
         this.userPictureService = userPictureService;
+    }
+
+    public AlbumPictureMapper getAlbumPictureMapper() {
+        return albumPictureMapper;
+    }
+    @Autowired
+    public void setAlbumPictureMapper(AlbumPictureMapper albumPictureMapper) {
+        this.albumPictureMapper = albumPictureMapper;
     }
 
     public AlbumPictureService getAlbumPictureService() {
@@ -150,6 +159,16 @@ public class MyAlbumServiceImpl implements MyAlbumService {
     @Transactional(isolation = Isolation.READ_COMMITTED,timeout = 300,rollbackFor = {Exception.class})
     public int removeAlbumPicture(Long albumId, Long pictureId) throws Exception {
         return albumPictureService.deleteAlbumPictureByIds(albumId,pictureId);
+    }
+
+
+    public AlbumPicture getAlbumPictureByIds(Long albumId, Long pictureId) throws Exception {
+        return albumPictureService.getAlbumPictureByIds(albumId,pictureId);
+    }
+
+    @Transactional(isolation = Isolation.READ_COMMITTED,timeout = 300,rollbackFor = {Exception.class})
+    public int collectPictureToAlbum(AlbumPicture albumPicture) throws Exception {
+        return albumPictureMapper.insert(albumPicture);
     }
 
 

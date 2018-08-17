@@ -20,7 +20,7 @@
 
     <select id="getUserCollectedAlbum" resultMap="AlbumResultMap" parameterType="long">
         SELECT ab.album_id,ab.author_id,ab.create_at,ab.album_title,ab.album_desc FROM album as ab RIGHT JOIN user_album as ua
-        ON ab.album_id = ua.album_id AND ua.user_id = #{userId}
+        ON ab.album_id = ua.album_id WHERE ua.user_id = #{userId}
     </select>
 
 
