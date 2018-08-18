@@ -1,5 +1,105 @@
+
 /********************* 图片轮播******************/
-$(function () {
+// $(function () {
+// //     配置参数
+// //     Skidder旋转木马插件的配置参数如下：
+// //
+// // 参数	描述
+// //     slideClass	slide元素的class名称。默认为".slide"
+// //     animationType	该插件支持CSS动画和jQuery动画。可选值为： 'animate', 'css'。默认值为 'animate'
+// //     lazyLoad	懒加载，默认值为false
+// //     lazyLoadAutoInit	默认值为true
+// //     lazyLoadWindow	默认值为1
+// //     scaleSlides	是否根据maxWidth, maxHeight和scaleTo参数缩放slide为统一的值。默认为true。
+// //     scaleTo	定义缩放模式。有2种模式：最小模式和响应式模式。可选值为："smallest"和[x, y]。"smallest"表示高度最小的图片绝对幻灯片的高度。[x, y]表示使用一个数组中的两个数值来定义幻灯片的比例。默认为"smallest"模式。
+// //     maxWidth	现在幻灯片的最大宽度，0或"none"表示不限制。默认为800
+// //     maxHeight	现在幻灯片的最大高度，0或"none"表示不限制。默认为500
+// //     preservePortrait	在响应式模式中该参数有效。决定小于比例的图片的填充模式。true表示适应视口高度，水平方向上留空白。默认为false。
+// //     paging	设置为true时，插件会查找pagingElement元素的包裹元素pagingWrapper来设置padding。如果这两个元素不存在，插件会自动创建它们。默认为true。
+// //     pagingWrapper	分页圆点的包裹元素，默认为'.skidder-pager'
+// //     pagingElement	分页圆点元素，默认为'.skidder-pager-dot'
+// //     swiping	是否在移动触摸设备上允许swiping。默认为true
+// //     leftaligned	如果不希望幻灯片居中，设置为true，默认为false
+// //     cycle	是否循环显示，默认为true。
+// //     jumpback	在非循环模式时，最后一张幻灯片会显示'return to first slide'箭头。默认为false
+// //     speed	过渡动画的速度，默认为400
+// //     autoplay	是否总播放，默认为false
+// //     autoplayResume	是否在互动后恢复自动播放，默认为false
+// //     interval	自动播放的时间间隔，默认为4000
+// //     transition	过渡动画效果，'slide' 或 'fade'
+// //     directionClasses	在过渡动画结束后为slides添加 'left-from-active' 和 'right-from-active' class类。
+// //     afterSliding	旋转木马改变后的回调函数
+// //     afterInit	旋转木马初始化后的回调函数
+// //     afterResize	旋转木马尺寸改变时的回调函数
+//     $('.slideshow').each(function () {
+//         var $slideshow = $(this);
+//         $slideshow.imagesLoaded(function () {
+//             $slideshow.skidder({
+//                 slideClass: '.slide',
+//                 animationType: 'css',
+//                 scaleSlides: true,
+//                 // scaleTo: [2,1],
+//                 maxWidth: 0,
+//                 maxHeight: 0,
+//                 paging: true,
+//                 autoPaging: true,
+//                 pagingWrapper: ".skidder-pager",
+//                 pagingElement: ".skidder-pager-dot",
+//                 swiping: true,
+//                 leftaligned: false,
+//                 cycle: true,
+//                 jumpback: false,
+//                 speed: 400,
+//                 autoplay: true,
+//                 autoplayResume: true,
+//                 interval: 2000,
+//                 transition: "slide",
+//                 afterSliding: function () {
+//                 },
+//                 afterInit: function () {
+//                 }
+//             });
+//         });
+//     });
+//     // $(window).smartresize(function () {
+//     //     $('.slideshow').skidder('resize');
+//     // });
+// });
+
+
+function getSliderPicture(callback) {
+    var page=1;
+    var pageSize=5;
+    $.ajax({
+        method:"post",
+        dataType:"json",
+        data:{
+            "page":page,
+            "pageSize":pageSize
+        },
+        url:"picture/getSliderPicture",
+        success:function (data) {
+            callback(data.pictureList);
+            console.log(data);
+        },
+        error:function (data) {
+            console.log(data);
+        }
+    });
+}
+
+function createSliderItem(picture) {
+    var sliderItem =' <div class="slide"><a href="picture/'+picture.picId+'"><img src="'+picture.url+'"></a></div>\n';
+    return $(sliderItem);
+}
+
+function appendPictureToSlider(data) {
+    var sliderShow = $(".slideshow");
+    $.each(data,function (i) {
+        var sliderItem = createSliderItem(data[i]);
+        sliderShow.append(sliderItem);
+    });
+    /********************* 图片轮播******************/
 //     配置参数
 //     Skidder旋转木马插件的配置参数如下：
 //
@@ -30,46 +130,176 @@ $(function () {
 //     afterSliding	旋转木马改变后的回调函数
 //     afterInit	旋转木马初始化后的回调函数
 //     afterResize	旋转木马尺寸改变时的回调函数
-    $('.slideshow').each(function () {
-        var $slideshow = $(this);
-        $slideshow.imagesLoaded(function () {
-            $slideshow.skidder({
-                slideClass: '.slide',
-                animationType: 'css',
-                scaleSlides: true,
-                // scaleTo: [2,1],
-                maxWidth: 0,
-                maxHeight: 0,
-                paging: true,
-                autoPaging: true,
-                pagingWrapper: ".skidder-pager",
-                pagingElement: ".skidder-pager-dot",
-                swiping: true,
-                leftaligned: false,
-                cycle: true,
-                jumpback: false,
-                speed: 400,
-                autoplay: true,
-                autoplayResume: true,
-                interval: 2000,
-                transition: "slide",
-                afterSliding: function () {
-                },
-                afterInit: function () {
-                }
+        $('.slideshow').each(function () {
+            var $slideshow = $(this);
+            $slideshow.imagesLoaded(function () {
+                $slideshow.skidder({
+                    slideClass: '.slide',
+                    animationType: 'css',
+                    scaleSlides: true,
+                    // scaleTo: [2,1],
+                    maxWidth: 0,
+                    maxHeight: 0,
+                    paging: true,
+                    autoPaging: true,
+                    pagingWrapper: ".skidder-pager",
+                    pagingElement: ".skidder-pager-dot",
+                    swiping: true,
+                    leftaligned: false,
+                    cycle: true,
+                    jumpback: false,
+                    speed: 400,
+                    autoplay: true,
+                    autoplayResume: true,
+                    interval: 2000,
+                    transition: "slide",
+                    afterSliding: function () {
+                    },
+                    afterInit: function () {
+                    }
+                });
             });
         });
+        // $(window).smartresize(function () {
+        //     $('.slideshow').skidder('resize');
+        // });
+}
+
+
+//创建瀑布流item
+function createPictureItem(user, picture) {
+    user = $.parseJSON(user);
+    var string_timestamp = picture.uploadAt;// String时间戳
+    var time = new Date(parseInt(string_timestamp));
+    time = time.format("yyyy-MM-dd");
+    var itemHtml = '            <div class="item">\n' +
+        '                                <div class="pic">\n' +
+        '                                    <a href="picture/' + picture.picId + '"><img src="' + picture.url + '"></a>\n' +
+        '                                </div>\n' +
+        '                                <div class="hover-info">\n' +
+        '                                    <span class="mask"></span>\n' +
+        '                                    <a href="javascript:void(0);" class="collect">收藏 ' + picture.collectedNum + '</a>\n' +
+        '                                    <a href="javascript:void(0);" class="like white-btn"></a>\n' +
+        '                                    <a href="javascript:void(0);" class="comment white-btn"></a>\n' +
+        '                                </div>\n' +
+        '                                <div class="waterfall-info">\n' +
+        '                                    <p class="title">' + picture.picTitle + '</p>\n' +
+        '                                    <p class="icon">\n' +
+        '                                        <span class="icon-star">' + picture.collectedNum + '</span>\n' +
+        '                                        <span class="icon-like">' + picture.thumbNum + '</span>\n' +
+        '                                    </p>\n' +
+        '                                </div>\n' +
+        '                                <div class="collect-info">\n' +
+        '                                    <a href="#" class="headImg">' +
+        '                                           <img src="' + user.avatar + '">' +
+        '                                   </a>\n' +
+        '                                    <p class="title"><a href="user/' + picture.uploaderId + '/picture">' + user.name + ' </a></p>\n' +
+        '                                    <p class="to">发表于 <a href="">' + time + '</a></p>\n' +
+        '                                </div>\n' +
+        '                            </div>';
+    return $(itemHtml);
+}
+
+//将瀑布流item更新到waterfall
+function appendItemToWaterFall(data) {
+    var pictureDataList = data.pictureDataList;
+    var waterFall = $("#waterfall");
+    waterFall.masonry({
+        itemSelector: '.item',
+        columnWidth: 0,
+        gutter: 0,
+        transitionDuration: 0,
+        isAnimated: true,
+        flowWidth: true,//自定义参数
+        //假如这个参数为真,容器container的宽度为100,列宽度为30,则列数应该为100/30=3.333
+        //四舍五入,3.33取3.假如列宽度为28,则列数为100/28=3.57...,这个时候列数会取为4,即四舍五入.
     });
-    // $(window).smartresize(function () {
-    //     $('.slideshow').skidder('resize');
-    // });
-});
+    $.each(pictureDataList, function (i) {
+        $.each(pictureDataList[i], function (j) {
+            var item = createPictureItem(j, pictureDataList[i][j]);
+            waterFall.append(item).masonry("appended", item);
+        })
+    });
+    waterfall();
+}
+
+function getIndexPicture(callback) {
+    var items = $("#waterfall").find("div.item").length;
+    var pageSize = 20;
+    var page = Math.ceil(parseInt(items) / pageSize) + 1;
+    $.ajax({
+       method:"post",
+       dataType:"json",
+       data:{
+           "page":page,
+           "pageSize":pageSize
+       },
+       url:"picture/getIndexPicture",
+       success:function (data) {
+           callback(data);
+           console.log(data);
+       },
+       error:function (data) {
+           console.log(data);
+       }
+    });
+}
 
 
-//=============瀑布流调用=================
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * When scrolled all the way to the bottom, add more tiles
+ */
+function onIndexPageScroll() {
+    var clientHeight = $(this).height();
+    var scrollTop = Math.ceil($(this).scrollTop());
+    var scrollHeight = $(document).height();
+    if(scrollTop + clientHeight === scrollHeight){
+        // Get the first then items from the grid, clone them, and add them to the bottom of the grid
+        var $container = $("#waterfall");
+        var $items = $('div.item', $container);
+        var $itemCount = $items.length;
+        if ($itemCount < 100) {
+            getIndexPicture(appendItemToWaterFall);
+        }
+    }
+}
+
+
+
+
+
 $(function () {
-   waterfall();
+    //获取幻灯片栏的照片
+    getSliderPicture(appendPictureToSlider);
+    //获取瀑布流照片
+    getIndexPicture(appendItemToWaterFall);
+    //滚动条往下时,加载图片
+    $(window).scroll(onIndexPageScroll);
 });
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ===============瀑布流==============
 // $(function () {
@@ -130,9 +360,9 @@ $(function () {
 
 
 
-
-
-// (function ($) {
+//
+//
+// $(function ($) {
 //     // Instantiate wookmark after all images have been loaded
 //     // 初始化wookmark插件,
 //     var wookmark,

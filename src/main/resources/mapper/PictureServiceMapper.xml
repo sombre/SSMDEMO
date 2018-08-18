@@ -36,4 +36,20 @@
         FROM picture WHERE uploader_id = #{uid,jdbcType=BIGINT}
     </select>
 
+    <select id="getSliderPicture" resultMap="PictureResultMap" parameterType="int">
+        SELECT p.pic_id,p.pic_desc,p.uploader_id,p.upload_at,p.path,p.url,p.thumb_num,p.collected_num
+        FROM picture AS p JOIN
+            (SELECT ROUND(
+                  RAND() * ( (SELECT MAX(pic_id) FROM picture) - (SELECT Min(pic_id) FROM picture)) + (SELECT MIN(pic_id) FROM picture) ) AS id
+            )AS t2
+        WHERE p.pic_id >= t2.id
+        ORDER BY p.pic_id LIMIT #{pageSize}
+    </select>
+
+    <select id="getIndexPicture" resultMap="PictureResultMap">
+        SELECT p.pic_id,p.pic_desc,p.uploader_id,p.upload_at,p.path,p.url,p.thumb_num,p.collected_num
+        FROM picture AS  p
+    </select>
+
+
 </mapper>

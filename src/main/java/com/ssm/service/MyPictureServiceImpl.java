@@ -95,7 +95,14 @@ public class MyPictureServiceImpl implements MyPictureService {
         return null;
     }
 
+    public List<Picture> getSliderPicture(int pageSize) throws Exception {
+        return pictureService.getSliderPicture(pageSize);
+    }
 
+    public List<Picture> getIndexPicture(int page,int pageSize) throws Exception {
+        PageHelper.startPage(page,pageSize);
+        return pictureService.getIndexPicture();
+    }
 
 
 }

@@ -6,6 +6,7 @@ import com.github.pagehelper.PageHelper;
 import com.ssm.model.*;
 import com.ssm.service.*;
 import com.ssm.util.DateUtil;
+import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -121,6 +122,46 @@ public class PictureAction {
         map.put("message","上传失败!");
         return map;
     }
+
+    @RequestMapping(value = "picture/getSliderPicture")
+    @ResponseBody
+    public Map<Object,Object> getSliderPicture(int page,int pageSize) throws Exception{
+        Map<Object,Object> map = new HashMap<Object,Object>();
+        List<Picture> pictureList = myPictureService.getSliderPicture(pageSize);
+        if(null!=pictureList && 0!=pictureList.size()){
+            map.put("pictureList",pictureList);
+            map.put("message","获取成功!");
+            return map;
+        }
+        map.put("message","获取失败!");
+        return map;
+    }
+
+    @RequestMapping(value = "picture/getIndexPicture")
+    @ResponseBody
+    public Map<Object,Object> getIndexPicture(int page,int pageSize) throws Exception{
+        Map<Object,Object> map= new HashMap<Object,Object>();
+        List<Picture> pictureList = myPictureService.getIndexPicture(page,pageSize);
+        List<Object> pictureDataList = new ArrayList<Object>();
+        if(null!=pictureList && 0!=pictureList.size()){
+            for(Picture picture : pictureList){
+                User user = myUserService.selectUserById(picture.getUploaderId());
+                if(null!=user){
+                    Map<Object,Object> pictureDataMap = new HashMap<Object,Object>();
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    pictureDataMap.put(objectMapper.writeValueAsString(user),picture);
+                    pictureDataList.add(pictureDataMap);
+                }
+            }
+            map.put("pictureDataList",pictureDataList);
+            map.put("message","获取主页图片成功!");
+            return map;
+        }
+        map.put("message","获取主页图片失败!");
+        return map;
+    }
+
+
 
 
     @RequestMapping(value = "picture/{pId}")

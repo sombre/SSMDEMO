@@ -17,6 +17,8 @@ public interface MyPictureService {
     boolean removeUserPicture(UserPicture userPicture) throws Exception;
     UserPicture getUserPictureByIds(Long userId,Long pictureId) throws Exception;
 
+    List<Picture> getSliderPicture(int pageSize) throws Exception;
+    List<Picture> getIndexPicture(int page,int pageSize) throws Exception;
 
 
 

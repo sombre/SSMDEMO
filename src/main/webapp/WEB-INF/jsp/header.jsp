@@ -58,7 +58,7 @@
                         <li ><span class="vertical-divider"></span><a href="user/signup"  class="icon-text-pink">注册</a></li>
                     </shiro:notAuthenticated>
                     <shiro:authenticated>
-                        <li><a href="#">${user.name}</a></li>
+                        <li><a href="user/${user.uid}/picture">${user.name}</a></li>
                         <li><span class="vertical-divider"></span><a href="upload">上传</a></li>
                         <li><span class="vertical-divider"></span><a href="user/${user.uid}/picture">图片</a></li>
                         <li><span class="vertical-divider"></span><a href="user/${user.uid}/album">专辑</a></li>
